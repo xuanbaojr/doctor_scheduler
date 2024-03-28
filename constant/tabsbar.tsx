@@ -1,37 +1,43 @@
 import { Entypo } from '@expo/vector-icons';
 import { FontAwesome6 } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
+
+interface Props {
+    color : string,
+    size : number,
+}
 export interface tabbarsub  {
     name : string,
     path : string,
     tabBarlabel : string,
-    tabbarIcon : React.ReactElement,
+    tabbarIcon :({color, size} : Props) =>  React.ReactElement,
 }
+
 
 export const tabbar : tabbarsub[] = [
     {
         name : 'home',
         path : "/home",
         tabBarlabel : "Trang chủ",
-        tabbarIcon : <Entypo name="home" size={24} color="black" />
+        tabbarIcon :({color, size} : Props) => ( <Entypo name="home" size={size} color={color} />)
     },
     {
         name : 'medical',
         path : "/medical",
         tabBarlabel : "Hồ sơ",
-        tabbarIcon : <FontAwesome5 name="notes-medical" size={24} color="black" />
+        tabbarIcon :({color, size} : Props) => <FontAwesome5 name="notes-medical" size={size} color={color} />
     },
     {
         name : 'schedule',
         path : "/schedule",
         tabBarlabel : "lịch khám",
-        tabbarIcon : <FontAwesome5 name="calendar-alt" size={24} color="black" />
+        tabbarIcon :({color, size} : Props) => <FontAwesome5 name="calendar-alt" size={size} color={color} />
     },
     {
         name : 'setting',
         path : "/setting",
         tabBarlabel : "Cá nhân",
-        tabbarIcon : <FontAwesome6 name="user" size={24} color="black" />
+        tabbarIcon :({color, size} : Props)=> <FontAwesome6 name="user" size={size} color={color} />
     }
 ]
 

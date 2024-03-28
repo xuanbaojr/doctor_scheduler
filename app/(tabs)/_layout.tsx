@@ -7,16 +7,20 @@ const TabLayout = () => {
   const pathname = usePathname()
   
   return (
-    <Tabs >
+    <Tabs screenOptions={{
+      tabBarActiveTintColor: "#000"  // sua mau tabbar active o day
+      
+    }}>
         {
             tabbar.map((tab : tabbarsub) => (
               <Tabs.Screen 
                 key={tab.name}
                 name={tab.name}
                 options={{
-                  tabBarLabel : tab.tabBarlabel,
-                  tabBarIcon : () => tab.tabbarIcon,
+                  tabBarLabel :  tab.tabBarlabel,
+                  tabBarIcon : ({color, size}) => <tab.tabbarIcon size={size} color={color}/>,
                   headerShown : false,
+                  
                 }}
               />
             ))
