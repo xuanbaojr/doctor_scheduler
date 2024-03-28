@@ -19,9 +19,28 @@ const HomeLayout = () => {
             
             name='index'
             options={{
-                headerShown: false,
+                headerShown: true,
+                headerTitle : "trang chu"
                 
             }}
+        />
+        <Stack.Screen 
+          name='test'
+          options={{
+            headerShown : true,
+          }}
+        />
+        <Stack.Screen 
+          name='advise'
+          options={{
+            headerShown : true,
+          }}
+        />
+        <Stack.Screen 
+          name='post'
+          options={{
+            headerShown : true,
+          }}
         />
     </Stack>
   )

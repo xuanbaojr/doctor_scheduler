@@ -1,27 +1,30 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 import { Link, Stack, } from 'expo-router'
-import RecommentDoctor from '../../../components/card/RecommentDoctor'
-import ButtonDesign from '../../../components/card/ButtonDesign'
+import ButtonDesign from '@/components/card/ButtonDesign'
+import ReviewDoctor from '@/components/card/ReviewDoctor'
+import Activity from '@/components/card/Activity'
 
 const HomePage = () => {
   return (
     <>
-    <View className="flex-1 items-center justify-center  bg-white">
-
-      <View className='flex-row justify-around  w-full max-h-40 p-10 bg-slate-500'>
-        <View className='w-1/2'>
-          <ButtonDesign path='/home/advise' name={"advise"} />
+    <Stack.Screen  options={{
+      headerShown : true,
+    }}/>
+    <View className="flex-col justify-between h-full bg-bg">
+      <View className='h-[40rem] '>
+        <View className='w-full absolute'>
+          
         </View>
-        <View className='w-1/2'>
-          <ButtonDesign path='home/order' name={"push order"} />
-        </View>
-        
+        <Activity />
       </View>
       
+      <View className='b-0 h-3/5'>
+        <ReviewDoctor />
+      </View>
 
-      <RecommentDoctor />
-    </View>
+        
+      </View>
     </>
   )
 }

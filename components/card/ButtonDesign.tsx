@@ -1,25 +1,26 @@
-import { Link } from "expo-router"
-import { Text, View } from "react-native"
+'use client'
+import { Link, useRouter } from "expo-router"
+import { Text, TouchableOpacity, View } from "react-native"
 
 
 interface Props {
     path : string,
-    name : string,
+    label : string,
 
 }
 
-const ButtonDesign = ({path, name} : Props) => {
+const ButtonDesign = ({path, label} : Props) => {
+    const router = useRouter()
+    const Press = () => {
+        router.navigate(path)
+    }
     return (
-        <View className=" bg-blue-200  h-full w-full">
-            <Link 
-                className="w-ful h-full"
-                href={path}
-            >
-                <Text>
-                    {name}
-                </Text>
-            </Link>
-        </View>
+    <TouchableOpacity
+        onPress={Press}
+        className="bg-blue-1 rounded-lg py-2 px-4"
+    >
+        <Text className="text-black font-semibold text-center">{label}</Text>
+    </TouchableOpacity>
     )
 }
 
