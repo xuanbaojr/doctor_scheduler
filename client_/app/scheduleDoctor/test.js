@@ -7,9 +7,9 @@ const App = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://192.168.1.5:3000/products');
+                const response = await axios.get('http://192.168.1.5:3000/about');
+                console.log(response.data[0].email)
                 setData(response.data);
-                console.log(data && data[0]['name'])
                 
             } catch (error) {
                 console.error(error);
@@ -21,8 +21,7 @@ const App = () => {
 
     return (
         <View>
-            
-            <Text>{data && <Text>{data[0]['description']}</Text>}</Text>
+            {data && <Text>{data[0].email}</Text>}
         </View>
     );
 };
