@@ -1,4 +1,4 @@
-import { ScrollView, Text, View } from "react-native"
+import { ScrollView, Text, View, TouchableOpacity } from "react-native"
 import InforDoctor from "./InforDoctor"
 import { Ionicons } from '@expo/vector-icons';
 import { Link } from "expo-router";
@@ -13,6 +13,11 @@ const ReviewDoctor = () => {
                 <Text className="text-xl font-bold mb-2">
                     Bac si nhan duoc danh gia cao
                 </Text>
+                <Link href={`../scheduleDoctor/test`} asChild>
+                    <TouchableOpacity>
+                      <Text>Bat dau</Text>
+                    </TouchableOpacity>
+                </Link>
                 <View className="border-t-2 border-black"/>
             </View>
             {/* scroll view  */}
