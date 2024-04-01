@@ -13,7 +13,7 @@ const ReviewDoctor = () => {
                 <Text className="text-xl font-bold mb-2">
                     Bac si nhan duoc danh gia cao
                 </Text>
-                <Link href={`../scheduleDoctor/test`} asChild>
+                <Link href={`../scheduleDoctor/bookDoctor`} asChild>
                     <TouchableOpacity>
                       <Text>Bat dau</Text>
                     </TouchableOpacity>

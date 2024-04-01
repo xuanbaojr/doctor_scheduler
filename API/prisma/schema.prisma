@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -15,8 +9,124 @@ datasource db {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+  id       String     @id @default(uuid())
+  phone    String
+  email    String     @unique
+  role     Role
+  custumer Customer[]
+  doctor   Doctor?
+  nurse    Nurse?
 }
 
+model Doctor {
+  id        String   @id @default(uuid())
+  name      String
+  userId    String   @unique
+  clinics   Clinic[]
+  user      User     @relation(fields: [userId], references: [id])
+  listOrder Order[]  @relation("doctorOrdered")
+}
+
+model Order {
+  id        String    @id @default(uuid())
+  createAt  DateTime  @default(now())
+  comment   String
+  done      Boolean
+  customId  String
+  doctorId  String
+  time      Int[]     @db.SmallInt
+  data_time DateTime? @db.Timestamptz(6)
+  date_time DateTime? @db.Date
+  hour_time String?
+  custom    Customer  @relation("customerOrder", fields: [customId], references: [id])
+  doctor    Doctor    @relation("doctorOrdered", fields: [doctorId], references: [id])
+}
+
+model Thread {
+  id        String   @id @default(uuid())
+  customId  String
+  nurfeId   String
+  image     String[]
+  name      String
+  sex       String
+  age       String
+  createAt  DateTime @default(now())
+  content   String
+  custom    Customer @relation("customerThread", fields: [customId], references: [id])
+  comment   Thread   @relation("comment", fields: [id], references: [id])
+  commentId Thread?  @relation("comment")
+  nurfe     Nurse    @relation("nurseThread", fields: [nurfeId], references: [id])
+}
+
+model Profile {
+  id              String        @id @default(uuid())
+  customId        String
+  createAt        DateTime      @default(now())
+  title           String
+  recomment       String[]
+  content         String
+  listExamination Examination[] @relation("profile")
+  customer        Customer      @relation("customerProfile", fields: [customId], references: [id])
+}
+
+model Examination {
+  id        String   @id @default(uuid())
+  createAt  DateTime @default(now())
+  iamge     String[]
+  title     String
+  profileId String
+  profile   Profile  @relation("profile", fields: [profileId], references: [id])
+}
+
+model Customer {
+  id         String    @id @default(uuid())
+  firstName  String
+  lastName   String
+  age        String
+  sex        Sex
+  address    String
+  userId     String
+  User       User      @relation(fields: [userId], references: [id])
+  listOrder  Order[]   @relation("customerOrder")
+  listFile   Profile[] @relation("customerProfile")
+  listThread Thread[]  @relation("customerThread")
+}
+
+model Nurse {
+  id         String   @id @default(uuid())
+  userId     String   @unique
+  User       User     @relation(fields: [userId], references: [id])
+  listThread Thread[] @relation("nurseThread")
+}
+
+model Specialty {
+  id      String   @id @default(uuid())
+  name    String?  @unique
+  clinics Clinic[]
+}
+
+model Clinic {
+  id           String    @id
+  doctor_id    String
+  specialty_id String
+  name         String?
+  major        String
+  price        Int
+  Doctor       Doctor    @relation(fields: [doctor_id], references: [id], onDelete: Cascade, map: "_DoctorToSpecialty_A_fkey")
+  Specialty    Specialty @relation(fields: [specialty_id], references: [id], onDelete: Cascade, map: "_DoctorToSpecialty_B_fkey")
+
+  @@unique([id, doctor_id], map: "_DoctorToSpecialty_AB_unique")
+  @@index([doctor_id], map: "_DoctorToSpecialty_B_index")
+}
+
+enum Sex {
+  woman
+  man
+  not
+}
+
+enum Role {
+  Doctor
+  Customer
+  Nurse
+}
