@@ -15,6 +15,10 @@ const advise = () => {
       title : tabTitle.communicate
     }}/>
     <View className='h-full w-full bg-bg p-0.5'>
+      <Link href={'/(adviceDoctor)/thread'}>
+      <Text>thread</Text>
+      </Link>
+        
       <ScrollView className="w-full h-full px-3 pt-2 ">
         <Post />
         <Post />

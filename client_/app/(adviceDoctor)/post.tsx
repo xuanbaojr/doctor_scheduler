@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { Stack } from 'expo-router'
-import InforInput from '@/components/forms/InforInput'
+import InforInput from '@/components/share/InforInput'
 import { headerTitle, noteTitle } from '@/constant/screen/post'
 
 const Post = () => {

@@ -19,6 +19,12 @@ const AdviseLayout = () => {
                 headerShown : false
             }}
         />
+        <Stack.Screen
+            name='thread'
+            options={{
+                headerShown : false
+            }}
+        />
     </Stack>
   )
 }

@@ -16,7 +16,7 @@ const RootLayout = () => {
             options={{
               headerShown : false,
             }}
-        />
+          />
         </Stack>
         
     </>

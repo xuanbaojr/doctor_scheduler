@@ -1,5 +1,5 @@
 export const headerTitle = {
-    title : "Đặt câu hỏi"
+    title : "Đặt câu hỏi",
 }
 
 export const noteTitle = {
