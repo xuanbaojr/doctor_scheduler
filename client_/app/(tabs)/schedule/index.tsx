@@ -3,8 +3,7 @@ import React from 'react'
 
 const SchedulePage = () => {
   return (
-    <View className="flex-1 items-center justify-center bg-white">
-      <Text>Schedule Page</Text>
+    <View className="flex justify-center items-center">
     </View>
   )
 }

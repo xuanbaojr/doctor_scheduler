@@ -12,13 +12,13 @@ interface Props {
 const CommentDoctor = () => {
   return (
     <View className='flex-row items-center justify-between p-1 mb-1 rounded-xl bg-avatar-2'>
-        <View className='w-10 h-10 rounded-full ml-1 mr-1 flex items-center justify-center bg-blue-1'>
+        <View className='w-8 h-8 rounded-full ml-1 mr-1 flex items-center justify-center bg-blue-1'>
             {/* <Image source={avatar}/> */}
         </View>
-        <View className='text-sm flex-1 ml-0.5 p-0.5 rounded-xl bg-blue-1'>
-            <Text className='ml-0.5'>aaaaaaaaaaaaaaaaaaaaaaaaaaaa
+        <View className='text-sm flex-1 h-12 ml-0.5 p-0.5 rounded-xl bg-blue-1'>
+            <Text className='ml-0.5'>
+              aaaaaaaaaaaaaaaaaaaaaaaaaaaa
               aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-              aaaaaaaaaaaaaaaaaaaaa
             </Text>
         </View>
 

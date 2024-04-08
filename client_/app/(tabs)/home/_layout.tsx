@@ -16,32 +16,25 @@ const HomeLayout = () => {
     }}
     >
         <Stack.Screen 
-            
-            name='index'
-            options={{
-                headerShown: true,
-                headerTitle : "trang chu"
-                
-            }}
+          name='index'
+          options={{
+            headerShown: true,
+            headerTitle : "trang chu"
+              
+          }}
         />
-        <Stack.Screen 
-          name='test'
+        {/* <Stack.Screen 
+          name='(adviceDoctor)'
+          options={{
+            headerShown : false,
+          }}
+        /> */}
+        {/* <Stack.Screen 
+          name='(scheduleDoctor)'
           options={{
             headerShown : true,
           }}
-        />
-        <Stack.Screen 
-          name='advise'
-          options={{
-            headerShown : true,
-          }}
-        />
-        <Stack.Screen 
-          name='post'
-          options={{
-            headerShown : true,
-          }}
-        />
+        /> */}
     </Stack>
   )
 }

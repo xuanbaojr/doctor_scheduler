@@ -7,7 +7,7 @@ interface pathname {
 
 export const pathScreen = {
     advise : {
-        path : "/home/advise",
+        path : "(adviceDoctor)/(threads)/advice",
         name : "advise",
         lable: "Tu van"
     },

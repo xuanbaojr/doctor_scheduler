@@ -1,5 +1,5 @@
 import { ScrollView, Text, View, TouchableOpacity } from "react-native"
-import InforDoctor from "./InforDoctor"
+import InforDoctor from "../card/InforDoctor"
 import { Ionicons } from '@expo/vector-icons';
 import { Link } from "expo-router";
 
