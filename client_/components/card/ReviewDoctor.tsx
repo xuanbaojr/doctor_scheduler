@@ -3,7 +3,6 @@ import InforDoctor from "./InforDoctor"
 import { Ionicons } from '@expo/vector-icons';
 import { Link } from "expo-router";
 
-
 const ReviewDoctor = () => {
 
     return (
@@ -13,11 +12,7 @@ const ReviewDoctor = () => {
                 <Text className="text-xl font-bold mb-2">
                     Bac si nhan duoc danh gia cao
                 </Text>
-                <Link href={`../scheduleDoctor/bookDoctor`} asChild>
-                    <TouchableOpacity>
-                      <Text>Bat dau</Text>
-                    </TouchableOpacity>
-                </Link>
+
                 <View className="border-t-2 border-black"/>
             </View>
             {/* scroll view  */}
@@ -50,9 +45,34 @@ const ReviewDoctor = () => {
                 
 
             </Link>
+            <ChatCustomer></ChatCustomer>
         </View>
     )
 }
 
+
+
+const ChatCustomer = () =>{
+    return(
+        <View>
+            <Link href={`../scheduleDoctor/bookClinic`} asChild>
+                <TouchableOpacity>
+                    <Text>Bat dau</Text>
+                </TouchableOpacity>
+            </Link>
+            <Link href={`../chat/chatForNurse`} asChild>
+                <TouchableOpacity>
+                    <Text>Bat dau</Text>
+                </TouchableOpacity>
+            </Link>
+            <Link href={`../chat/chat_for_customer`} asChild>
+            <TouchableOpacity>
+                <Text>CHAT FOR CUSTOMER</Text>
+            </TouchableOpacity>
+        </Link>
+    </View>
+    )
+
+}
 
 export default ReviewDoctor

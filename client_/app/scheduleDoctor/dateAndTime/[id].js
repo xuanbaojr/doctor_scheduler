@@ -1,18 +1,10 @@
 import React from "react";
 import { Modal, View, Text, TouchableOpacity, Image, ScrollView, StyleSheet } from "react-native";
 import { Link } from "expo-router";
-import { StatusBar } from "expo-status-bar";
 import { useState, useEffect } from "react";
-import CalendarPicker from "react-native-calendar-picker"
-import { withTheme } from "@rneui/themed";
+
 import { MaterialIcons } from '@expo/vector-icons';
-import { Entypo } from '@expo/vector-icons';
-import moment from "moment";
-import { TabView, SceneMap } from 'react-native-tab-view';
-import { FontAwesome } from '@expo/vector-icons';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {BookClinic} from '../bookClinic.js'
+
 import { useLocalSearchParams } from 'expo-router';
 import instance from "../../../utils/axios.js";
 

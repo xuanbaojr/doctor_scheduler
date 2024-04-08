@@ -119,6 +119,21 @@ model Clinic {
   @@index([doctor_id], map: "_DoctorToSpecialty_B_index")
 }
 
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model todos {
+  id   Int     @id @default(autoincrement())
+  task String?
+}
+
+model chat {
+  id         String   @id(map: "Chat_pkey") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  sender     String?
+  receiver   String?
+  content    String?
+  member     String[]
+}
+
 enum Sex {
   woman
   man

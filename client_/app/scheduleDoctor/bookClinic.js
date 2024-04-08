@@ -1,7 +1,6 @@
 import React, {useState} from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import { Link } from "expo-router";
-import { Path, Svg } from 'react-native-svg';
 import { SearchBar } from '@rneui/themed';
 import { Entypo } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
