@@ -16,7 +16,19 @@ const RootLayout = () => {
             options={{
               headerShown : false,
             }}
-          />
+            />
+            <Stack.Screen 
+            name='scheduleDoctor'
+            options={{
+              headerShown : false,
+            }}
+            />
+            <Stack.Screen 
+            name='chat'
+            options={{
+              headerShown : false,
+            }}
+            />
         </Stack>
         
     </>

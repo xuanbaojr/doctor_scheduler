@@ -14,7 +14,7 @@ import {  KeyboardAvoidingView, Text,  View } from 'react-native'
 import { MyContext, MyFunctionType } from '../context/UpLoadContext'
 import { OptionUpLoad } from '../forms/UpAndLoadImage'
 import { MajorType } from '@/constant/type'
-
+import {CreateThreads} from '../../../API/controllers/threadsController'
 
 const InforInput = () => {
 
@@ -37,8 +37,9 @@ const InforInput = () => {
     };
 
 
-    const onSubmit = () => {
+    const onSubmit = async () => {
       console.log(gender, age, puImage, images[0], major, title )
+      await CreateThreads()
     }
 
   return (
