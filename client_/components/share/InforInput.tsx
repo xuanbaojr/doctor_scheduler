@@ -14,7 +14,7 @@ import {  KeyboardAvoidingView, Text,  View } from 'react-native'
 import { MyContext, MyFunctionType } from '../context/UpLoadContext'
 import { OptionUpLoad } from '../forms/UpAndLoadImage'
 import { MajorType } from '@/constant/type'
-import {CreateThreads} from '../../../API/controllers/threadsController'
+import instance from '@/utils/axios'
 
 const InforInput = () => {
 
@@ -36,10 +36,17 @@ const InforInput = () => {
       setMyFunction(() => newFunction);
     };
 
-
     const onSubmit = async () => {
       console.log(gender, age, puImage, images[0], major, title )
-      await CreateThreads()
+      await instance.post(`/createNewThread`, {
+        // id : id 
+        gender : gender,
+        age : age.toString(), 
+        puImage :puImage, 
+        image : images[0],
+        major : major,
+        title : title,
+      })
     }
 
   return (
@@ -57,10 +64,10 @@ const InforInput = () => {
         </View>
 
         {/* sex */}
-        <GenderBox genderDefault={gender} ChooseGander={() => setGender}/>
+        <GenderBox genderDefault={gender} ChooseGander={setGender}/>
 
         {/* age  */}
-        <SliderAge ageDefault={age} chooseAge={() => setAge}/>
+        <SliderAge ageDefault={age} chooseAge={setAge}/>
 
         {/* major */}
         <SelectMajor major={major} setMajor={setMajor}/>

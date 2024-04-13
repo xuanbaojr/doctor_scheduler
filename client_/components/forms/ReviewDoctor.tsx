@@ -8,6 +8,7 @@ const ReviewDoctor = () => {
     return (
         <View className="flex-1 p-4 mb-4 mx-0.5 bg-blue-1 rounded-xl">
             {/* header */}
+            <ChatCustomer></ChatCustomer>
             <View className="mb-4">
                 <Text className="text-xl font-bold mb-2">
                     Bac si nhan duoc danh gia cao
@@ -45,7 +46,7 @@ const ReviewDoctor = () => {
                 
 
             </Link>
-            <ChatCustomer></ChatCustomer>
+            
         </View>
     )
 }

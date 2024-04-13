@@ -10,6 +10,11 @@ interface Props {
 
 const SliderAge = ({chooseAge, ageDefault} : Props) => {
     const [age, setAge] = useState<number>(ageDefault)
+
+    const update = (value : number) => {
+      setAge(value)
+      chooseAge(value)
+    }
   return (
     <>
     <View className='w-full flex-none px-2 '>
@@ -28,10 +33,11 @@ const SliderAge = ({chooseAge, ageDefault} : Props) => {
                 backgroundColor: "#fdf4f4"
               }}
               value={age}
-              onValueChange={(value) => setAge(value)}
+              onValueChange={(value) => update(value)}
               minimumValue={1}
               maximumValue={120}
               maximumTrackTintColor='#ff0000'
+              step={1}
             />
           </View>
     </View>

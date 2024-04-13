@@ -10,8 +10,8 @@ datasource db {
 
 model User {
   id       String     @id @default(uuid())
-  phone    String
   email    String     @unique
+  phone    String
   role     Role
   custumer Customer[]
   doctor   Doctor?
@@ -43,18 +43,19 @@ model Order {
 }
 
 model Thread {
-  id        String   @id @default(uuid())
+  id        String    @id @default(uuid())
   customId  String?
   nurfeId   String?
-  image     String[]
-  name      String
-  sex       String
-  age       String
-  createAt  DateTime @default(now())
+  image     String?
+  createAt  DateTime  @default(now())
   content   String
+  gender    String
+  major     String[]
+  age       String
+  puImage   Boolean?
   custom    Customer? @relation("customerThread", fields: [customId], references: [id])
-  comment   Thread   @relation("comment", fields: [id], references: [id])
-  commentId Thread?  @relation("comment")
+  comment   Thread    @relation("comment", fields: [id], references: [id])
+  commentId Thread?   @relation("comment")
   nurfe     Nurse?    @relation("nurseThread", fields: [nurfeId], references: [id])
 }
 

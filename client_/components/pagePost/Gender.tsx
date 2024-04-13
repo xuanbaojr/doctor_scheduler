@@ -6,7 +6,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 interface Props {
     genderDefault : Gender,
-    ChooseGander: (gender : string) => void
+    ChooseGander: (gender : Gender) => void
 }
 
 const GenderBox = ({ChooseGander, genderDefault} : Props) => {
