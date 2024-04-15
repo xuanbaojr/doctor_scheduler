@@ -1,4 +1,5 @@
 const { PrismaClient } = require('@prisma/client');
+const { connect } = require('http2');
 
 prisma = new PrismaClient()
 
@@ -110,7 +111,7 @@ class scheduleController {
 
     async createOrder(req, res) {
         try {
-            const {doctorId, customerId, date_time, hour_time} = req.body
+            const {doctorId, customerId, date_time, hour_time, clinic_id} = req.body
             console.log(date_time)
             const response = await prisma.order.create({
                 data:{
@@ -126,10 +127,13 @@ class scheduleController {
                     },
                     custom:{
                         connect:{
-                            id: customerId
+                            id: "8b57944c-1e70-4a2e-83ec-30532e698de3"
                         }
-                    }
-                }
+                    },
+                    Clinic:{
+                        connect:{
+                            id: clinic_id
+                }}}
             })
             console.log(response)
             res.send(response)
@@ -194,7 +198,72 @@ class scheduleController {
         }
     }
     
+    async GetAllOrders(req, res) {
+        try {
+
+            const { customer_id } = req.params; // Extract doctor_id and date_time from URL params
+            const response = await prisma.order.findMany({
+                where: {
+                    customId: customer_id
+                }
+            });
+                        
+            console.log(response);
+            res.send(response);
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({
+                errorCode: 1,
+                msg: "Server" + error.message
+            });
+        }
+    }
+
+    async getCustomerByCustomerId(req, res) {
+        try {
+
+            const { customer_id } = req.params; // Extract doctor_id and date_time from URL params
+            const response = await prisma.Customer.findMany({
+                where: {
+                    id: customer_id
+                }
+            });
+                        
+            console.log(response);
+            res.send(response);
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({
+                errorCode: 1,
+                msg: "Server" + error.message
+            });
+        }
+    }
+
     
+    async getClinicByClinicId(req, res) {
+        try {
+
+            const { clinic_id } = req.params; // Extract doctor_id and date_time from URL params
+            const response = await prisma.Clinic.findMany({
+                where: {
+                    id: clinic_id
+                },
+                include:{
+                    Specialty: true
+                }
+            });
+                        
+            console.log(response);
+            res.send(response);
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({
+                errorCode: 1,
+                msg: "Server" + error.message
+            });
+        }
+    }
 }
 
 

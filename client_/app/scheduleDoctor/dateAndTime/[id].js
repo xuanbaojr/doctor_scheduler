@@ -8,9 +8,9 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { useLocalSearchParams } from 'expo-router';
 import instance from "../../../utils/axios.js";
 
+const customerId = "1"
 
 const DoctorDetail = ({doctor}) => {
-
 
   return (
     <View>
@@ -39,50 +39,15 @@ const DoctorDetail = ({doctor}) => {
   );
 };
 
-
-
-
 const Services = ({propOfService}) => {
    const [modalVisible, setModalVisiable] = useState('false')
+   const [clinic, setClinic] = useState(""); // Initialize as null instead of []
 
-    // const today = moment(); 
-    // console.log(today)
-    const today_day = new Date()
-    console.log(today_day)
-    const [selectedValue, setSelectedValue] = useState(today_day)
+   const handleOnPress = () => {  
+    setModalVisiable(!modalVisible)
+    setClinic(propOfService['id'])
+  }
 
-
-    const disable_bi = [1,0,1]
-  
-    let listOfDay = ["Chủ nhật", "Thứ hai", "Thứ ba", "Thứ tư", "Thứ 5", "Thứ 6", "Thứ 7"]
-    let listOfDayShow = []
-
-    
-    let listOfDate = []
-    for (let i = 0; i < 7; i++){
-      // let nextDay = today.clone().add(i,"days").format('DD-MM') // Sử dụng clone để tạo bản sao của đối tượng today
-      // listOfDate.push(nextDay)
-
-      let tomorrowDay = new Date(today_day.getFullYear(), today_day.getMonth(), today_day.getDate() + i)
-      const dayOfWeek = tomorrowDay.getDay()
-      // console.log(dayOfWeek)
-      listOfDayShow.push(listOfDay[dayOfWeek])
-    }
-
-    // create order function
-    const createOrder = async() => {
-      try {
-        const doctors = await instance.post(`/order`,{
-          customerId:"1",
-          doctorId: "1",
-          data_time: selectedValue
-        })
-        console.log("line 87" + selectedValue)
-        setModalVisiable(!modalVisible)
-      }catch (e) {
-          console.log(e)
-      }
-    }
     return(
         <View style={{margin:10, backgroundColor:'f0f4f7', alignItems:'left', justifyContent:'center', }}>
       <Modal
@@ -91,17 +56,15 @@ const Services = ({propOfService}) => {
         transparent={true}
         backdropColor="#000000"
       >
-
-
       <TouchableOpacity 
         onPress={() => setModalVisiable(!modalVisible)}
         style={{flex:1, backgroundColor: 'rgba(0, 0, 0, 0.7)' }} />
-      <DateComponent></DateComponent>
-
+      <DateComponent modalVisible={modalVisible} setModalVisiable={setModalVisiable} clinic={clinic}></DateComponent>
 
       </Modal>
+
             <TouchableOpacity
-                onPress={() => setModalVisiable(true)}
+                onPress={() => handleOnPress()}
                 style={{ 
                     width:390,
                     alignItems:'flex-start',
@@ -119,8 +82,8 @@ const Services = ({propOfService}) => {
                     <MaterialIcons name="post-add" size={30} color="powderblue" style={{alignItems:'flex-start', margin:10, marginRight: 30,}} />
 
                     <View style={{flexDirection:'column', paddingVertical:20}}>
-                    <Text style={{fontSize: 16, fontWeight:'600', color:'#111827'}}>Khám Nội</Text>
-                    <Text style={{fontSize:15, marginTop:5}}>{propOfService['name']}</Text>
+                    <Text style={{fontSize: 16, fontWeight:'600', color:'#111827'}}>{propOfService['name']}</Text>
+                    <Text style={{fontSize:15, marginTop:5}}>{propOfService['major']}</Text>
                     <Text style={{fontSize:15, marginTop:5, fontWeight:'300'}}>{propOfService['Specialty']['name']}</Text>
                         <View style={{flexDirection:'row', marginTop:20}}>
                             <MaterialIcons name="attach-money" size={15} color="black" />
@@ -161,7 +124,6 @@ const DateAndTime = () => {
   const getClinicByDoctor = async (id) => {
     try {
       const response = await instance.get(`/clinic/${id}`);
-      console.log("ok")
       setClinic(response);
     } catch (error) {
       console.error("Error fetching doctor:", error);
@@ -171,9 +133,6 @@ const DateAndTime = () => {
   useEffect(() => {
     getClinicByDoctor(id);
   }, [id]);
-
-
-
 
   var numDoctor = doctor.length
   var listOfDoctor = []
@@ -193,7 +152,6 @@ const DateAndTime = () => {
     )
   }
 
-
   }
 
   return(
@@ -207,10 +165,9 @@ const DateAndTime = () => {
   
 }
 
-const HourComponent = ({disable, date, doctorId}) => {
+const HourComponent = ({disable, date_fe, date_be, doctorId, modalVisible, setModalVisiable, clinic}) => {
 
   const [selectedValue, setSelectedValue] = useState('')
-
   // const disable = [true, false, true]
   const handleOnPress = (value) => {
     console.log(value)
@@ -219,19 +176,6 @@ const HourComponent = ({disable, date, doctorId}) => {
   const amHour = ["07:00", "07:30", "08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00"]
   const pmHour = ["14:00", "14:30", "15:00", "15:30", "16:00","16:30", "17:00"]
 
-  const createOrder = async() => {
-    try {
-        const response = await instance.post('/order',{
-            customerId: "1",
-            doctorId : doctorId,
-            date_time : date,
-            hour_time: selectedValue
-        })
-    }
-    catch (error) {
-        console.error("Error fetching order time:", error);
-    }
-}
 
 
   return(
@@ -302,10 +246,13 @@ const HourComponent = ({disable, date, doctorId}) => {
         </TouchableOpacity>
       ))}
     </View>
-    <Link href={`../confirm`} asChild>
+    <Link href={{
+                    pathname: "../[orderId]",
+                    params: { doctorId: doctorId, date_fe: date_fe, date_be:date_be, time: selectedValue, customerId: "1", clinic_id: clinic}
+                    }} asChild>
       <TouchableOpacity
                 style={styles.box}
-                onPress={() => createOrder()}>
+                onPress={() => setModalVisiable(!modalVisible)}>
                 <Text>Xac nhan</Text>
             </TouchableOpacity>
         </Link>
@@ -315,7 +262,7 @@ const HourComponent = ({disable, date, doctorId}) => {
 }
 
 
-const DateComponent = () => {
+const DateComponent = ({modalVisible, setModalVisiable, clinic}) => {
   const { id } = useLocalSearchParams();
   const doctorId = id
   console.log("id" + doctorId)
@@ -323,6 +270,7 @@ const DateComponent = () => {
   const [disable, setDisable] = useState([])
   const today_day = new Date();
   const [selectedValue, setSelectedValue] = useState(today_day.toISOString().slice(0,10) + "T00:00:00.000Z");
+  const [date, setDate] = useState(today_day.toISOString().slice(0,10));
   const [test, setTest] = useState([]); // Use state to hold the test array
 
   let listOfDay = ["Chủ nhật", "Thứ hai", "Thứ ba", "Thứ tư", "Thứ 5", "Thứ 6", "Thứ 7"];
@@ -369,30 +317,39 @@ const DateComponent = () => {
 
     getHourByDate(); // Call the function to fetch order time
 }, [selectedValue]); // Empty dependency array to ensure the effect runs only once on component mount
-
-
-  console.log("test_line53" + test); // Log the test array after it's updated
-  console.log("disable" + disable)
-
+  const handleOnPress = (value) => {
+    setSelectedValue(value)
+    const date_ = value.slice(0,10)
+    setDate(date_)
+  }
   return (
-      <View>
-          {listOfTomorrow.map((value, index) => (
-              <TouchableOpacity
-                  key={value}
-                  // disabled={test.includes(value)}
-                  onPress={() => setSelectedValue(value)}>
-                  <Text 
-                      style={[selectedValue === value && styles.select,
-                              test.includes(value) && styles.check]}>
-                          {listOfDayShow[index]}</Text>
-              </TouchableOpacity>
-          ))}
+    <View>
+      {listOfTomorrow.map((value, index) => (
+        <TouchableOpacity
+          key={value}
+          onPress={() => handleOnPress(value)}
+        >
+          <Text
+            style={[
+              selectedValue === value && styles.select,
+              test.includes(value) && styles.check,
+            ]}
+          >
+            {listOfDayShow[index]}
+          </Text>
+        </TouchableOpacity>
+      ))}
 
-          <Text>{test[1]}</Text>
-
-
-          <HourComponent disable={disable} date = {selectedValue} doctorId={doctorId}></HourComponent>
-      </View>
+      <HourComponent
+        disable={disable}
+        date_fe={date}
+        date_be = {selectedValue}
+        doctorId={doctorId}
+        modalVisible={modalVisible}
+        setModalVisiable={setModalVisiable}
+        clinic={clinic}
+      ></HourComponent>
+    </View>
   );
 };
 

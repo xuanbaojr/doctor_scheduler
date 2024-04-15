@@ -38,25 +38,26 @@ model Order {
   data_time DateTime? @db.Timestamptz(6)
   date_time DateTime? @db.Date
   hour_time String?
+  clinicId  String?
   custom    Customer  @relation("customerOrder", fields: [customId], references: [id])
   doctor    Doctor    @relation("doctorOrdered", fields: [doctorId], references: [id])
+  Clinic    Clinic?   @relation(fields: [clinicId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "public_Order_clinicId_fkey")
 }
 
 model Thread {
-  id        String    @id @default(uuid())
-  customId  String?
-  nurfeId   String?
-  image     String?
-  createAt  DateTime  @default(now())
-  content   String
-  gender    String
-  major     String[]
-  age       String
-  puImage   Boolean?
-  custom    Customer? @relation("customerThread", fields: [customId], references: [id])
-  comment   Thread    @relation("comment", fields: [id], references: [id])
-  commentId Thread?   @relation("comment")
-  nurfe     Nurse?    @relation("nurseThread", fields: [nurfeId], references: [id])
+  id       String    @id @default(uuid())
+  customId String?
+  image    String?
+  createAt DateTime  @default(now())
+  content  String
+  gender   String
+  major    String[]
+  age      String
+  puImage  Boolean?
+  nurseId  String?
+  Comment  Comment[]
+  custom   Customer? @relation("customerThread", fields: [customId], references: [id])
+  Nurse    Nurse?    @relation(fields: [nurseId], references: [id])
 }
 
 model Profile {
@@ -87,6 +88,7 @@ model Customer {
   sex        Sex
   address    String
   userId     String
+  Comment    Comment[]
   User       User      @relation(fields: [userId], references: [id])
   listOrder  Order[]   @relation("customerOrder")
   listFile   Profile[] @relation("customerProfile")
@@ -94,10 +96,11 @@ model Customer {
 }
 
 model Nurse {
-  id         String   @id @default(uuid())
-  userId     String   @unique
-  User       User     @relation(fields: [userId], references: [id])
-  listThread Thread[] @relation("nurseThread")
+  id      String    @id @default(uuid())
+  userId  String    @unique
+  Comment Comment[]
+  User    User      @relation(fields: [userId], references: [id])
+  Thread  Thread[]
 }
 
 model Specialty {
@@ -115,6 +118,7 @@ model Clinic {
   price        Int
   Doctor       Doctor    @relation(fields: [doctor_id], references: [id], onDelete: Cascade, map: "_DoctorToSpecialty_A_fkey")
   Specialty    Specialty @relation(fields: [specialty_id], references: [id], onDelete: Cascade, map: "_DoctorToSpecialty_B_fkey")
+  Order        Order[]
 
   @@unique([id, doctor_id], map: "_DoctorToSpecialty_AB_unique")
   @@index([doctor_id], map: "_DoctorToSpecialty_B_index")
@@ -133,6 +137,19 @@ model chat {
   receiver   String?
   content    String?
   member     String[]
+}
+
+model Comment {
+  id         String    @id
+  threadId   String?
+  nurseId    String?
+  customerId String?
+  content    String
+  createAt   DateTime  @default(now())
+  name       String
+  Customer   Customer? @relation(fields: [customerId], references: [id])
+  Nurse      Nurse?    @relation(fields: [nurseId], references: [id])
+  Thread     Thread?   @relation(fields: [threadId], references: [id])
 }
 
 enum Sex {
