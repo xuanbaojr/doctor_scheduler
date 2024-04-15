@@ -1,35 +1,42 @@
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native'
-import React from 'react'
-import { Link, Stack, useRouter } from 'expo-router'
+import { View,  ScrollView } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import Post from '@/components/share/Post'
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialTopTabs } from './_layout';
 import { tabTitle } from '@/constant/screen/threads';
+import instance from '@/utils/axios';
+import { ConvertDataToThreadType, ThreadDataType } from '@/components/pageThread/ThreadDataType';
 
 const advise = () => {
-  
+  const [listTheard, setListThreard] = useState<ThreadDataType[]>([])
+  const [comment, setComment] = useState<string>("")
+
+  const getallThrealForUser = async () => {
+    try {
+        const data : any = await instance.get(`/threadAll`)
+        const test : ThreadDataType[] = ConvertDataToThreadType(data)
+        setListThreard(test)
+        setComment(test[0].comment[0].content)
+        console.log(test[0].comment[0].content)
+    }catch (e) {
+        console.log(e)
+    }
+}
+
+useEffect(() => {
+  getallThrealForUser()
+}, [])
 
   return (
     <>
     <MaterialTopTabs.Screen options={{
-      title : tabTitle.communicate
+      title : tabTitle.communicate,
     }}/>
-    <View className='h-full w-full bg-bg p-0.5'>
-      <Link href={'/(adviceDoctor)/thread'}>
-      <Text>thread</Text>
-      </Link>
-        
-      <ScrollView className="w-full h-full px-3 pt-2 ">
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-
-
+    <View className='h-full w-full bg-background '>
+      <ScrollView className="w-full h-full">
+        {listTheard.map((thread) => (
+          <Post key={thread.id} thread={thread} comment={comment}/>
+        ))}
       </ScrollView>
-
-        
-
     </View>
     </>
     

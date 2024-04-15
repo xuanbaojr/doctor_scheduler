@@ -1,6 +1,7 @@
 import { Text, View } from "react-native"
 import ThreadAnser from "./ThreadAnser"
 import { ThreadTitle } from "@/constant/screen/threads"
+import { Comment } from "./ThreadDataType"
 
 interface anser {
     name : string,
@@ -9,17 +10,19 @@ interface anser {
 }
 
 interface Props {
-    anser : anser[]
+    anser : Comment[] 
 }
 
 const ThreadAnserBox = ({anser} : Props) => {
+
+   
     return (
         <>
         <View className="w-full px-3 py-1 bg-anserBox">
             {/* header */}
             <View className="py-3">
                 <Text className="font-medium text-base">
-                    {ThreadTitle.anser}
+                    {ThreadTitle.anser + " "}
                 </Text>
 
             </View>
@@ -28,12 +31,11 @@ const ThreadAnserBox = ({anser} : Props) => {
                 <ThreadAnser 
                 key={index}
                 name={i.name}
-                date={i.date}
-                title={i.title}
+                date={i.createAt}
+                title={i.content}
                 />
             ))
             }
-
         </View>
         </>
     )

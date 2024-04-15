@@ -16,24 +16,18 @@ class test {
     async createNewThread (req, res) {
         try {
             const {
-                gender,
-                age, 
-                puImage, 
-                image,
-                major,
-                title,
+                id
             } = req.body
-            const data = await prisma.thread.create({
-                data : {
-                    sex: gender,
-                    age : age,
-                    name : "asd",
-                    image : image,
-                    content : title,
-                }
+            const data = await prisma.thread.findFirstOrThrow({
+                where : {
+                    typeThread : 'Thread'
+                   },
+                   include : {
+                    comment : true
+                   }
             })
-            console.log(req.body);
-            res.send(req.body);
+            console.log(data);
+            res.send(data);
         } catch (error ) {
             console.log(error);
             res.status(500).json({

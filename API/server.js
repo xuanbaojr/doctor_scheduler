@@ -10,12 +10,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors())
 
-
-
 routesInit(app)
 
-
-var server = app.listen(3000, "192.168.1.80", { cors: true }, listen);
+var server = app.listen(3000, { cors: true }, listen);
 
 
 function listen() {

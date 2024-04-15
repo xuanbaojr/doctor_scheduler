@@ -51,6 +51,7 @@ class scheduleController {
                 },
             })
             console.log(data)
+            console.log("asd")
             res.send(data)
         } catch (error) {
             console.log(error)

@@ -43,20 +43,32 @@ model Order {
 }
 
 model Thread {
-  id        String    @id @default(uuid())
-  customId  String?
-  nurfeId   String?
-  image     String?
-  createAt  DateTime  @default(now())
-  content   String
-  gender    String
-  major     String[]
-  age       String
-  puImage   Boolean?
-  custom    Customer? @relation("customerThread", fields: [customId], references: [id])
-  comment   Thread    @relation("comment", fields: [id], references: [id])
-  commentId Thread?   @relation("comment")
-  nurfe     Nurse?    @relation("nurseThread", fields: [nurfeId], references: [id])
+  id       String    @id @default(uuid())
+  customId String?
+  image    String?
+  createAt DateTime  @default(now())
+  content  String
+  gender   String
+  major    String[]
+  age      String
+  puImage  Boolean?
+  nurseId  String?
+  comment  Comment[] @relation("threadComment")
+  custom   Customer? @relation("customerThread", fields: [customId], references: [id])
+  nurse    Nurse?    @relation("nurseThread", fields: [nurseId], references: [id])
+}
+
+model Comment {
+  id         String    @id @default(uuid())
+  threadId   String?
+  nurseId    String?
+  customerId String?
+  content    String
+  createAt   DateTime  @default(now())
+  name       String
+  customer   Customer? @relation(fields: [customerId], references: [id])
+  nurse      Nurse?    @relation(fields: [nurseId], references: [id])
+  thread     Thread?   @relation("threadComment", fields: [threadId], references: [id])
 }
 
 model Profile {
@@ -80,24 +92,26 @@ model Examination {
 }
 
 model Customer {
-  id         String    @id @default(uuid())
-  firstName  String
-  lastName   String
-  age        String
-  sex        Sex
-  address    String
-  userId     String
-  User       User      @relation(fields: [userId], references: [id])
-  listOrder  Order[]   @relation("customerOrder")
-  listFile   Profile[] @relation("customerProfile")
-  listThread Thread[]  @relation("customerThread")
+  id          String    @id @default(uuid())
+  firstName   String
+  lastName    String
+  age         String
+  sex         Sex
+  address     String
+  userId      String
+  listComment Comment[]
+  User        User      @relation(fields: [userId], references: [id])
+  listOrder   Order[]   @relation("customerOrder")
+  listFile    Profile[] @relation("customerProfile")
+  listThread  Thread[]  @relation("customerThread")
 }
 
 model Nurse {
-  id         String   @id @default(uuid())
-  userId     String   @unique
-  User       User     @relation(fields: [userId], references: [id])
-  listThread Thread[] @relation("nurseThread")
+  id          String    @id @default(uuid())
+  userId      String    @unique
+  listComment Comment[]
+  User        User      @relation(fields: [userId], references: [id])
+  listThread  Thread[]  @relation("nurseThread")
 }
 
 model Specialty {

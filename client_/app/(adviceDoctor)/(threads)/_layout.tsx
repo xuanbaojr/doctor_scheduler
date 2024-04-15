@@ -46,16 +46,16 @@ const Layout = () => {
             />
 
         </MaterialTopTabs>
-        <Link href={"/(adviceDoctor)/post"} className='bg-post-bt flex-col items-center absolute rounded-l-lg right-0 z-10 bottom-1/4 p-0.5'>
+        <Link href={"/(adviceDoctor)/post"} className=' flex-col bg-question items-center absolute rounded-l-lg right-0 z-10 bottom-1/4 p-0.5'>
           <TouchableOpacity
             className='z-20 flel-col items-center relative'
             onPress={onQuestion}
           >
-            <MaterialCommunityIcons name="account-question-outline" size={24} color="black" />
-            <Text>
+            <MaterialCommunityIcons name="account-question-outline" size={24} color="white" />
+            <Text className="text-white">
               {questionTitle.title1}
             </Text>
-            <Text>
+            <Text className="text-white">
               {questionTitle.title2}
             </Text>
           </TouchableOpacity>
