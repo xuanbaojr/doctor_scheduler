@@ -50,6 +50,7 @@ const ChatComponent = () => {
                 setCheckUser(prevList => [...prevList, data[data.length -1].sender]);        
         
             }
+            console.log("update database")
 
         } catch (error) {
             console.error("Error fetching chat:", error);

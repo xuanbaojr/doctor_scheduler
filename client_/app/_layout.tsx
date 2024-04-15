@@ -39,7 +39,32 @@ const InitialLayout = () => {
     }
   }, [isSignedIn]);
 
-  return <Slot />;
+  return (<Stack>
+    <Stack.Screen 
+      name='(tabs)' 
+      options={{
+        headerShown: false,
+        
+      }}/>
+      <Stack.Screen 
+      name='(adviceDoctor)'
+      options={{
+        headerShown : false,
+      }}
+      />
+      <Stack.Screen 
+      name='scheduleDoctor'
+      options={{
+        headerShown : false,
+      }}
+      />
+      <Stack.Screen 
+      name='chat'
+      options={{
+        headerShown : false,
+      }}
+      />
+  </Stack>);
 };
 
 const RootLayoutNav = () => {

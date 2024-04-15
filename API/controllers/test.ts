@@ -18,16 +18,16 @@ class test {
             const {
                 id
             } = req.body
-            const data = await prisma.thread.findFirstOrThrow({
-                where : {
-                    typeThread : 'Thread'
-                   },
-                   include : {
-                    comment : true
-                   }
-            })
-            console.log(data);
-            res.send(data);
+            // const data = await prisma.thread.findFirstOrThrow({
+            //     where : {
+            //         typeThread : 'Thread'
+            //        },
+            //        include : {
+            //         comment : true
+            //        }
+            // })
+            // console.log(data);
+            // res.send(data);
         } catch (error ) {
             console.log(error);
             res.status(500).json({
