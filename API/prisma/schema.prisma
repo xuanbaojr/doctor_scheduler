@@ -38,8 +38,10 @@ model Order {
   data_time DateTime? @db.Timestamptz(6)
   date_time DateTime? @db.Date
   hour_time String?
+  clinicId  String?
   custom    Customer  @relation("customerOrder", fields: [customId], references: [id])
   doctor    Doctor    @relation("doctorOrdered", fields: [doctorId], references: [id])
+  Clinic    Clinic?   @relation(fields: [clinicId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "public_Order_clinicId_fkey")
 }
 
 model Thread {
@@ -129,6 +131,7 @@ model Clinic {
   price        Int
   Doctor       Doctor    @relation(fields: [doctor_id], references: [id], onDelete: Cascade, map: "_DoctorToSpecialty_A_fkey")
   Specialty    Specialty @relation(fields: [specialty_id], references: [id], onDelete: Cascade, map: "_DoctorToSpecialty_B_fkey")
+  Order        Order[]
 
   @@unique([id, doctor_id], map: "_DoctorToSpecialty_AB_unique")
   @@index([doctor_id], map: "_DoctorToSpecialty_B_index")
@@ -147,6 +150,19 @@ model chat {
   receiver   String?
   content    String?
   member     String[]
+}
+
+model Comment {
+  id         String    @id
+  threadId   String?
+  nurseId    String?
+  customerId String?
+  content    String
+  createAt   DateTime  @default(now())
+  name       String
+  Customer   Customer? @relation(fields: [customerId], references: [id])
+  Nurse      Nurse?    @relation(fields: [nurseId], references: [id])
+  Thread     Thread?   @relation(fields: [threadId], references: [id])
 }
 
 enum Sex {
