@@ -8,120 +8,6 @@ datasource db {
   directUrl = "postgres://postgres.snwjzonusggqqymhbluj:RZCjy358US7E@aws-0-ap-southeast-1.pooler.supabase.com:5432/postgres"
 }
 
-model User {
-  id       String     @id @default(uuid())
-  email    String     @unique
-  phone    String
-  role     Role
-  custumer Customer[]
-  doctor   Doctor?
-  nurse    Nurse?
-}
-
-model Doctor {
-  id        String   @id @default(uuid())
-  name      String
-  userId    String   @unique
-  clinics   Clinic[]
-  user      User     @relation(fields: [userId], references: [id])
-  listOrder Order[]  @relation("doctorOrdered")
-}
-
-model Order {
-  id        String    @id @default(uuid())
-  createAt  DateTime  @default(now())
-  comment   String
-  done      Boolean
-  customId  String
-  doctorId  String
-  time      Int[]     @db.SmallInt
-  data_time DateTime? @db.Timestamptz(6)
-  date_time DateTime? @db.Date
-  hour_time String?
-  clinicId  String?
-  custom    Customer  @relation("customerOrder", fields: [customId], references: [id])
-  doctor    Doctor    @relation("doctorOrdered", fields: [doctorId], references: [id])
-  Clinic    Clinic?   @relation(fields: [clinicId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "public_Order_clinicId_fkey")
-}
-
-model Thread {
-  id       String    @id @default(uuid())
-  customId String?
-  image    String?
-  createAt DateTime  @default(now())
-  content  String
-  gender   String
-  major    String[]
-  age      String
-  puImage  Boolean?
-  nurseId  String?
-  comment  Comment[] @relation("threadComment")
-  custom   Customer? @relation("customerThread", fields: [customId], references: [id])
-  nurse    Nurse?    @relation("nurseThread", fields: [nurseId], references: [id])
-}
-
-model Comment {
-  id         String    @id @default(uuid())
-  threadId   String?
-  nurseId    String?
-  customerId String?
-  content    String
-  createAt   DateTime  @default(now())
-  name       String
-  customer   Customer? @relation(fields: [customerId], references: [id])
-  nurse      Nurse?    @relation(fields: [nurseId], references: [id])
-  thread     Thread?   @relation("threadComment", fields: [threadId], references: [id])
-}
-
-model Profile {
-  id              String        @id @default(uuid())
-  customId        String
-  createAt        DateTime      @default(now())
-  title           String
-  recomment       String[]
-  content         String
-  listExamination Examination[] @relation("profile")
-  customer        Customer      @relation("customerProfile", fields: [customId], references: [id])
-}
-
-model Examination {
-  id        String   @id @default(uuid())
-  createAt  DateTime @default(now())
-  iamge     String[]
-  title     String
-  profileId String
-  profile   Profile  @relation("profile", fields: [profileId], references: [id])
-}
-
-model Customer {
-  id          String    @id @default(uuid())
-  firstName   String
-  lastName    String
-  age         String
-  sex         Sex
-  address     String
-  userId      String
-  listComment Comment[]
-  User        User      @relation(fields: [userId], references: [id])
-  listOrder   Order[]   @relation("customerOrder")
-  listFile    Profile[] @relation("customerProfile")
-  listThread  Thread[]  @relation("customerThread")
-}
-
-model Nurse {
-  id          String    @id @default(uuid())
-  userId      String    @unique
-  listComment Comment[]
-  User        User      @relation(fields: [userId], references: [id])
-  listThread  Thread[]  @relation("nurseThread")
-}
-
-model Specialty {
-  id      String   @id @default(uuid())
-  name    String?  @unique
-  clinics Clinic[]
-}
-
 model Clinic {
   id           String    @id
   doctor_id    String
@@ -137,21 +23,6 @@ model Clinic {
   @@index([doctor_id], map: "_DoctorToSpecialty_B_index")
 }
 
-/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
-model todos {
-  id   Int     @id @default(autoincrement())
-  task String?
-}
-
-model chat {
-  id         String   @id(map: "Chat_pkey") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  created_at DateTime @default(now()) @db.Timestamptz(6)
-  sender     String?
-  receiver   String?
-  content    String?
-  member     String[]
-}
-
 model Comment {
   id         String    @id
   threadId   String?
@@ -165,14 +36,129 @@ model Comment {
   Thread     Thread?   @relation(fields: [threadId], references: [id])
 }
 
-enum Sex {
-  woman
-  man
-  not
+model Customer {
+  id        String    @id
+  firstName String
+  lastName  String
+  age       String
+  sex       Sex
+  address   String
+  userId    String
+  Comment   Comment[]
+  User      User      @relation(fields: [userId], references: [id])
+  Order     Order[]
+  Profile   Profile[]
+  Thread    Thread[]
+}
+
+model Doctor {
+  id     String   @id
+  name   String
+  userId String   @unique
+  Clinic Clinic[]
+  User   User     @relation(fields: [userId], references: [id])
+  Order  Order[]
+}
+
+model Examination {
+  id        String   @id
+  createAt  DateTime @default(now())
+  iamge     String[]
+  title     String
+  profileId String
+  Profile   Profile  @relation(fields: [profileId], references: [id])
+}
+
+model Nurse {
+  id      String    @id
+  userId  String    @unique
+  Comment Comment[]
+  User    User      @relation(fields: [userId], references: [id])
+  Thread  Thread[]
+}
+
+model Order {
+  id        String    @id
+  createAt  DateTime  @default(now())
+  comment   String
+  done      Boolean
+  customId  String
+  doctorId  String
+  time      Int[]     @db.SmallInt
+  data_time DateTime? @db.Timestamptz(6)
+  date_time DateTime? @db.Date
+  hour_time String?
+  clinicId  String?
+  Customer  Customer  @relation(fields: [customId], references: [id])
+  Doctor    Doctor    @relation(fields: [doctorId], references: [id])
+  Clinic    Clinic?   @relation(fields: [clinicId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "public_Order_clinicId_fkey")
+}
+
+model Profile {
+  id          String        @id
+  customId    String
+  createAt    DateTime      @default(now())
+  title       String
+  recomment   String[]
+  content     String
+  Examination Examination[]
+  Customer    Customer      @relation(fields: [customId], references: [id])
+}
+
+model Specialty {
+  id     String   @id
+  name   String?  @unique
+  Clinic Clinic[]
+}
+
+model Thread {
+  id       String    @id
+  customId String?
+  image    String?
+  createAt DateTime  @default(now())
+  content  String
+  gender   String
+  major    String[]
+  age      String
+  puImage  Boolean?
+  nurseId  String?
+  Comment  Comment[]
+  Customer Customer? @relation(fields: [customId], references: [id])
+  Nurse    Nurse?    @relation(fields: [nurseId], references: [id])
+}
+
+model User {
+  id       String     @id
+  email    String     @unique
+  phone    String
+  role     Role
+  Customer Customer[]
+  Doctor   Doctor?
+  Nurse    Nurse?
+}
+
+model chat {
+  id         String   @id(map: "Chat_pkey") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  sender     String?
+  receiver   String?
+  content    String?
+  member     String[]
+}
+
+model todos {
+  id   Int     @id @default(autoincrement())
+  task String?
 }
 
 enum Role {
   Doctor
   Customer
   Nurse
+}
+
+enum Sex {
+  woman
+  man
+  not
 }
