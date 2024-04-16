@@ -122,19 +122,121 @@ model Thread {
   age      String
   puImage  Boolean?
   nurseId  String?
+<<<<<<<<< Temporary merge branch 1
   Comment  Comment[]
-  Customer Customer? @relation(fields: [customId], references: [id])
+  custom   Customer? @relation("customerThread", fields: [customId], references: [id])
   Nurse    Nurse?    @relation(fields: [nurseId], references: [id])
+=========
+  comment  Comment[] @relation("threadComment")
+  custom   Customer? @relation("customerThread", fields: [customId], references: [id])
+  nurse    Nurse?    @relation("nurseThread", fields: [nurseId], references: [id])
 }
 
-model User {
-  id       String     @id
-  email    String     @unique
-  phone    String
-  role     Role
-  Customer Customer[]
-  Doctor   Doctor?
-  Nurse    Nurse?
+model Comment {
+  id         String    @id @default(uuid())
+  threadId   String?
+  nurseId    String?
+  customerId String?
+  content    String
+  createAt   DateTime  @default(now())
+  name       String
+  customer   Customer? @relation(fields: [customerId], references: [id])
+  nurse      Nurse?    @relation(fields: [nurseId], references: [id])
+  thread     Thread?   @relation("threadComment", fields: [threadId], references: [id])
+>>>>>>>>> Temporary merge branch 2
+}
+
+model Profile {
+  id              String        @id @default(uuid())
+  customId        String
+  createAt        DateTime      @default(now())
+  title           String
+  recomment       String[]
+  content         String
+  listExamination Examination[] @relation("profile")
+  customer        Customer      @relation("customerProfile", fields: [customId], references: [id])
+}
+
+model Examination {
+  id        String   @id @default(uuid())
+  createAt  DateTime @default(now())
+  iamge     String[]
+  title     String
+  profileId String
+  profile   Profile  @relation("profile", fields: [profileId], references: [id])
+}
+
+model Customer {
+<<<<<<<<< Temporary merge branch 1
+  id         String    @id @default(uuid())
+  firstName  String
+  lastName   String
+  age        String
+  sex        Sex
+  address    String
+  userId     String
+  Comment    Comment[]
+  User       User      @relation(fields: [userId], references: [id])
+  listOrder  Order[]   @relation("customerOrder")
+  listFile   Profile[] @relation("customerProfile")
+  listThread Thread[]  @relation("customerThread")
+}
+
+model Nurse {
+  id      String    @id @default(uuid())
+  userId  String    @unique
+  Comment Comment[]
+  User    User      @relation(fields: [userId], references: [id])
+  Thread  Thread[]
+=========
+  id          String    @id @default(uuid())
+  firstName   String
+  lastName    String
+  age         String
+  sex         Sex
+  address     String
+  userId      String
+  listComment Comment[]
+  User        User      @relation(fields: [userId], references: [id])
+  listOrder   Order[]   @relation("customerOrder")
+  listFile    Profile[] @relation("customerProfile")
+  listThread  Thread[]  @relation("customerThread")
+}
+
+model Nurse {
+  id          String    @id @default(uuid())
+  userId      String    @unique
+  listComment Comment[]
+  User        User      @relation(fields: [userId], references: [id])
+  listThread  Thread[]  @relation("nurseThread")
+>>>>>>>>> Temporary merge branch 2
+}
+
+model Specialty {
+  id      String   @id @default(uuid())
+  name    String?  @unique
+  clinics Clinic[]
+}
+
+model Clinic {
+  id           String    @id
+  doctor_id    String
+  specialty_id String
+  name         String?
+  major        String
+  price        Int
+  Doctor       Doctor    @relation(fields: [doctor_id], references: [id], onDelete: Cascade, map: "_DoctorToSpecialty_A_fkey")
+  Specialty    Specialty @relation(fields: [specialty_id], references: [id], onDelete: Cascade, map: "_DoctorToSpecialty_B_fkey")
+  Order        Order[]
+
+  @@unique([id, doctor_id], map: "_DoctorToSpecialty_AB_unique")
+  @@index([doctor_id], map: "_DoctorToSpecialty_B_index")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model todos {
+  id   Int     @id @default(autoincrement())
+  task String?
 }
 
 model chat {
@@ -146,9 +248,23 @@ model chat {
   member     String[]
 }
 
-model todos {
-  id   Int     @id @default(autoincrement())
-  task String?
+model Comment {
+  id         String    @id
+  threadId   String?
+  nurseId    String?
+  customerId String?
+  content    String
+  createAt   DateTime  @default(now())
+  name       String
+  Customer   Customer? @relation(fields: [customerId], references: [id])
+  Nurse      Nurse?    @relation(fields: [nurseId], references: [id])
+  Thread     Thread?   @relation(fields: [threadId], references: [id])
+}
+
+enum Sex {
+  woman
+  man
+  not
 }
 
 enum Role {

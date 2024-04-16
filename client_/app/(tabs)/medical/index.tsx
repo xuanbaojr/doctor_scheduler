@@ -1,12 +1,22 @@
-import { View, Text } from 'react-native'
+import { View, Text, ScrollView, StyleSheet } from 'react-native'
 import React from 'react'
+import { Link, Stack, } from 'expo-router'
+import MedicalLayout from '@/components/patientRecord/MedicalLayout' 
+import InforDoctor from '@/components/card/InforDoctor'
+import PatientProfile from '@/components/patientRecord/PatientProfile'
+
 
 const MedicalPage = () => {
   return (
-    <View className="flex-1 items-center justify-center bg-white">
-      <Text>Medical Page</Text>
+    <>
+    <Stack.Screen  options={{
+      headerShown : true,
+    }}/>
+    <View className="flex-col justify-between h-full bg-bg">
+      <PatientProfile />
     </View>
-  )
-}
 
+    </>
+  )
+  }
 export default MedicalPage

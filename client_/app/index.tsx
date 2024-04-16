@@ -1,12 +1,9 @@
-import React from 'react'
-import { Link, Redirect, Stack, } from 'expo-router'
+import { View, Text } from "react-native";
+import React from "react";
+import { Link, Stack, Redirect } from "expo-router";
 
-const HomePage = () => {
-  return (
-    <>
-    <Redirect  href={"/(tabs)/home"}/>
-    </>
-  )
-}
+const StartPage = () => {
+  return <Redirect href={"/(public)/login"} />;
+};
 
-export default HomePage
+export default StartPage;
