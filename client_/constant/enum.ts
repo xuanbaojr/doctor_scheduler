@@ -10,3 +10,4 @@ export enum Gender {
     man = "man",
     not = "not"
 }
+

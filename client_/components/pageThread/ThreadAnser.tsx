@@ -1,9 +1,10 @@
 import { ThreadTitle } from "@/constant/screen/threads"
 import { Text, View } from "react-native"
+import { convertCreateAt } from "./ThreadDataType"
 
 interface Props {
     name : string,
-    date : string,
+    date : Date,
     title : string,
 }
 
@@ -19,7 +20,7 @@ const ThreadAnser = ({name, date, title} : Props) => {
                     </View>
                     <View className="flex-1">
                        <Text className="text-hospital font-medium text-base">{name}</Text>
-                       <Text className="text-md font-light italic">{date}</Text>
+                       <Text className="text-md font-light italic">{convertCreateAt(date)}</Text>
                     </View>
                 </View>
 

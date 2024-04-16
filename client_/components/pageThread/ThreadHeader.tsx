@@ -1,15 +1,20 @@
 import { Text, View } from "react-native"
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from "react-native-reanimated/lib/typescript/Animated";
+import { convertCreateAt, convertName } from "./ThreadDataType";
 
 interface Props {
-    name : string,
-    date : string,
-    title : string,
-    major : string[],
+    gender : string,
+    age : string,
+    date : Date ,
+    title : string ,
+    major : string[] ,
+    image : string 
 }
 
-const ThreadHeader = ({name, date, title,major} : Props) => {
+const ThreadHeader = ({gender, age, date, title,major, image} : Props) => {
+    
+
     return (
     <>
     <View className="w-full bg-threadbg px-3 py-2 flex-col ">
@@ -21,8 +26,8 @@ const ThreadHeader = ({name, date, title,major} : Props) => {
                 </View>
             </View>
             <View className="flex-col flex-1">
-                <Text className="text-sm font-semibold">{name}</Text>
-                <Text className="text-sm font-light italic">{date}</Text>
+                <Text className="text-sm font-semibold">{convertName(gender, age)}</Text>
+                <Text className="text-sm font-light italic">{convertCreateAt(date)}</Text>
             </View>
         </View>
 
@@ -37,12 +42,13 @@ const ThreadHeader = ({name, date, title,major} : Props) => {
 
         <View className="h-30 w-full ">
             {/* <Image source={uri} */}
+            {/* {image && <Image source={image} />} */}
 
         </View>
 
         {/* list major  */}
         <View className="flex-row flex-wrap">
-            {major.map((i) => (
+            {major?.map((i) => (
             <View key={i} className='flex rounded-md justify-center items-center bg-majorbg p-1.5 mx-1'>
                 <Text className='text-sm'>{i}</Text>
             </View> 

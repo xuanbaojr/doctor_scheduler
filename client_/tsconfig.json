@@ -8,8 +8,10 @@
     },
     "sourceMap": true,
     "outDir": "dist",
-    "lib": ["ESNext"],
-    "esModuleInterop": true,
+    "lib": [
+      "ESNext"
+    ],
+    "esModuleInterop": true
   },
   "extends": "expo/tsconfig.base",
   "include": [

@@ -2,7 +2,13 @@ import axios from 'axios';
 
 const instance = axios.create({
 //  baseURL: 'http://10.30.15.136:3000'
-  baseURL: 'http://192.168.1.4:3000'
+  baseURL: 'http://192.168.1.80:3000'
+
+ //ktx
+  // baseURL: 'http://192.168.1.80:3000' 
+
+  // quyen 
+  // baseURL: "http://192.168.1.80:3000" 
 
 
 });

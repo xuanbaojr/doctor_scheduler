@@ -4,21 +4,19 @@ const avatar = require("@/assets/favicon.png")
 
 
 interface Props {
-    conment : string,
-    image : string,
-
+    comment : string,
+    // image : string,
 }
 
-const CommentDoctor = () => {
+const CommentDoctor = ({comment} : Props ) => {
   return (
-    <View className='flex-row items-center justify-between p-1 mb-1 rounded-xl bg-avatar-2'>
+    <View className='flex-row items-center justify-between p-1 mb-1  bg-comment'>
         <View className='w-8 h-8 rounded-full ml-1 mr-1 flex items-center justify-center bg-blue-1'>
             {/* <Image source={avatar}/> */}
         </View>
-        <View className='text-sm flex-1 h-12 ml-0.5 p-0.5 rounded-xl bg-blue-1'>
+        <View className='text-sm flex-1 h-12 ml-0.5 p-0.5 '>
             <Text className='ml-0.5'>
-              aaaaaaaaaaaaaaaaaaaaaaaaaaaa
-              aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+              {comment}
             </Text>
         </View>
 

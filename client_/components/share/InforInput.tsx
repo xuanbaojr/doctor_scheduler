@@ -48,7 +48,7 @@ const InforInput = () => {
         title : title,
       })
     }
-
+    
   return (
     <>
     <MyContext.Provider value={{ myFunction, updateMyFunction }}>
