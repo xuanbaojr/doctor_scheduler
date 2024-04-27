@@ -1,4 +1,4 @@
-import { Button, TextInput, View, StyleSheet, Alert } from "react-native";
+import { Button, TextInput, View, StyleSheet } from "react-native";
 import { useSignUp } from "@clerk/clerk-expo";
 import Spinner from "react-native-loading-spinner-overlay";
 import { useState } from "react";
@@ -32,7 +32,7 @@ const register = () => {
       // change the UI to verify the email address
       setPendingVerification(true);
     } catch (err: any) {
-      Alert.alert(err.errors[0].message);
+      alert(err.errors[0].message);
     } finally {
       setLoading(false);
     }
@@ -51,7 +51,7 @@ const register = () => {
 
       await setActive({ session: completeSignUp.createdSessionId });
     } catch (err: any) {
-      Alert.alert(err.errors[0].message);
+      alert(err.errors[0].message);
     } finally {
       setLoading(false);
     }
@@ -66,24 +66,26 @@ const register = () => {
         <>
           <TextInput
             autoCapitalize="none"
-            placeholder="example@gmail.com"
+            placeholder="Email"
             value={emailAddress}
             onChangeText={setEmailAddress}
             style={styles.inputField}
           />
           <TextInput
-            placeholder="password"
+            placeholder="Mật khẩu"
             value={password}
             onChangeText={setPassword}
             secureTextEntry
             style={styles.inputField}
           />
 
-          <Button
-            onPress={onSignUpPress}
-            title="Sign up"
-            color={"#6c47ff"}
-          ></Button>
+          <View style={styles.button}>
+            <Button
+              onPress={onSignUpPress}
+              title="Đăng ký"
+              color={"#2E82FF"}
+            ></Button>
+          </View>
         </>
       )}
 
@@ -92,16 +94,18 @@ const register = () => {
           <View>
             <TextInput
               value={code}
-              placeholder="Code..."
+              placeholder="Mã xác thực..."
               style={styles.inputField}
               onChangeText={setCode}
             />
           </View>
-          <Button
-            onPress={onPressVerify}
-            title="Verify Email"
-            color={"#6c47ff"}
-          ></Button>
+          <View style={styles.button}>
+            <Button
+              onPress={onPressVerify}
+              title="Xác thực Email"
+              color={"#2E82FF"}
+            ></Button>
+          </View>
         </>
       )}
     </View>
@@ -117,16 +121,19 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   inputField: {
-    marginVertical: 4,
+    marginVertical: 8,
     height: 50,
     borderWidth: 1,
-    borderColor: "#6c47ff",
-    borderRadius: 4,
+    borderColor: "#2E82FF",
+    borderRadius: 8,
     padding: 10,
     backgroundColor: "#fff",
   },
   button: {
-    margin: 8,
-    alignItems: "center",
+    marginVertical: 8,
+    borderRadius: 8,
   },
 });
+function alert(message: any) {
+  throw new Error("Function not implemented.");
+}

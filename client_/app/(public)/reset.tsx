@@ -1,4 +1,4 @@
-import { View, StyleSheet, TextInput, Button, Alert } from "react-native";
+import { View, StyleSheet, TextInput, Button } from "react-native";
 import React, { useState } from "react";
 import { Stack } from "expo-router";
 import { useSignIn } from "@clerk/clerk-expo";
@@ -19,7 +19,7 @@ const PwReset = () => {
       });
       setSuccessfulCreation(true);
     } catch (err: any) {
-      Alert.alert(err.errors[0].message);
+      alert(err.errors[0].message);
     }
   };
 
@@ -32,24 +32,24 @@ const PwReset = () => {
         password,
       });
       console.log(result);
-      Alert.alert("Password reset successfully");
+      alert("Mât khẩu đã được thay đổi thành công!");
 
       // Set the user session active, which will log in the user automatically
       await setActive!({ session: result.createdSessionId });
     } catch (err: any) {
-      Alert.alert(err.errors[0].message);
+      alert(err.errors[0].message);
     }
   };
 
   return (
     <View style={styles.container}>
-      {/* <Stack.Screen options={{ headerBackVisible: !successfulCreation }} /> */}
+      <Stack.Screen options={{ headerBackVisible: !successfulCreation }} />
 
       {!successfulCreation && (
         <>
           <TextInput
             autoCapitalize="none"
-            placeholder="simon@galaxies.dev"
+            placeholder="Email của bạn"
             value={emailAddress}
             onChangeText={setEmailAddress}
             style={styles.inputField}
@@ -57,8 +57,8 @@ const PwReset = () => {
 
           <Button
             onPress={onRequestReset}
-            title="Send Reset Email"
-            color={"#6c47ff"}
+            title="Gửi mã xác nhận qua email"
+            color={"#2E82FF"}
           ></Button>
         </>
       )}
@@ -68,12 +68,12 @@ const PwReset = () => {
           <View>
             <TextInput
               value={code}
-              placeholder="Code..."
+              placeholder="Mã xác thực..."
               style={styles.inputField}
               onChangeText={setCode}
             />
             <TextInput
-              placeholder="New password"
+              placeholder="Mật khẩu mới"
               value={password}
               onChangeText={setPassword}
               secureTextEntry
@@ -83,7 +83,7 @@ const PwReset = () => {
           <Button
             onPress={onReset}
             title="Set new Password"
-            color={"#6c47ff"}
+            color={"#2E82FF"}
           ></Button>
         </>
       )}
@@ -98,11 +98,11 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   inputField: {
-    marginVertical: 4,
+    marginVertical: 16,
     height: 50,
     borderWidth: 1,
-    borderColor: "#6c47ff",
-    borderRadius: 4,
+    borderColor: "grey",
+    borderRadius: 8,
     padding: 10,
     backgroundColor: "#fff",
   },
@@ -113,3 +113,6 @@ const styles = StyleSheet.create({
 });
 
 export default PwReset;
+function alert(arg0: string) {
+  throw new Error("Function not implemented.");
+}
