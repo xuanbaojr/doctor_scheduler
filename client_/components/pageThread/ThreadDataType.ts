@@ -20,9 +20,7 @@ export interface Comment {
     name : string
 }
 
-
 export const ConvertDataToThreadType  = (data : any[]) : ThreadDataType[] => {
-
     const thread : ThreadDataType[] = data.map((item : any) => ({
         id: item['id'],
         customId : item['customid'],
@@ -34,7 +32,7 @@ export const ConvertDataToThreadType  = (data : any[]) : ThreadDataType[] => {
         major : item['major'],
         age : item['age'],
         puImage : item['puImage'],
-        comment : item['comment']
+        comment : item['comment'],
       }))
 
     return thread

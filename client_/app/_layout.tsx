@@ -75,39 +75,6 @@ const RootLayoutNav = () => {
       publishableKey={CLERK_PUBLISHABLE_KEY!}
       tokenCache={tokenCache}
     ><>
-        {/* <Stack>
-          <Stack.Screen 
-            name='(tabs)' 
-            options={{
-              headerShown: false,
-              
-            }}/>
-            <Stack.Screen 
-            name='(adviceDoctor)'
-            options={{
-              headerShown : false,
-            }}
-            />
-            <Stack.Screen 
-            name='scheduleDoctor'
-            options={{
-              headerShown : false,
-            }}
-            />
-            <Stack.Screen 
-            name='chat'
-            options={{
-              headerShown : false,
-            }}
-            />
-            <Stack.Screen 
-            name='ngungoc'
-            options={{
-              headerShown : false,
-            }}
-            />
-        </Stack> */}
-        
     </>
     <InitialLayout />
     </ClerkProvider>

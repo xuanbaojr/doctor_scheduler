@@ -17,7 +17,7 @@ const SchedulePage = () => {
 
   const getAllOrders = async () => {
     try {
-        const response = await instance.get(`/getAllOrder/${customer_id}`)
+        const response : any = await instance.get(`/getAllOrder/${customer_id}`)
         if(response && response.length > 0) {
           setOrders(response); // Provide the correct type for the 'setOrders' function
         }

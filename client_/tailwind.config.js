@@ -19,7 +19,10 @@ module.exports = {
         'hospital' : '#5e9e8d',
         'bg-post' : "#fefefe",
         "comment" : "#f5f4f9",
-        'question' : "#065bb5"
+        'question' : "#065bb5",
+        "all" : "#194d89",
+        "bgmajor" : "#ebeef7",
+        "bghotline" : "#7ab3f0"
       },
     },
   },

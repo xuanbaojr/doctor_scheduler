@@ -9,12 +9,12 @@ export const pathScreen = {
     advise : {
         path : "(adviceDoctor)/(threads)/advice",
         name : "advise",
-        lable: "Tu van"
+        lable: "Hỏi đáp"
     },
 
     order : {
-        path : "/home/order",
+        path : "/chat/chat_for_customer",
         order: "order",
-        label : "dat lich"
+        label : "Tư vấn nhanh"
     }
 }

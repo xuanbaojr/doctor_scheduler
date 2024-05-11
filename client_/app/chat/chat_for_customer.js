@@ -50,7 +50,7 @@ const ChatComponent = () => {
                 setCheckUser(prevList => [...prevList, data[data.length -1].sender]);        
         
             }
-            console.log("update database")
+            console.log("update database customer")
 
         } catch (error) {
             console.error("Error fetching chat:", error);
@@ -70,7 +70,7 @@ const ChatComponent = () => {
             schema: 'public',
             table: 'chat'
         },
-        () => getChatUpdate() 
+        () => console.log("asdas")
         )
         .subscribe()
 

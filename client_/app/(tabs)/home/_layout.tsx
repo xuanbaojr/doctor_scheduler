@@ -7,7 +7,7 @@ const HomeLayout = () => {
     <Stack
     screenOptions={{
       headerStyle: {
-        backgroundColor: '#f4511e',
+        backgroundColor: '#194d89',
       },
       headerTintColor: '#fff',
       headerTitleStyle: {
@@ -19,22 +19,8 @@ const HomeLayout = () => {
           name='index'
           options={{
             headerShown: true,
-            headerTitle : "trang chu"
-              
           }}
         />
-        {/* <Stack.Screen 
-          name='(adviceDoctor)'
-          options={{
-            headerShown : false,
-          }}
-        /> */}
-        {/* <Stack.Screen 
-          name='(scheduleDoctor)'
-          options={{
-            headerShown : true,
-          }}
-        /> */}
     </Stack>
   )
 }

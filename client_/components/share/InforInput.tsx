@@ -15,6 +15,7 @@ import { MyContext, MyFunctionType } from '../context/UpLoadContext'
 import { OptionUpLoad } from '../forms/UpAndLoadImage'
 import { MajorType } from '@/constant/type'
 import instance from '@/utils/axios'
+import { faL } from '@fortawesome/free-solid-svg-icons'
 
 const InforInput = () => {
 

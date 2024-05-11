@@ -1,6 +1,5 @@
-import { Text, View } from "react-native"
+import { Image, Text, View } from "react-native"
 import { Ionicons } from '@expo/vector-icons';
-import { Image } from "react-native-reanimated/lib/typescript/Animated";
 import { convertCreateAt, convertName } from "./ThreadDataType";
 
 interface Props {
@@ -21,7 +20,7 @@ const ThreadHeader = ({gender, age, date, title,major, image} : Props) => {
         {/* avatar */}
         <View className="w-full flex-row items-center border-b-2 py-2 border-red-100">
             <View className="w-10 h-10 p-0.5 rounded-full mr-4 bg-white flex justify-center items-center">
-                <View className=" w-full h-full bg-bgavatar rounded-full flex justify-center items-center">
+                <View className=" w-full h-full bg-majorbg rounded-full flex justify-center items-center">
                     <Ionicons name="person" size={30} color='white' />
                 </View>
             </View>
@@ -39,12 +38,13 @@ const ThreadHeader = ({gender, age, date, title,major, image} : Props) => {
         </View>
 
         {/* image */}
-
-        <View className="h-30 w-full ">
-            {/* <Image source={uri} */}
-            {/* {image && <Image source={image} />} */}
-
+        {
+            image && 
+            <View className="my-3 px-2">
+            <Image source={{uri: image}} style={{width: 80, height: 80, borderRadius:12}} />
         </View>
+        }
+        
 
         {/* list major  */}
         <View className="flex-row flex-wrap">

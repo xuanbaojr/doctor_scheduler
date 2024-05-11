@@ -13,7 +13,7 @@ export const LogoutButton = () => {
 
   return (
     <Pressable onPress={doLogout} style={{ marginRight: 10 }}>
-      <Ionicons name="log-out-outline" size={24} color={"#808080"} />
+      <Ionicons name="log-out-outline" size={24} color={"#fff"} />
     </Pressable>
   );
 };
@@ -22,17 +22,28 @@ const SettingLayout = () => {
   const { isSignedIn } = useAuth();
 
   return (
-    <Stack>
+    <Stack
+    screenOptions={{
+      headerStyle: {
+        backgroundColor: '#194d89',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+    }}
+    >
       <Stack.Screen
         name="index"
         options={{
-          headerTitle: "Setting",
+          headerTitle: "  Cài đặt",
+          headerTintColor: "#fff",
           headerRight: () => (isSignedIn ? <LogoutButton /> : null),
           headerLeft: () => (
             <Ionicons
               name="person-outline"
               size={24}
-              color={"#808080"}
+              color={"#fff"}
               style={{ marginLeft: 10 }}
             />
           ),
