@@ -11,14 +11,14 @@ const MedicalPage = () => {
         options={{
           headerShown: true,
           headerTitle: () => (
-            <View className="w-full bg-all">
+            <View className="w-ful">
               <Text className="text-white flex-row justify-center text-2xl font-semibold ">
                 Hồ sơ sức khỏe
               </Text>
             </View>
           ),
           headerStyle: {
-            backgroundColor: "#194d89",
+            backgroundColor: "#0860c4",
           },
         }}
       />

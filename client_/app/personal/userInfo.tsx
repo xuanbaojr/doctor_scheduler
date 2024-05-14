@@ -1,7 +1,8 @@
 import { View, Text } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 
 const userInfo = () => {
+  const [selectedCustomer, setSelectedCustomer] = useState(null);
   return (
     <View>
       <Text>userInfo</Text>
