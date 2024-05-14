@@ -8,7 +8,7 @@ import { useAuth } from "@clerk/clerk-expo";
 
 const StartPage = () => {
   const { isLoaded, userId, sessionId, getToken } = useAuth();
-  console.log("StartPage", isLoaded, userId, sessionId, getToken);
+  console.log("StartPage", userId);
   return (
     <>
       <Stack.Screen

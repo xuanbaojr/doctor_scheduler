@@ -2,6 +2,7 @@ import { View, StyleSheet, TextInput, Button } from "react-native";
 import React, { useState } from "react";
 import { Stack } from "expo-router";
 import { useSignIn } from "@clerk/clerk-expo";
+import CustomButton from "@/components/customButton";
 
 const PwReset = () => {
   const [emailAddress, setEmailAddress] = useState("");
@@ -55,11 +56,10 @@ const PwReset = () => {
             style={styles.inputField}
           />
 
-          <Button
+          <CustomButton
             onPress={onRequestReset}
             title="Gửi mã xác nhận qua email"
-            color={"#2E82FF"}
-          ></Button>
+          ></CustomButton>
         </>
       )}
 
