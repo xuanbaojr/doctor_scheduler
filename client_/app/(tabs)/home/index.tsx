@@ -10,8 +10,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 
 const StartPage = () => {
   const { isLoaded, userId, sessionId, getToken } = useAuth();
-  console.log("StartPage", isLoaded, userId, sessionId, getToken);
-  const header = "Xin chào "
+  console.log("StartPage", userId);
   return (
     <>
       <Stack.Screen
