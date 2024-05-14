@@ -5,7 +5,17 @@ import PatientProfile from "@/components/patientRecord/PatientProfile";
 
 const MedicalLayout = () => {
   return (
-    <Stack>
+    <Stack
+    // screenOptions={{
+    //   headerStyle: {
+    //     backgroundColor: '#194d89',
+    //   },
+    //   headerTintColor: '#fff',
+    //   headerTitleStyle: {
+    //     fontWeight: 'bold',
+    //   },
+    // }}
+    >
       <Stack.Screen
         name="index"
         options={{

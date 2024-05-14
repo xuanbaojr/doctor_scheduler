@@ -4,7 +4,7 @@ import Post from '@/components/share/Post'
 import { MaterialTopTabs } from './_layout';
 import { tabTitle } from '@/constant/screen/threads';
 import instance from '@/utils/axios';
-import { ConvertDataToThreadType, ThreadDataType } from '@/components/pageThread/ThreadDataType';
+import { ConvertDataToThreadType, ThreadDataType,  } from '@/components/pageThread/ThreadDataType';
 
 const advise = () => {
   const [listTheard, setListThreard] = useState<ThreadDataType[]>([])
@@ -15,8 +15,7 @@ const advise = () => {
         const data : any = await instance.get(`/threadAll`)
         const test : ThreadDataType[] = ConvertDataToThreadType(data)
         setListThreard(test)
-        setComment(test[0].comment[0].content)
-        console.log(test[0].comment[0].content)
+        console.log(test)
     }catch (e) {
         console.log(e)
     }
@@ -34,8 +33,8 @@ useEffect(() => {
     <View className='h-full w-full bg-background '>
       <ScrollView className="w-full h-full">
         {listTheard.map((thread) => (
-          <Post key={thread.id} thread={thread} comment={comment}/>
-        ))}
+            <Post key={thread.id} thread={thread} />
+          ))}
       </ScrollView>
     </View>
     </>

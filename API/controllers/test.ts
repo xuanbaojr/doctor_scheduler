@@ -13,21 +13,19 @@ class test {
         })
     }
 
-    async createNewThread (req, res) {
+    async createUser (req, res) {
         try {
-            const {
-                id
-            } = req.body
-            // const data = await prisma.thread.findFirstOrThrow({
-            //     where : {
-            //         typeThread : 'Thread'
-            //        },
-            //        include : {
-            //         comment : true
-            //        }
-            // })
-            // console.log(data);
-            // res.send(data);
+            
+            const data = await prisma.user.create({
+                data : {
+                    email : "quyen1412kid",
+                    phone : "0926929296",
+                    id : "á",
+                    role: "Customer"
+                }
+            })
+            console.log(data);
+            res.send(data);
         } catch (error ) {
             console.log(error);
             res.status(500).json({

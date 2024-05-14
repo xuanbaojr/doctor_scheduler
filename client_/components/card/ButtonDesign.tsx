@@ -2,14 +2,14 @@
 import { Link, useRouter } from "expo-router"
 import { Text, TouchableOpacity, View } from "react-native"
 
-
 interface Props {
     path : string,
     label : string,
+    children : React.ReactElement
 
 }
 
-const ButtonDesign = ({path, label} : Props) => {
+const ButtonDesign = ({path, label, children} : Props) => {
     const router = useRouter()
     const Press = () => {
         router.navigate(path)
@@ -17,9 +17,12 @@ const ButtonDesign = ({path, label} : Props) => {
     return (
     <TouchableOpacity
         onPress={Press}
-        className="bg-blue-1 rounded-lg py-2 px-4"
+        className="border flex-1  border-all rounded-full p-3 mr-3 flex-row justify-around items-center"
     >
-        <Text className="text-black font-semibold text-center">{label}</Text>
+        <View>
+            {children}
+        </View>
+        <Text className=" text-all text-base font-semibold text-center">{label}</Text>
     </TouchableOpacity>
     )
 }
