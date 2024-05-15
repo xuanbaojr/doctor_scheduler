@@ -11,6 +11,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 const StartPage = () => {
   const { isLoaded, userId, sessionId, getToken } = useAuth();
   console.log("StartPage", userId);
+  const header = "Xin chào "
   return (
     <>
       <Stack.Screen
@@ -49,7 +50,7 @@ const StartPage = () => {
               <FontAwesome5 name="phone-alt" size={24} color="blue" />
               </View>
               <View className="">
-                <Text className="text-all text-base font-semibold text-center">hotline: xxxxxxxxx </Text>
+                <Text className="text-all text-base font-semibold text-center">hotline: 1900 6868 </Text>
               </View>
             </View>
         </View>

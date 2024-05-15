@@ -16,14 +16,19 @@ class test {
     async createUser (req, res) {
         try {
             
-            const data = await prisma.user.create({
-                data : {
-                    email : "quyen1412kid",
-                    phone : "0926929296",
-                    id : "á",
-                    role: "Customer"
+            const { customer_id } = req.params; // Extract doctor_id and date_time from URL params
+            const data = await prisma.order.findMany({
+                where: {
+                    customId: customer_id
+                },
+                include : {
+                    doctor : {
+                        select : {
+                            name: true,
+                        }
+                    }
                 }
-            })
+            });
             console.log(data);
             res.send(data);
         } catch (error ) {

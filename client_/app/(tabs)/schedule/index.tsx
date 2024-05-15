@@ -4,6 +4,8 @@ import React, { useEffect } from 'react'
 import instance from '@/utils/axios'
 import { createClient } from '@supabase/supabase-js';
 import { get } from 'http';
+import { convertCreateAt } from '@/components/pageThread/ThreadDataType';
+import ScheduleOrderButton from '@/components/schedule/SchduleOrderButton';
 
 
 const customer_id = "8b57944c-1e70-4a2e-83ec-30532e698de3"
@@ -21,6 +23,8 @@ const SchedulePage = () => {
         if(response && response.length > 0) {
           setOrders(response); // Provide the correct type for the 'setOrders' function
         }
+
+        console.log(response)
     } catch (error) {
         console.error("Error fetching chat:", error);
     }
@@ -54,30 +58,24 @@ const SchedulePage = () => {
   return (
     <View className="flex justify-center items-center">
       <Link href="../scheduleDoctor/bookClinic" asChild>
-        <TouchableOpacity style={{margin:60}}>
+        <TouchableOpacity 
+          // style={{margin:60}}
+          className=''
+        >
           <Text>Bat dau</Text>
         </TouchableOpacity>
       </Link>
       {orders.map((order, index: number) => (
         <View key={index}>
-          <Link
-            href={{
-              pathname: "../scheduleDoctor/[orderId]",
-              params: {
-                clinic_id: order['clinicId'],
-                doctorId: order['doctorId'],
-                time: order['hour_time'],
-                date_be: order['date_time'],
-                orderId: order['id'],
-                isCreate: false.toString() // Convert boolean to string
-              }
-            }}
-            asChild
-          >
-            <TouchableOpacity>
-              <Text>{order['id']}</Text>
-            </TouchableOpacity>
-          </Link>
+            <ScheduleOrderButton 
+              date_be={order['date_time']}
+              time={order['hour_time']}
+              doctor={order['doctor']['name']}
+              clinic={order['clinicId']}
+              doctorId={order['doctorId']}
+              orderId={order['id']}
+              isCreate={false.toString()}
+            />
         </View>
       ))}
     </View>
