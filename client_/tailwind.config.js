@@ -22,7 +22,8 @@ module.exports = {
         'question' : "#065bb5",
         "all" : "#194d89",
         "bgmajor" : "#ebeef7",
-        "bghotline" : "#7ab3f0"
+        "bghotline" : "#7ab3f0",
+        "line-bot" : "#dedfe0",
       },
     },
   },

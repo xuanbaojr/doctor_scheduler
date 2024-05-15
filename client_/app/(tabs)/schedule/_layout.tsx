@@ -18,7 +18,9 @@ const SettingLayout = () => {
         <Stack.Screen 
             name='index'
             options={{
-                headerShown : false,
+              headerTitle: "Cá nhân",
+              headerTintColor: "#fff",
+              headerTitleAlign: "center",
             }}
         />
     </Stack>

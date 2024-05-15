@@ -10,6 +10,13 @@ const MedicalPage = () => {
       <Stack.Screen
         options={{
           headerShown: true,
+          headerTitle: () => (
+            <View className="">
+              <Text className="text-white text-2xl font-semibold">
+                {"hồ sơ sức khỏe"}
+              </Text>
+            </View>
+          ),
         }}
       />
       <View className="flex-col justify-between h-full bg-bg">

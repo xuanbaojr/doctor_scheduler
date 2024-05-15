@@ -51,6 +51,19 @@ const Index = () => {
   };
 
   return (
+    <>
+    <Stack.Screen
+        options={{
+          headerShown: true,
+          headerTitle: () => (
+            <View className="">
+              <Text className="text-white text-2xl font-semibold">
+                {"Cá nhân"}
+              </Text>
+            </View>
+          ),
+        }}
+      />
     <GestureHandlerRootView style={styles.container}>
       <ScrollView>
         <Link href={"/personal/userInfo"} asChild>
@@ -152,6 +165,7 @@ const Index = () => {
         {/* <Button title="Create Customer" onPress={createCustomer} /> */}
       </ScrollView>
     </GestureHandlerRootView>
+    </>
   );
 };
 

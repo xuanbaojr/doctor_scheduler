@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useId, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -15,7 +15,7 @@ const ListMember = () => {
   // Initialize listOfCustomers as an empty array to ensure it's never undefined
   const [listOfCustomers, setListOfCustomers] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-
+  console.log(useId)
   const fetchCustomer = async () => {
     setIsLoading(true);
     try {

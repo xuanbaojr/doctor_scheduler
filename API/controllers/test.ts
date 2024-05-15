@@ -13,30 +13,40 @@ class test {
         })
     }
 
-    async createUser (req, res) {
+    async createCustomer(req, res) {
+        const { userId, ho, ten, tuoi, gioiTinh, diaChi } = req.body;
+        console.log(userId);
+    
         try {
-            
-            const { customer_id } = req.params; // Extract doctor_id and date_time from URL params
-            const data = await prisma.order.findMany({
-                where: {
-                    customId: customer_id
-                },
-                include : {
-                    doctor : {
-                        select : {
-                            name: true,
-                        }
-                    }
-                }
-            });
-            console.log(data);
-            res.send(data);
-        } catch (error ) {
-            console.log(error);
-            res.status(500).json({
-                errorCode: 1,
-                msg: "Server" + error.message
-            });
+          // Kiểm tra xem user đã tồn tại trong database chưa
+          const user = await prisma.user.findUnique({
+            where: {
+              id: userId,
+            },
+          });
+    
+          // Nếu user không tồn tại, trả về lỗi
+          if (!user) {
+            return res.status(404).send("User not found");
+          }
+    
+          // Tạo customer mới với userId, không cần kiểm tra sự tồn tại trước đó
+          const newCustomer = await prisma.customer.create({
+            data: {
+              userId: userId,
+              firstName: ho,
+              lastName: ten,
+              age: tuoi,
+              sex: gioiTinh,
+              address: diaChi,
+            },
+          });
+    
+          // Trả về thông tin customer mới
+          return res.status(201).json(newCustomer);
+        } catch (error) {
+          console.error("Error creating customer:", error);
+          return res.status(500).send("Error creating customer");
         }
-    }
+      }
 }

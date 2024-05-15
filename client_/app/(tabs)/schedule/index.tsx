@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity } from 'react-native'
-import { Link } from 'expo-router'
+import { Link, Stack } from 'expo-router'
 import React, { useEffect } from 'react'
 import instance from '@/utils/axios'
 import { createClient } from '@supabase/supabase-js';
@@ -56,6 +56,19 @@ const SchedulePage = () => {
   
 
   return (
+    <>
+    <Stack.Screen
+        options={{
+          headerShown: true,
+          headerTitle: () => (
+            <View className="">
+              <Text className="text-white text-2xl font-semibold">
+                {"Lịch khám"}
+              </Text>
+            </View>
+          ),
+        }}
+      />
     <View className="flex justify-center items-center">
       <Link href="../scheduleDoctor/bookClinic" asChild>
         <TouchableOpacity 
@@ -79,6 +92,7 @@ const SchedulePage = () => {
         </View>
       ))}
     </View>
+    </>
   )
 }
 

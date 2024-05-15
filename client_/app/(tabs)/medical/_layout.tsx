@@ -6,21 +6,22 @@ import PatientProfile from "@/components/patientRecord/PatientProfile";
 const MedicalLayout = () => {
   return (
     <Stack
-    // screenOptions={{
-    //   headerStyle: {
-    //     backgroundColor: '#194d89',
-    //   },
-    //   headerTintColor: '#fff',
-    //   headerTitleStyle: {
-    //     fontWeight: 'bold',
-    //   },
-    // }}
+    screenOptions={{
+      headerStyle: {
+        backgroundColor: '#194d89',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+    }}
     >
       <Stack.Screen
         name="index"
         options={{
-          headerShown: true,
-          headerTitle: "Hồ sơ sức khỏe",
+          headerTitle: "Cá nhân",
+          headerTintColor: "#fff",
+          headerTitleAlign: "center",
         }}
       />
       <Stack.Screen

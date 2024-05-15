@@ -23,7 +23,7 @@ class CustomerController {
 
   async createCustomer(req, res) {
     const { userId, ho, ten, tuoi, gioiTinh, diaChi } = req.body;
-    console.log(userId);
+    console.log(userId + "asdasdasdada");
 
     try {
       // Kiểm tra xem user đã tồn tại trong database chưa

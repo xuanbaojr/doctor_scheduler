@@ -11,7 +11,11 @@ const SettingLayout = () => {
     <Stack
       screenOptions={{
         headerStyle: {
-          backgroundColor: "#0860c4",
+          backgroundColor: '#194d89',
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: 'bold',
         },
       }}
     >
