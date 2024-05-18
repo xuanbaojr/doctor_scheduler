@@ -24,6 +24,8 @@ module.exports = {
         "bgmajor" : "#ebeef7",
         "bghotline" : "#7ab3f0",
         "line-bot" : "#dedfe0",
+        "backgroundateandgender" : "#f2f6f9",
+        "border-1": "#988383",
       },
     },
   },

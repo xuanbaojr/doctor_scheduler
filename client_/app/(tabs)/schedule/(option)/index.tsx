@@ -1,11 +1,13 @@
-import { View, Text, TouchableOpacity } from 'react-native'
-import { Link, Stack } from 'expo-router'
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native'
+import { Link, Stack, router } from 'expo-router'
 import React, { useEffect } from 'react'
 import instance from '@/utils/axios'
 import { createClient } from '@supabase/supabase-js';
 import { get } from 'http';
 import { convertCreateAt } from '@/components/pageThread/ThreadDataType';
 import ScheduleOrderButton from '@/components/schedule/SchduleOrderButton';
+import CustomButton from '@/components/customButton';
+import { MaterialTopTabs } from './_layout';
 
 
 const customer_id = "8b57944c-1e70-4a2e-83ec-30532e698de3"
@@ -53,32 +55,20 @@ const SchedulePage = () => {
     }
 }, []);
 
+
+
   
 
   return (
     <>
-    <Stack.Screen
-        options={{
-          headerShown: true,
-          headerTitle: () => (
-            <View className="">
-              <Text className="text-white text-2xl font-semibold">
-                {"Lịch khám"}
-              </Text>
-            </View>
-          ),
+    <MaterialTopTabs.Screen options={{
+          title : "Hẹn khám"
         }}
       />
-    <View className="flex justify-center items-center">
-      <Link href="../scheduleDoctor/bookClinic" asChild>
-        <TouchableOpacity 
-          // style={{margin:60}}
-          className=''
-        >
-          <Text>Bat dau</Text>
-        </TouchableOpacity>
-      </Link>
-      {orders.map((order, index: number) => (
+    <View className=" h-full w-full py-3 flex items-center">
+      <View className='flex-1 w-full px-2'>
+        <ScrollView>
+        {orders.map((order, index: number) => (
         <View key={index}>
             <ScheduleOrderButton 
               date_be={order['date_time']}
@@ -90,7 +80,22 @@ const SchedulePage = () => {
               isCreate={false.toString()}
             />
         </View>
-      ))}
+        ))}
+        {orders.map((order, index: number) => (
+        <View key={index}>
+            <ScheduleOrderButton 
+              date_be={order['date_time']}
+              time={order['hour_time']}
+              doctor={order['doctor']['name']}
+              clinic={order['clinicId']}
+              doctorId={order['doctorId']}
+              orderId={order['id']}
+              isCreate={false.toString()}
+            />
+        </View>
+        ))}
+        </ScrollView>
+      </View>
     </View>
     </>
   )

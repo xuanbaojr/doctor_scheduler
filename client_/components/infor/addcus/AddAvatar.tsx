@@ -2,7 +2,7 @@ import { useUser } from "@clerk/clerk-expo";
 import { useState } from "react";
 import { Image, Text, View } from "react-native"
 import { Entypo } from "@expo/vector-icons";
-
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 interface Props {
 
 }
@@ -16,8 +16,11 @@ const AddAvatar = () => {
     return (
         <>
         <View className="flex-row justify-between px-3 mt-3 mb-4 items-center">
-                <View className="flex items-center justify-center bg-post-bt p-2">
-                    <Text>Chọn ảnh đại diện:</Text>
+                <View className="flex-row flex-1 items-center justify-center shadow-lg bg-post-bt px-2 py-2 rounded-lg border border-border-1">
+                    <View className="mr-4">
+                        <MaterialCommunityIcons name="qrcode-scan" size={24} color="black" />
+                    </View>
+                    <Text className="flex-1">Quét CCCD để nhập nhanh thông tin</Text>
                 </View>
                 <View className="flex relative justify-center items-center">
                 <Image

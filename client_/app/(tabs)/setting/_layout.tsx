@@ -22,9 +22,17 @@ const SettingLayout = () => {
       <Stack.Screen
         name="index"
         options={{
-          headerTitle: "Cá nhân",
-          headerTintColor: "#fff",
-          headerTitleAlign: "center",
+          headerShown: true,
+          headerTitle: () => (
+            <View className="w-ful">
+              <Text className="text-white flex-row justify-center text-2xl font-semibold ">
+                Cá nhân
+              </Text>
+            </View>
+          ),
+          headerStyle: {
+            backgroundColor: "#0860c4",
+          },
         }}
       />
     </Stack>

@@ -16,7 +16,7 @@ const InforSection = ({section, value} : Props) => {
             </View>
             <View className="mb-1">
                 {
-                    value != null &&
+                    value != null && value.length !== 0 && 
                     <Text className="text-md font-medium">{value}</Text>
                 }
                 

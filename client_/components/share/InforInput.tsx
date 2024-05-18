@@ -10,12 +10,14 @@ import BottomSubmit from '../pagePost/BottomSubmit'
 import PublicImage from '../pagePost/PublicImage'
 import SelectMajor from '../pagePost/SelectMajor'
 import { noteTitle } from '@/constant/screen/post'
-import {  KeyboardAvoidingView, Text,  View } from 'react-native'
+import {  Alert, KeyboardAvoidingView, Text,  View } from 'react-native'
 import { MyContext, MyFunctionType } from '../context/UpLoadContext'
 import { OptionUpLoad } from '../forms/UpAndLoadImage'
 import { MajorType } from '@/constant/type'
 import instance from '@/utils/axios'
 import { faL } from '@fortawesome/free-solid-svg-icons'
+import { useAuth } from '@clerk/clerk-expo'
+import { router } from 'expo-router'
 
 const InforInput = () => {
 
@@ -25,7 +27,7 @@ const InforInput = () => {
     const [major, setMajor] = useState<MajorType[]>([])
     const [title, setTitle] = useState<string>('')
     const [puImage, setPuImage] = useState(true)
-
+    const {userId} = useAuth()
 
     const snapPoint2 = useMemo(() => [  '25%' ], ['0%'])
     const bottomSheetRef2 = useRef<BottomSheet>(null)
@@ -37,10 +39,25 @@ const InforInput = () => {
       setMyFunction(() => newFunction);
     };
 
+    const checkAlert = () => {
+      if (major.length == 0 ) {
+          failCreate("chọn khoa")
+          return false
+      } else if (title.length == 0 || !title) {
+          failCreate("điền câu hỏi")
+          return false
+      } else {
+        return true
+      }
+    }
+
     const onSubmit = async () => {
+      if(!checkAlert()) {
+        return
+      }
       console.log(gender, age, puImage, images[0], major, title )
       await instance.post(`/createNewThread`, {
-        // id : id 
+        userId : userId,
         gender : gender,
         age : age.toString(), 
         puImage :puImage, 
@@ -48,6 +65,7 @@ const InforInput = () => {
         major : major,
         title : title,
       })
+      done()
     }
     
   return (
@@ -115,3 +133,49 @@ const InforInput = () => {
 }
 
 export default InforInput
+
+
+const failCreate = (messing : string ) => {
+  Alert.alert(
+    "Thông tin còn thiếu",
+    "Vui lòng " + messing,
+    [
+      {
+          text: "Thoát",
+          onPress : () => {
+              router.back()
+          }
+      },
+      {
+          text:"Tiếp tục",
+          onPress : () => {
+              
+          },
+          style: 'cancel'
+      }
+    ]
+  )
+}
+
+const done = () => {
+  Alert.alert(
+    "Đăng bài thành công",
+    "",
+    [
+            
+      {
+          text:"Tiếp tục thêm",
+          onPress : () => {
+              
+          },
+          style: 'cancel'
+      },
+      {
+          text: "Thoát",
+          onPress : () => {
+              router.back()
+          }
+      }
+  ]
+  )
+}

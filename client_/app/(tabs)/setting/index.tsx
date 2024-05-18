@@ -30,6 +30,7 @@ const Index = () => {
   const { user } = useUser();
   const [firstName, setFirstName] = useState(user?.firstName);
   const [lastName, setLastName] = useState(user?.lastName);
+  const id = "null"
 
   const [selectedImage, setSelectedImage] = useState(
     require("../../../assets/avatar.png")
@@ -56,17 +57,20 @@ const Index = () => {
         options={{
           headerShown: true,
           headerTitle: () => (
-            <View className="">
-              <Text className="text-white text-2xl font-semibold">
-                {"Cá nhân"}
+            <View className="w-ful">
+              <Text className="text-white flex-row justify-center text-2xl font-semibold ">
+                Cá nhân
               </Text>
             </View>
           ),
+          headerStyle: {
+            backgroundColor: "#0860c4",
+          },
         }}
       />
     <GestureHandlerRootView style={styles.container}>
       <ScrollView>
-        <Link href={"/personal/userInfo"} asChild>
+        <Link href={`/personal/${id}/userInfo`} asChild>
           <TouchableOpacity style={styles.userInfo}>
             <TouchableOpacity onPress={onCaptureImage}>
               <Image
@@ -111,7 +115,7 @@ const Index = () => {
               </View>
             </TouchableOpacity>
           </Link>
-          <Link href={"/(tabs)/schedule"} asChild>
+          <Link href={'/(tabs)/schedule/(option)/pass'} asChild>
             <TouchableOpacity style={styles.option}>
               <View style={styles.icon}>
                 <FontAwesome5 name="calendar-check" size={25} color="#0860c4" />

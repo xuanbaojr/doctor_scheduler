@@ -8,14 +8,13 @@ import { ConvertDataToThreadType, ThreadDataType,  } from '@/components/pageThre
 
 const advise = () => {
   const [listTheard, setListThreard] = useState<ThreadDataType[]>([])
-  const [comment, setComment] = useState<string>("")
 
   const getallThrealForUser = async () => {
     try {
         const data : any = await instance.get(`/threadAll`)
         const test : ThreadDataType[] = ConvertDataToThreadType(data)
         setListThreard(test)
-        console.log(test)
+        // console.log(data)
     }catch (e) {
         console.log(e)
     }
@@ -30,7 +29,7 @@ useEffect(() => {
     <MaterialTopTabs.Screen options={{
       title : tabTitle.communicate,
     }}/>
-    <View className='h-full w-full bg-background '>
+    <View className='h-full w-full bg-background pt-1'>
       <ScrollView className="w-full h-full">
         {listTheard.map((thread) => (
             <Post key={thread.id} thread={thread} />

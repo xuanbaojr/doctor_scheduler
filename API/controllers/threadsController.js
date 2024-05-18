@@ -74,7 +74,7 @@ class ThreadsController {
                     }
                }
             })
-            console.log(data);
+            // console.log(data);
             res.send(data);
         } catch (error ) {
             console.log(error);
@@ -84,10 +84,58 @@ class ThreadsController {
             });
         }
     } 
+
+    // get all thread for self 
+    async getAllThreadForSelf (req, res) {
+        try {
+            const userId = req.query.userId;
+            console.log(userId)
+            const data = await prisma.user.findFirst({
+                where : {
+                    id : userId
+                },
+                include : {
+                    custumer : {
+                    select : {
+                        id: true,
+                    }
+                    }
+                }
+            })
+            const customerId = data.custumer[0].id
+            const user = await prisma.customer.findFirst({
+                where : {
+                id: customerId
+                },
+                include : {
+                listThread : {
+                    include : {
+                    comment : {
+                        select : {
+                        content : true,
+                        createAt : true,
+                        name : true,
+                        }
+                    }
+                    }
+                }
+                }
+            })
+            console.log(user)
+            res.send(user)
+        }catch (error ) {
+            console.log(error);
+            res.status(500).json({
+                errorCode: 1,
+                msg: "Server" + error.message
+            });
+        }
+    }
     // creat the new thread 
     async createNewThread (req, res) {
         try {
             const {
+                userId,
                 gender,
                 age, 
                 puImage, 
@@ -95,9 +143,23 @@ class ThreadsController {
                 major,
                 title,
             } = req.body
+            const user= await prisma.user.findFirst({
+                where : {
+                    id : userId
+                },
+                include : {
+                  custumer : {
+                    select : {
+                      id: true,
+                    }
+                  }
+                }
+            })
+            const customerId = user.custumer[0].id
+
             const data = await prisma.thread.create({
                 data : {
-                    customId : "8b57944c-1e70-4a2e-83ec-30532e698de3",
+                    customId : customerId,
                     image : image,
                     content : title,
                     gender : gender,

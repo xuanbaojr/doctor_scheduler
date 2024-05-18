@@ -21,9 +21,31 @@ class CustomerController {
     }
   }
 
+  async fetchCustomerId(req, res) {
+    const userId = req.query.userId;
+    console.log(userId);
+    try {
+      const data = await prisma.customer.findFirst({
+        where: {
+          id: userId,
+        },
+      });
+      console.log(data);
+      res.send(data);
+    } catch (error) {
+      console.error("Lỗi khi lấy thông tin khách hàng:", error);
+      return res.status(500).send("Lỗi khi lấy thông tin khách hàng");
+    }
+  }
+
   async createCustomer(req, res) {
-    const { userId, ho, ten, tuoi, gioiTinh, diaChi } = req.body;
-    console.log(userId + "asdasdasdada");
+    const { userId, 
+      firstName, 
+      lastName, 
+      gender, 
+      age, 
+      address} = req.body;
+    console.log(userId + " " + firstName + " " + lastName + " " + gender + " " + age + " " + address);
 
     try {
       // Kiểm tra xem user đã tồn tại trong database chưa
@@ -42,11 +64,11 @@ class CustomerController {
       const newCustomer = await prisma.customer.create({
         data: {
           userId: userId,
-          firstName: ho,
-          lastName: ten,
-          age: tuoi,
-          sex: gioiTinh,
-          address: diaChi,
+          firstName: firstName,
+          lastName: lastName,
+          age: age,
+          sex: gender,
+          address: address,
         },
       });
 

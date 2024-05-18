@@ -6,7 +6,7 @@ import { TextInput } from "react-native-gesture-handler"
 
 interface Props {
     placeholder : string,
-    value : string,
+    value : string | undefined,
     setValue : (value : string) => void
 }
 
@@ -17,10 +17,10 @@ const InputSection = ({
 } : Props) => {
     return (
         <>
-        <View className="flex w-full border-b-gray-500 rounded-sm my-1.5">
+        <View className="flex w-full border-border-1 rounded-sm my-1.5">
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
           <TextInput
-            className="text-base border rounded-lg border-gray-600 p-2"
+            className="text-base border-2 rounded-lg border-border-1 p-2"
             underlineColorAndroid="transparent"
             placeholder={placeholder}
             placeholderTextColor="grey"

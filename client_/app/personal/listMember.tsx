@@ -32,15 +32,16 @@ const ListMember = () => {
     return <Text>Không có dữ liệu.</Text>;
   }
 
-  const Press = () => {
-    router.navigate("/(tabs)/medical/result")
+  const Press = (custome : string) => {
+    console.log(custome)
+    router.navigate(`/personal/${custome}/userInfo`)
   }
 
   return (
     <View className="w-full h-full bg-background px-2">
     <ScrollView className="mt-4 bg-background">
       {listOfCustomers.map((customer, index) => (
-        <TouchableOpacity key={index} onPress={Press} 
+        <TouchableOpacity key={index} onPress={() => Press(customer.id)} 
           style={{
             // flexDirection: "row",
             padding: 5,

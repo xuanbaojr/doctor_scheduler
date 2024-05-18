@@ -32,7 +32,7 @@ export default function Layout() {
         }}
       />
       <Stack.Screen
-        name="userInfo"
+        name="[id]"
         options={{
           headerTitle: "Chi tiết hồ sơ",
           headerTintColor: "#fff",

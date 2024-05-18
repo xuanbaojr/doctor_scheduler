@@ -5,13 +5,50 @@ const prisma = new PrismaClient()
 
 
 class test {
-    async test1 (req, res )  {
-        await prisma.thread.findMany({
-            include : {
-                
-            }
-        })
+  async getAllThreadForSelf (req, res) {
+    try {
+      const userId = req.query.userId;
+      console.log(userId)
+      // const data = await prisma.user.findFirst({
+      //     where : {
+      //         id : userId
+      //     },
+      //     include : {
+      //       custumer : {
+      //         select : {
+      //           id: true,
+      //         }
+      //       }
+      //     }
+      // })
+      // const customerId = data.custumer[0].id
+      // const user = await prisma.customer.findFirst({
+      //   where : {
+      //     id: customerId
+      //   },
+      //   include : {
+      //     listThread : {
+      //       include : {
+      //         comment : {
+      //           select : {
+      //             content : true,
+      //             createAt : true,
+      //             name : true,
+      //           }
+      //         }
+      //       }
+      //     }
+      //   }
+      // })
+      // console.log(user)
+    }catch (error ) {
+        console.log(error);
+        res.status(500).json({
+            errorCode: 1,
+            msg: "Server" + error.message
+        });
     }
+}
 
     async createCustomer(req, res) {
         const { userId, ho, ten, tuoi, gioiTinh, diaChi } = req.body;
