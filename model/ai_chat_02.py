@@ -18,8 +18,8 @@ from langchain.chains import create_retrieval_chain
 from langchain_core.messages import HumanMessage, AIMessage
 
 
+# dan open_api vao day
 
-# os.environ['OPENAI_API_KEY'] = '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'
 llm = ChatOpenAI(model="gpt-3.5-turbo")
 embedding = OpenAIEmbeddings()
 
