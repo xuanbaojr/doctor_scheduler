@@ -1,4 +1,4 @@
-import { Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback, View } from "react-native"
+import { Keyboard, TouchableWithoutFeedback, View } from "react-native"
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler"
 import { Ionicons } from '@expo/vector-icons';
 import { ThreadTitle } from "@/constant/screen/threads";

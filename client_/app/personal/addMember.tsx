@@ -21,6 +21,7 @@ import instance from "@/utils/axios";
 import { useAuth } from "@clerk/clerk-expo";
 import CustomButton from "@/components/customButton";
 import { green } from "react-native-reanimated/lib/typescript/reanimated2/Colors";
+import AddNewCustom from "@/components/infor/AddNewCustom";
 const AddMember = () => {
   const [ho, setHo] = useState("");
   const [ten, setTen] = useState("");
@@ -63,11 +64,11 @@ const AddMember = () => {
     });
   };
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
+    <GestureHandlerRootView className='bg-bg w-full h-full flex-col'>
       <KeyboardAvoidingView
         style={{ flex: 1 }}
-        behavior={Platform.OS === "ios" ? "padding" : undefined}
-        keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}
+        behavior={Platform.OS === "ios" ? "padding" : "padding"}
+        keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 50}
       >
         <ScrollView style={styles.container}>
           <View
@@ -165,7 +166,9 @@ const AddMember = () => {
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
-      <View style={styles.button}>
+
+      <AddNewCustom />
+      <View className="">
         <CustomButton title="Thêm thành viên" onPress={createCustomer} />
       </View>
     </GestureHandlerRootView>

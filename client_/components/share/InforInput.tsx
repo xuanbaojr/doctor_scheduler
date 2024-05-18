@@ -55,7 +55,7 @@ const InforInput = () => {
     <MyContext.Provider value={{ myFunction, updateMyFunction }}>
       <GestureHandlerRootView className='bg-bg w-full h-full flex-col'>
       <KeyboardAvoidingView 
-      className='grow'
+        className='grow'
         keyboardVerticalOffset={50}
       >
         <ScrollView className='flex '>
