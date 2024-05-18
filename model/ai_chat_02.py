@@ -19,7 +19,7 @@ from langchain_core.messages import HumanMessage, AIMessage
 
 
 
-os.environ['OPENAI_API_KEY'] = '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'
+# os.environ['OPENAI_API_KEY'] = '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'
 llm = ChatOpenAI(model="gpt-3.5-turbo")
 embedding = OpenAIEmbeddings()
 
