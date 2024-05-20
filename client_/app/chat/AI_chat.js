@@ -10,7 +10,7 @@ const supabase = createClient(supabase_url, supabase_anon)
 const TestComponent = () => {
 
     // thay ip cua may minh
-    const url = "http://172.20.10.2:8000"
+    const url = "http://192.168.1.80:8000"
     const [humanChat, setHumanChat] = useState('');
     const [questionList, setQuestionList] = useState([])
     const [answerList, setAnswerList] = useState([])
