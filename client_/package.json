@@ -53,12 +53,15 @@
     "react-native-loading-spinner-overlay": "^3.0.1",
     "react-native-popup-menu": "^0.16.1",
     "react-native-radio-buttons-group": "^3.1.0",
+    "react-native-rapi-ui": "^0.2.1",
     "react-native-reanimated": "~3.6.2",
     "react-native-safe-area-context": "4.8.2",
     "react-native-screens": "~3.29.0",
     "react-native-svg": "^14.1.0",
     "react-native-tab-view": "^3.5.2",
-    "react-native-web": "~0.19.6"
+    "react-native-web": "~0.19.6",
+    "expo-font": "~11.10.3",
+    "expo-asset": "~9.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
