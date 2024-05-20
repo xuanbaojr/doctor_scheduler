@@ -22,6 +22,11 @@ const ThreadAnser = ({name, date, title} : Props) => {
                        <Text className="text-hospital font-medium text-base">{name}</Text>
                        <Text className="text-md font-light italic">{convertCreateAt(date)}</Text>
                     </View>
+                    <View className="flex rounded-full bg-slate-600 h-6 w-6">
+                        <Text>
+                            adasa
+                        </Text>
+                    </View>
                 </View>
 
                 <View className='border-t-2 border-black'></View>

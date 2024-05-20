@@ -206,7 +206,15 @@ class scheduleController {
             const response = await prisma.order.findMany({
                 where: {
                     customId: customer_id
+                },
+                include : {
+                    doctor : {
+                        select : {
+                            name: true,
+                        }
+                    }
                 }
+               
             });
                         
             console.log(response);

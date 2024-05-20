@@ -5,13 +5,17 @@ const avatar = require("../../assets/favicon.png")
 const InforDoctor = () => {
 
     return (
-        <View className="flex-row items-center p-2 mb-4 rounded-xl bg-blue-2">
-            <View className="w-16 h-16 rounded-full mr-4 bg-avatar-1 flex items-center justify-center">
+        <View className="flex-row p-2 mb-3 rounded-xl bg-bg-post">
+            <View className="w-16 h-16 rounded-xl mr-4 bg-avatar-1 flex items-center justify-center">
                 <Image source={avatar}  />
             </View>
-            <View className="flex-1">
-                    <Text className="text-lg font-semibold">Phan xuan bao</Text>
-                    <Text className="text-gray-500">Khoa noi</Text>
+            <View className="flex-col">
+                    <View>
+                        <Text className="text-base font-semibold">Phan xuan bao</Text>
+                    </View>
+                    <View className="rounded-sm flex-row ">
+                        <Text className=" text-all bg-bgmajor py-0.5 px-1 rounded-md flex-none">Khoa noi</Text>
+                    </View>
             </View>
         </View>
         

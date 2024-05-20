@@ -32,6 +32,7 @@ const ChatComponent = () => {
                 content: text
             })
             setText("")
+            console.log("sendmessage")
 
         }
         catch (error) {
