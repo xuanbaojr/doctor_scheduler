@@ -9,13 +9,14 @@ datasource db {
 }
 
 model User {
-  id       String     @id @default(uuid())
-  email    String     @unique
-  phone    String
-  role     Role
-  custumer Customer[]
-  doctor   Doctor?
-  nurse    Nurse?
+  id        String      @id @default(uuid())
+  email     String      @unique
+  phone     String
+  role      Role
+  Chat_chat Chat_chat[]
+  custumer  Customer[]
+  doctor    Doctor?
+  nurse     Nurse?
 }
 
 model Doctor {
@@ -97,10 +98,10 @@ model Customer {
   id          String    @id @default(uuid())
   firstName   String
   lastName    String
-  age         String
   sex         Sex
   address     String
   userId      String
+  date        DateTime? @db.Date
   listComment Comment[]
   User        User      @relation(fields: [userId], references: [id])
   listOrder   Order[]   @relation("customerOrder")
@@ -150,6 +151,37 @@ model chat {
   receiver   String?
   content    String?
   member     String[]
+}
+
+model Chat_chat {
+  id        BigInt                 @id(map: "chat_chat_pkey") @default(autoincrement())
+  content   Json?
+  metadata  Json?
+  embedding Unsupported("vector")?
+  user_id   String?
+  User      User?                  @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model Doctor_chat {
+  id             BigInt           @id(map: "Doctor_AI_pkey") @unique(map: "Doctor_AI_id_key") @default(autoincrement())
+  name           String?
+  price          Int?             @db.SmallInt
+  Specialty_chat Specialty_chat[]
+}
+
+model Specialty_chat {
+  id             BigInt       @id(map: "Clinic_AI_pkey") @default(autoincrement())
+  doctor_id      BigInt?
+  specialty_name String?
+  price          Int?         @db.SmallInt
+  Doctor_chat    Doctor_chat? @relation(fields: [doctor_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Clinic_AI_doctor_id_fkey")
+}
+
+model documents {
+  id        BigInt                 @id @default(autoincrement())
+  content   String?
+  metadata  Json?
+  embedding Unsupported("vector")?
 }
 
 enum Sex {

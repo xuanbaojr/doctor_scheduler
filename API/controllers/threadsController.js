@@ -105,20 +105,20 @@ class ThreadsController {
             const customerId = data.custumer[0].id
             const user = await prisma.customer.findFirst({
                 where : {
-                id: customerId
+                    id: customerId
                 },
                 include : {
-                listThread : {
-                    include : {
-                    comment : {
-                        select : {
-                        content : true,
-                        createAt : true,
-                        name : true,
+                    listThread : {
+                        include : {
+                            comment : {
+                                select : {
+                                    content : true,
+                                    createAt : true,
+                                    name : true,
+                                }
+                            }
                         }
                     }
-                    }
-                }
                 }
             })
             console.log(user)

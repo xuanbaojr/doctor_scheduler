@@ -1,5 +1,6 @@
 import { Text, View } from "react-native"
 import { MaterialTopTabs } from "./_layout"
+import InvaildPage from "@/components/patientRecord/page/NoVaildPage"
 
 
 const notDonePage = () => {
@@ -9,10 +10,9 @@ const notDonePage = () => {
           title : "Hẹn nhỡ"
         }}
         />
-        <View>
-            <Text>
-                not done  page
-            </Text>
+        <View className="h-full w-full bg-bg-post">
+            <InvaildPage />
+            
         </View>
         </>
     )

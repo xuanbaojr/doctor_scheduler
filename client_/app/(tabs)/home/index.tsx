@@ -37,13 +37,16 @@ const StartPage = () => {
             className=" w-full grid grid-rows-2"
           />
         </View>
+
+        {/* activity  */}
         <View className="my-3">
           <Activity />
         </View>
-
+            {/* review doctor */}
         <View className="">
           <ReviewDoctor />
         </View>
+        {/* hotline */}
         <View className="px-2 mb-3">
           <View className="flex-row py-2 bg-bghotline justify-center items-center rounded-xl">
             <View className="mr-3 flex justify-center items-center">

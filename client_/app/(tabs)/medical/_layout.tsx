@@ -33,6 +33,12 @@ const MedicalLayout = () => {
         }}
       />
       <Stack.Screen
+        name="[id]"
+        options={{
+          headerShown: false
+        }}
+      />
+      <Stack.Screen
         name="result"
         options={{
           headerShown: true,

@@ -43,9 +43,9 @@ class CustomerController {
       firstName, 
       lastName, 
       gender, 
-      age, 
+      date, 
       address} = req.body;
-    console.log(userId + " " + firstName + " " + lastName + " " + gender + " " + age + " " + address);
+    console.log(userId + " " + firstName + " " + lastName + " " + gender + " " + date + " " + address);
 
     try {
       // Kiểm tra xem user đã tồn tại trong database chưa
@@ -66,7 +66,7 @@ class CustomerController {
           userId: userId,
           firstName: firstName,
           lastName: lastName,
-          age: age,
+          date: date,
           sex: gender,
           address: address,
         },

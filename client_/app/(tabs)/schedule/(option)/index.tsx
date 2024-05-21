@@ -65,22 +65,9 @@ const SchedulePage = () => {
           title : "Hẹn khám"
         }}
       />
-    <View className=" h-full w-full py-3 flex items-center">
+    <View className=" h-full w-full py-3 flex bg-bg-post items-center">
       <View className='flex-1 w-full px-2'>
         <ScrollView>
-        {orders.map((order, index: number) => (
-        <View key={index}>
-            <ScheduleOrderButton 
-              date_be={order['date_time']}
-              time={order['hour_time']}
-              doctor={order['doctor']['name']}
-              clinic={order['clinicId']}
-              doctorId={order['doctorId']}
-              orderId={order['id']}
-              isCreate={false.toString()}
-            />
-        </View>
-        ))}
         {orders.map((order, index: number) => (
         <View key={index}>
             <ScheduleOrderButton 
