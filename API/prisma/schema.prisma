@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -15,8 +9,203 @@ datasource db {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+  id        String      @id @default(uuid())
+  email     String      @unique
+  phone     String
+  role      Role
+  Chat_chat Chat_chat[]
+  custumer  Customer[]
+  doctor    Doctor?
+  nurse     Nurse?
 }
 
+model Doctor {
+  id        String   @id @default(uuid())
+  name      String
+  userId    String   @unique
+  clinics   Clinic[]
+  user      User     @relation(fields: [userId], references: [id])
+  listOrder Order[]  @relation("doctorOrdered")
+}
+
+model Order {
+  id          String    @id @default(uuid())
+  createAt    DateTime  @default(now())
+  comment     String
+  customer_id String
+  doctorId    String
+  date_time   DateTime? @db.Date
+  hour_time   String?
+  clinicId    String?
+  status      Status?   @default(Pending)
+  Customer    Customer  @relation(fields: [customer_id], references: [id], map: "Order_customId_fkey")
+  doctor      Doctor    @relation("doctorOrdered", fields: [doctorId], references: [id])
+  Clinic      Clinic?   @relation(fields: [clinicId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "public_Order_clinicId_fkey")
+}
+
+model Thread {
+  id       String    @id @default(uuid())
+  customId String?
+  image    String?
+  createAt DateTime  @default(now())
+  content  String
+  gender   String
+  major    String[]
+  age      String
+  puImage  Boolean?
+  nurseId  String?
+  comment  Comment[] @relation("threadComment")
+  custom   Customer? @relation("customerThread", fields: [customId], references: [id])
+  nurse    Nurse?    @relation("nurseThread", fields: [nurseId], references: [id])
+}
+
+model Comment {
+  id         String    @id @default(uuid())
+  threadId   String?
+  nurseId    String?
+  customerId String?
+  content    String
+  createAt   DateTime  @default(now())
+  name       String
+  customer   Customer? @relation(fields: [customerId], references: [id])
+  nurse      Nurse?    @relation(fields: [nurseId], references: [id])
+  thread     Thread?   @relation("threadComment", fields: [threadId], references: [id])
+}
+
+model Profile {
+  id              String        @id @default(uuid())
+  customId        String
+  createAt        DateTime      @default(now())
+  title           String
+  reconment        String
+  listExamination Examination[] @relation("profile")
+  customer        Customer      @relation("customerProfile", fields: [customId], references: [id])
+}
+
+model Examination {
+  id        String   @id @default(uuid())
+  createAt  DateTime @default(now())
+  comment String
+  listResult Result[] @relation("examination")
+  profileId String
+  profile   Profile  @relation("profile", fields: [profileId], references: [id])
+}
+
+model Result {
+  id String @id @default(uuid())
+  image String[]
+  comment String
+  name String
+  examinationId String
+  examination Examination @relation("examination", fields: [examinationId], references: [id])
+
+}
+
+model Customer {
+  id          String    @id @default(uuid())
+  firstName   String
+  lastName    String
+  sex         Sex
+  address     String
+  userId      String
+  date        DateTime? @db.Date
+  listComment Comment[]
+  User        User      @relation(fields: [userId], references: [id])
+  Order       Order[]
+  listFile    Profile[] @relation("customerProfile")
+  listThread  Thread[]  @relation("customerThread")
+}
+
+model Nurse {
+  id          String    @id @default(uuid())
+  userId      String    @unique
+  listComment Comment[]
+  User        User      @relation(fields: [userId], references: [id])
+  listThread  Thread[]  @relation("nurseThread")
+}
+
+model Specialty {
+  id      String   @id @default(uuid())
+  name    String?  @unique
+  clinics Clinic[]
+}
+
+model Clinic {
+  id           String     @id
+  doctor_id    String
+  name         String?
+  major        String
+  price        Int
+  specialty_id String?
+  Specialty    Specialty? @relation(fields: [specialty_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "_DoctorToSpecialty_B_fkey")
+  Doctor       Doctor     @relation(fields: [doctor_id], references: [id], onDelete: Cascade, map: "_DoctorToSpecialty_A_fkey")
+  Order        Order[]
+
+  @@unique([id, doctor_id], map: "_DoctorToSpecialty_AB_unique")
+  @@index([doctor_id], map: "_DoctorToSpecialty_B_index")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model todos {
+  id   Int     @id @default(autoincrement())
+  task String?
+}
+
+model chat {
+  id         String   @id(map: "Chat_pkey") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  sender     String?
+  receiver   String?
+  content    String?
+  member     String[]
+}
+
+model Chat_chat {
+  id        BigInt                 @id(map: "chat_chat_pkey") @default(autoincrement())
+  content   Json?
+  metadata  Json?
+  embedding Unsupported("vector")?
+  user_id   String?
+  User      User?                  @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model Doctor_chat {
+  id             BigInt           @id(map: "Doctor_AI_pkey") @unique(map: "Doctor_AI_id_key") @default(autoincrement())
+  name           String?
+  price          Int?             @db.SmallInt
+  Specialty_chat Specialty_chat[]
+}
+
+model Specialty_chat {
+  id             BigInt       @id(map: "Clinic_AI_pkey") @default(autoincrement())
+  doctor_id      BigInt?
+  specialty_name String?
+  price          Int?         @db.SmallInt
+  Doctor_chat    Doctor_chat? @relation(fields: [doctor_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Clinic_AI_doctor_id_fkey")
+}
+
+model documents {
+  id        BigInt                 @id @default(autoincrement())
+  content   String?
+  metadata  Json?
+  embedding Unsupported("vector")?
+}
+
+enum Sex {
+  woman
+  man
+  not
+}
+
+enum Role {
+  Doctor
+  Customer
+  Nurse
+}
+
+/// This enum is commented in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+enum Status {
+  Pending
+  Completed
+  Cancelled
+}

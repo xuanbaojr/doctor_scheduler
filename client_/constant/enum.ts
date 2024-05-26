@@ -5,8 +5,9 @@ export enum Postion {
     nurfe = "nurfe",
 }
 
-export enum Sex {
+export enum Gender {
     woman = "woman",
     man = "man",
     not = "not"
 }
+

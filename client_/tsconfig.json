@@ -8,8 +8,10 @@
     },
     "sourceMap": true,
     "outDir": "dist",
-    "lib": ["ESNext"],
-    "esModuleInterop": true,
+    "lib": [
+      "ESNext"
+    ],
+    "esModuleInterop": true
   },
   "extends": "expo/tsconfig.base",
   "include": [
@@ -17,5 +19,5 @@
     "**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts"
-  ]
+, "components/pagePost/FieldInput.tsx", "components/card/SelectMajor.jsx"  ]
 }
