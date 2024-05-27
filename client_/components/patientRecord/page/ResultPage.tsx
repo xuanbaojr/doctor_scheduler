@@ -2,6 +2,7 @@ import instance from "@/utils/axios"
 import { useEffect, useState } from "react"
 import { View } from "react-native"
 import { ResultDataType, convertDataToResultType } from "../type/Result"
+import AccordinNative from "@/components/accordion/AccordinNative"
 
 interface Props {
     id : string,
@@ -28,6 +29,7 @@ const ResultPage = ({id, linkId} : Props) => {
 
     return (
         <View className="h-full w-full bg-bg-post flex-col px-2 py-1">
+            <AccordinNative />
             
         </View>
     )

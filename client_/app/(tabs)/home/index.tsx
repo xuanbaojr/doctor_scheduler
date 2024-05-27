@@ -7,6 +7,7 @@ import Activity from "@/components/card/Activity";
 import { useAuth } from "@clerk/clerk-expo";
 const background = require("../../../assets/background.jpg");
 import { FontAwesome5 } from "@expo/vector-icons";
+import AccordinNative from "@/components/accordion/AccordinNative";
 
 const StartPage = () => {
   const { isLoaded, userId, sessionId, getToken } = useAuth();
@@ -37,6 +38,7 @@ const StartPage = () => {
             className=" w-full grid grid-rows-2"
           />
         </View>
+        <AccordinNative />
         <View className="my-3">
           <Activity />
         </View>
