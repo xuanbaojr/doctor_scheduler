@@ -1,6 +1,5 @@
-require("dotenv").config();
-const cors = require("cors");
-const express = require("express");
+const cors = require('cors')
+const express = require("express")
 const app = express();
 const routesInit = require("./routes/indexRoute");
 const { ClerkExpressWithAuth } = require("@clerk/clerk-sdk-node");
@@ -26,7 +25,7 @@ var server = app.listen(3000, { cors: true }, listen);
 function listen() {
   var host = server.address().address;
   var port = server.address().port;
-  console.log("Example app listening at http://192.168.1.208" + ":" + port);
+  console.log("Example app listening at" + host  + ":" + port);
 }
 
 // npm install @supabase/supabase-js

@@ -14,12 +14,11 @@ const Myself = () => {
  
   const getAllThreadForSelf = async () => {
     try {
-       console.log(123)
+      console.log(123)
       const response : any  = await instance.get(`/threadAllForSelf?userId=${userId}`);
-       const test : ThreadDataType[] = ConvertDataToThreadType(response.listThread)
+      const test : ThreadDataType[] = ConvertDataToThreadType(response.listThread)
       setListThreard(test)
       console.log(response)
-      console.log(response.listThread)
     } catch (e) {
       console.log(e)
     }

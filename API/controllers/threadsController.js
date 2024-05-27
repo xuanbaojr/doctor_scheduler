@@ -102,6 +102,7 @@ class ThreadsController {
                     }
                 }
             })
+            if(!data) return
             const customerId = data.custumer[0].id
             const user = await prisma.customer.findFirst({
                 where : {

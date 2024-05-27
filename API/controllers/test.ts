@@ -5,39 +5,34 @@ const prisma = new PrismaClient()
 
 
 class test {
-
-  async fecthTimeForDisease (req, res) {
-    const diseaseId = req.query.diseaseId
-    console.log(diseaseId)
-      try {
-
-        const data = await prisma.profile.findFirst({
-            where : {
-              id : diseaseId,
-            },
-            include : {
-              listExamination : {
-                select : {
-                  id : true,
-                  title : true,
-                  createAt: true,
+    async getAllProfileForCus (req, res) {
+        try {
+            const userId = req.query.userId;
+            console.log(userId)  
+            const data = await prisma.examination.findFirst({
+                where : {
+                    id : userId,
                 },
-                orderBy : {
-                  createAt : "asc"
+                include : {
+                    listResult: {
+                        select : {
+                            id: true,
+                            image : true,
+                            comment : true,
+                            name : true,
+                        }
+                    }
                 }
-              }
-            }
-        })
-        console.log(data)
-        res.send(data)
-  
-      } catch (error ) {
-          console.log(error);
-          res.status(500).json({
-              errorCode: 1,
-              msg: "Server" + error.message
-          });
-      }
-  
-  }
-  }
+            })  
+            res.send(data?.listResult)
+            
+
+        }catch (error ) {
+            console.log(error);
+            res.status(500).json({
+                errorCode: 1,
+                msg: "Server" + error.message
+            });
+        }
+    }
+}

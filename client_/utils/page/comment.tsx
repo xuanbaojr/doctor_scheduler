@@ -6,3 +6,15 @@ export const convertComment = (content : string, subLength : number) => {
     }
     return content
 }
+
+export const convertDateToAge = (date : Date) : string => {
+    const today = new Date()
+    const birth = new Date(date)
+    const age = today.getFullYear() - birth.getFullYear()
+    return age.toString()
+}
+
+export const convertLink = (link : string, separator : string) => {
+    return link.split(separator)
+
+}
