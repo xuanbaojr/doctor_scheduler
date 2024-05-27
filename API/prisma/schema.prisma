@@ -9,13 +9,14 @@ datasource db {
 }
 
 model User {
-  id       String     @id @default(uuid())
-  email    String     @unique
-  phone    String
-  role     Role
-  custumer Customer[]
-  doctor   Doctor?
-  nurse    Nurse?
+  id        String      @id @default(uuid())
+  email     String      @unique
+  phone     String
+  role      Role
+  Chat_chat Chat_chat[]
+  custumer  Customer[]
+  doctor    Doctor?
+  nurse     Nurse?
 }
 
 model Doctor {
@@ -28,20 +29,18 @@ model Doctor {
 }
 
 model Order {
-  id        String    @id @default(uuid())
-  createAt  DateTime  @default(now())
-  comment   String
-  done      Boolean
-  customId  String
-  doctorId  String
-  time      Int[]     @db.SmallInt
-  data_time DateTime? @db.Timestamptz(6)
-  date_time DateTime? @db.Date
-  hour_time String?
-  clinicId  String?
-  custom    Customer  @relation("customerOrder", fields: [customId], references: [id])
-  doctor    Doctor    @relation("doctorOrdered", fields: [doctorId], references: [id])
-  Clinic    Clinic?   @relation(fields: [clinicId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "public_Order_clinicId_fkey")
+  id          String    @id @default(uuid())
+  createAt    DateTime  @default(now())
+  comment     String
+  customer_id String
+  doctorId    String
+  date_time   DateTime? @db.Date
+  hour_time   String?
+  clinicId    String?
+  status      Status?   @default(Pending)
+  Customer    Customer  @relation(fields: [customer_id], references: [id], map: "Order_customId_fkey")
+  doctor      Doctor    @relation("doctorOrdered", fields: [doctorId], references: [id])
+  Clinic      Clinic?   @relation(fields: [clinicId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "public_Order_clinicId_fkey")
 }
 
 model Thread {
@@ -78,8 +77,7 @@ model Profile {
   customId        String
   createAt        DateTime      @default(now())
   title           String
-  recomment       String[]
-  content         String
+  reconment        String
   listExamination Examination[] @relation("profile")
   customer        Customer      @relation("customerProfile", fields: [customId], references: [id])
 }
@@ -87,23 +85,33 @@ model Profile {
 model Examination {
   id        String   @id @default(uuid())
   createAt  DateTime @default(now())
-  iamge     String[]
-  title     String
+  comment String
+  listResult Result[] @relation("examination")
   profileId String
   profile   Profile  @relation("profile", fields: [profileId], references: [id])
+}
+
+model Result {
+  id String @id @default(uuid())
+  image String[]
+  comment String
+  name String
+  examinationId String
+  examination Examination @relation("examination", fields: [examinationId], references: [id])
+
 }
 
 model Customer {
   id          String    @id @default(uuid())
   firstName   String
   lastName    String
-  age         String
   sex         Sex
   address     String
   userId      String
+  date        DateTime? @db.Date
   listComment Comment[]
   User        User      @relation(fields: [userId], references: [id])
-  listOrder   Order[]   @relation("customerOrder")
+  Order       Order[]
   listFile    Profile[] @relation("customerProfile")
   listThread  Thread[]  @relation("customerThread")
 }
@@ -123,14 +131,14 @@ model Specialty {
 }
 
 model Clinic {
-  id           String    @id
+  id           String     @id
   doctor_id    String
-  specialty_id String
   name         String?
   major        String
   price        Int
-  Doctor       Doctor    @relation(fields: [doctor_id], references: [id], onDelete: Cascade, map: "_DoctorToSpecialty_A_fkey")
-  Specialty    Specialty @relation(fields: [specialty_id], references: [id], onDelete: Cascade, map: "_DoctorToSpecialty_B_fkey")
+  specialty_id String?
+  Specialty    Specialty? @relation(fields: [specialty_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "_DoctorToSpecialty_B_fkey")
+  Doctor       Doctor     @relation(fields: [doctor_id], references: [id], onDelete: Cascade, map: "_DoctorToSpecialty_A_fkey")
   Order        Order[]
 
   @@unique([id, doctor_id], map: "_DoctorToSpecialty_AB_unique")
@@ -152,6 +160,37 @@ model chat {
   member     String[]
 }
 
+model Chat_chat {
+  id        BigInt                 @id(map: "chat_chat_pkey") @default(autoincrement())
+  content   Json?
+  metadata  Json?
+  embedding Unsupported("vector")?
+  user_id   String?
+  User      User?                  @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model Doctor_chat {
+  id             BigInt           @id(map: "Doctor_AI_pkey") @unique(map: "Doctor_AI_id_key") @default(autoincrement())
+  name           String?
+  price          Int?             @db.SmallInt
+  Specialty_chat Specialty_chat[]
+}
+
+model Specialty_chat {
+  id             BigInt       @id(map: "Clinic_AI_pkey") @default(autoincrement())
+  doctor_id      BigInt?
+  specialty_name String?
+  price          Int?         @db.SmallInt
+  Doctor_chat    Doctor_chat? @relation(fields: [doctor_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Clinic_AI_doctor_id_fkey")
+}
+
+model documents {
+  id        BigInt                 @id @default(autoincrement())
+  content   String?
+  metadata  Json?
+  embedding Unsupported("vector")?
+}
+
 enum Sex {
   woman
   man
@@ -162,4 +201,11 @@ enum Role {
   Doctor
   Customer
   Nurse
+}
+
+/// This enum is commented in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+enum Status {
+  Pending
+  Completed
+  Cancelled
 }

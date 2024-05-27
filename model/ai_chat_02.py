@@ -42,7 +42,7 @@ app.add_middleware(
 
 
 
-os.environ['OPENAI_API_KEY'] = 'sk-proj-gFYTfQxwXefS5C6U5MInT3BlbkFJXUXyFPVG6zUECO7YgZUk'
+os.environ['OPENAI_API_KEY'] = 'sk-proj-H8O4QtCpj0K6FBF2bU0ZT3BlbkFJExFddD8CM7MyKRm8Qfj8'
 llm = ChatOpenAI(model="gpt-3.5-turbo")
 embedding = OpenAIEmbeddings()
 

@@ -49,8 +49,8 @@ const ListMember = () => {
             borderRadius: 8,
             shadowColor: "#000000",
             shadowOpacity: 0.1,
-            shadowRadius: 5,
-            elevation: 5,
+            shadowRadius: 2,
+            elevation: 2,
             // flex: 1,
             alignItems: "center",
           }}
