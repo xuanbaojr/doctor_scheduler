@@ -10,7 +10,7 @@ const Header = async() => {
     return (
         <>
         
-        <div className="h-20 bg-blue-400">
+        <div className="h-14 bg-blue-400 ">
 
         </div>
         

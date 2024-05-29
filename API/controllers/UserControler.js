@@ -7,7 +7,7 @@ class userController {
   async fetchUser(req, res) {
     try {
       const data = await prisma.user.findMany({});
-      console.log(data);
+      // console.log(data);
       res.send(data);
     } catch (error) {
       console.log(error);
