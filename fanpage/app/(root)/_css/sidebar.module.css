@@ -1,12 +1,11 @@
 .sidebar {
     position: fixed;
     left: 0;
-    top: 0;
-    height: 100%;
+    top: 70;
+    height: calc(100% - 70px);
     width: 300px;
     background-color: #33567a;
     padding: 20px;
-    margin-top: 70px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
@@ -30,9 +29,14 @@
     text-decoration: none;
     font-size: 1.2rem;
     transition: color 0.3s;
+    display: flex;
+    align-items: center;
   }
   
   .navLink:hover {
     color: #3498db;
   }
   
+  .icon {
+    margin-right: 10px;
+  }

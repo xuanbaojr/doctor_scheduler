@@ -1,6 +1,7 @@
 import React from 'react';
-import styles from '../_css/sidebar.module.css';
+import { FaUser, FaCalendarAlt, FaFolder } from 'react-icons/fa';
 import Link from 'next/link';
+import styles from '../_css/sidebar.module.css';
 
 const Sidebar = () => {
   return (
@@ -9,17 +10,23 @@ const Sidebar = () => {
         <ul className={styles.navList}>
           <li className={styles.navItem}>
             <Link href="./infor">
-              <div className={styles.navLink}>Thông tin bác sĩ</div>
+              <div className={styles.navLink}>
+                <FaUser className={styles.icon} /> Thông tin bác sĩ
+              </div>
             </Link>
           </li>
           <li className={styles.navItem}>
             <Link href="./media">
-              <div className={styles.navLink}>Lịch khám </div>
+              <div className={styles.navLink}>
+                <FaCalendarAlt className={styles.icon} /> Lịch khám
+              </div>
             </Link>
           </li>
           <li className={styles.navItem}>
             <Link href="./infor">
-              <div className={styles.navLink}>Lịch khám </div>
+              <div className={styles.navLink}>
+                <FaFolder className={styles.icon} /> Hồ sơ khám bệnh
+              </div>
             </Link>
           </li>
         </ul>
