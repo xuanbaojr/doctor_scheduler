@@ -9,23 +9,26 @@ const Sidebar = () => {
       <nav className={styles.nav}>
         <ul className={styles.navList}>
           <li className={styles.navItem}>
-            <Link href="./infor">
+            <Link href="./infor" >
               <div className={styles.navLink}>
-                <FaUser className={styles.icon} /> Thông tin bác sĩ
+                <FaUser className={styles.icon} /> 
+                <span>Thông tin bác sĩ</span>
               </div>
             </Link>
           </li>
           <li className={styles.navItem}>
-            <Link href="./media">
+            <Link href="./media" >
               <div className={styles.navLink}>
-                <FaCalendarAlt className={styles.icon} /> Lịch khám
+                <FaCalendarAlt className={styles.icon} /> 
+                <span>Lịch khám</span>
               </div>
             </Link>
           </li>
           <li className={styles.navItem}>
-            <Link href="./infor">
+            <Link href="./infor" >
               <div className={styles.navLink}>
-                <FaFolder className={styles.icon} /> Hồ sơ khám bệnh
+                <FaFolder className={styles.icon} /> 
+                <span>Hồ sơ khám bệnh</span>
               </div>
             </Link>
           </li>
