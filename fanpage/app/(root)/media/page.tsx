@@ -1,4 +1,21 @@
-const Media = () => {
+// 'use client'
+import React from 'react';
+import Calendar from '@/components/CalendarPage/Celendar';
+
+const MediaPage: React.FC = () => {
+  const pageStyle: React.CSSProperties = {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    padding: '20px',
   };
-  
-  export default Media;
+
+  return (
+    <div style={pageStyle}>
+      <h1>Lịch</h1>
+      <Calendar />
+    </div>
+  );
+};
+
+export default MediaPage;

@@ -17,7 +17,7 @@ const Sidebar = () => {
             </Link>
           </li>
           <li className={styles.navItem}>
-            <Link href="./media" >
+            <Link href="./calendar" >
               <div className={styles.navLink}>
                 <FaCalendarAlt className={styles.icon} /> 
                 <span>Lịch khám</span>
@@ -25,7 +25,7 @@ const Sidebar = () => {
             </Link>
           </li>
           <li className={styles.navItem}>
-            <Link href="./infor" >
+            <Link href="./media" >
               <div className={styles.navLink}>
                 <FaFolder className={styles.icon} /> 
                 <span>Hồ sơ khám bệnh</span>
