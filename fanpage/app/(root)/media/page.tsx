@@ -14,6 +14,9 @@ const MediaPage: React.FC = () => {
     <div style={pageStyle}>
       <h1>Lịch</h1>
       <Calendar />
+      <Calendar />
+      <Calendar />
+      <Calendar />
     </div>
   );
 };
