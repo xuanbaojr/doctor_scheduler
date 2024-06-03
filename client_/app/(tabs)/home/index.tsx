@@ -62,6 +62,12 @@ const StartPage = () => {
             <Text>AI CHAT DEMO</Text>
           </TouchableOpacity>
           </Link>
+        
+          <Link href={`/chat/AI_chat_test`} asChild>
+          <TouchableOpacity>
+            <Text>AI CHAT TEST</Text>
+          </TouchableOpacity>
+          </Link>
       </ScrollView>
     </>
   );
