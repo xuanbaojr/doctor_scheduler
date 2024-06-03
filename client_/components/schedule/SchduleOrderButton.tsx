@@ -28,7 +28,7 @@ const ScheduleOrderButton = ({
     return (
         <Link
             href={{
-              pathname: "../scheduleDoctor/[orderId]",
+              pathname: "../../scheduleDoctor/[orderId]",
               params: {
                 clinic_id: clinic,
                 doctorId: doctorId,

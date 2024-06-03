@@ -22,12 +22,6 @@ from langserve import RemoteRunnable
 from fastapi import FastAPI, File, UploadFile, Form, Body
 from fastapi.responses import Response
 
-
-
-os.environ["LANGCHAIN_TRACING_V2"] = "true"
-os.environ["LANGCHAIN_API_KEY"] = "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"
-# os.environ['OPENAI_API_KEY'] = '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'
-os.environ['TAVILY_API_KEY'] = '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'
 # 1. Load Retriever
 file_path = "test.txt"
 with open(file_path, "r", encoding="utf-8") as f:

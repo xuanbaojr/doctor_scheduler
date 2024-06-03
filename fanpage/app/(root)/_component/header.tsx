@@ -1,21 +1,49 @@
-import { draftMode } from "next/headers"
+import React from 'react';
+import { FaBell, FaUser, FaAmbulance } from 'react-icons/fa';
 
+const Header = () => {
+  return (
+    <header style={headerStyle}>
+      <div style={leftStyle}>
+        <FaAmbulance size={50} />
+        <span style={siteNameStyle}>ĐẶT LỊCH xin chào</span>
+      </div>
+      <div style={rightStyle}>
+        <FaBell size={30} style={iconStyle} />
+        <FaUser size={30} style={iconStyle} />
+      </div>
+    </header>
+  );
+};
 
+const headerStyle = {
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  padding: '10px 50px',
+  backgroundColor: '#CAE0FA',
+  boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+};
 
-interface Props {
+const leftStyle = {
+  display: 'flex',
+  alignItems: 'center',
+};
 
-}
+const siteNameStyle = {
+  marginLeft: '10px',
+  fontSize: '1.5rem',
+  fontWeight: 'bold',
+};
 
-const Header = async() => {
-    return (
-        <>
-        
-        <div className="h-20 bg-blue-400">
+const rightStyle = {
+  display: 'flex',
+  alignItems: 'center',
+};
 
-        </div>
-        
-        </>
-    )
-}
+const iconStyle = {
+  marginLeft: '15px',
+  cursor: 'pointer',
+};
 
-export default Header
+export default Header;

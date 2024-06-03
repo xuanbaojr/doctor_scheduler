@@ -11,17 +11,25 @@ class ExaminationController {
                 where : {
                     id : userId,
                 },
-                include : {
+                select : {
+                    title : true,
                     listExamination : {
                         select : {
                             id : true,
                             createAt : true,
                             comment : true,
+                        },
+                        orderBy : {
+                            createAt : "asc"
                         }
                     }
                 }
             })  
-            res.send(data?.listExamination)
+            const datas = {
+                title : data.title,
+                examination : data.listExamination
+            }
+            res.send(datas)
         }catch (error ) {
             console.log(error);
             res.status(500).json({
@@ -38,7 +46,8 @@ class ExaminationController {
                 where : {
                     id : userId,
                 },
-                include : {
+                select : {
+                    comment : true,
                     listResult: {
                         select : {
                             id: true,
@@ -49,7 +58,11 @@ class ExaminationController {
                     }
                 }
             })  
-            res.send(data?.listResult)
+            const datas = {
+                comment : data.comment,
+                result : data.listResult
+            }
+            res.send(datas)
         }catch (error ) {
             console.log(error);
             res.status(500).json({
@@ -59,6 +72,43 @@ class ExaminationController {
         }
     }
 
+
+    async getAllDataForProfile (req, res) {
+        try {
+            const Id = req.query.Id;
+            const data = await prisma.examination.findMany({
+                where : {
+                    profileId : Id
+                },
+                select : {
+                    id : true,
+                    createAt : true,
+                    comment : true,
+                    listResult : {
+                        select : {
+                            id : true,
+                            name : true,
+                            comment : true,
+                            image : true,
+                        }
+                    }
+                },
+                orderBy : {
+                    createAt : "desc"
+                }
+            })
+            res.send(data)
+        }catch (error ) {
+            console.log(error);
+            res.status(500).json({
+                errorCode: 1,
+                msg: "Server" + error.message
+            });
+        }
+    }
+
+    // create new exami for the web 
+    
 }
 
 module.exports = new ExaminationController

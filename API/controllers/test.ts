@@ -5,28 +5,15 @@ const prisma = new PrismaClient()
 
 
 class test {
-    async getAllProfileForCus (req, res) {
+    async createNewExamiForWeb (req, res) {
         try {
-            const userId = req.query.userId;
-            console.log(userId)  
-            const data = await prisma.examination.findFirst({
-                where : {
-                    id : userId,
-                },
-                include : {
-                    listResult: {
-                        select : {
-                            id: true,
-                            image : true,
-                            comment : true,
-                            name : true,
-                        }
-                    }
+            const profileId = req.query.profileId;
+            const data = await prisma.examination.create({
+                data : {
+                    comment : "sda",
+                    profile : profileId,
                 }
-            })  
-            res.send(data?.listResult)
-            
-
+            })
         }catch (error ) {
             console.log(error);
             res.status(500).json({
@@ -34,5 +21,5 @@ class test {
                 msg: "Server" + error.message
             });
         }
-    }
+        }
 }

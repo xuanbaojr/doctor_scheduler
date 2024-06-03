@@ -42,7 +42,7 @@ const ProfileList = ({id, createAt, title, reconment, linkId} : Props) => {
         }}
         >
             <View className="w-16 h-16 rounded-full mr-4 flex justify-center items-center">
-                <FontAwesome5 name="notes-medical" size={32} color="black" />
+                <FontAwesome5 name="notes-medical" size={32} color="#0860c4" />
             </View>
             <View className="flex-col flex-1">
                 <Text className="mb-1  text-slate-500 text-base">{convertComment(title, 30)}</Text>

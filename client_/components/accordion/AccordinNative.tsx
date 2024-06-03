@@ -4,17 +4,34 @@ import { accordinData } from "./accordinData"
 
 
 interface Props {
+    name : string,
+    image : string[],
+    comment : string,
 
 }
 
-const AccordinNative = () => {
+const AccordinNative = ({ image, comment, name} : Props) => {
 
     return (
-        <View>
+        <View className="mx-2 my-2"
+        style={{
+            // flexDirection: "row",
+            // padding: 2,
+            backgroundColor: "#FFFFFF",
+            borderRadius: 8,
+            shadowColor: "#000000",
+            shadowOpacity: 0.1,
+            shadowRadius: 2,
+            elevation: 2,
+            // flex: 1,
+            // alignItems: "center",
+        }}
+        >
             <AccordinItem 
-            index={1} 
-            label={accordinData[0].label}
-            body={accordinData[0].body}
+                index={1} 
+                label={name}
+                body={image}
+                comment={comment}
             />
         </View>
     )

@@ -73,3 +73,13 @@ export const convertCreateAt = (date : Date) : string => {
     const createAt = formattedDate.toLocaleDateString() 
     return createAt
 }
+
+export const convertDateToAge = (date : Date) : number | "Chưa điền" => {
+    if(date == null) {
+        return "Chưa điền"
+    }
+    const today = new Date()
+    const birth = new Date(date)
+    const age = today.getFullYear() - birth.getFullYear()
+    return age
+}

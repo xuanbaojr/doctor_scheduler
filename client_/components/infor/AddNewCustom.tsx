@@ -28,7 +28,7 @@ const AddNewCustom = () => {
     const [firstName, setFirstName] = useState<string>()
     const [lastName, setLastName] = useState<string>()
     const [gender, setGender] = useState<string>()
-    const [age, setAge] = useState<string>()
+    const [date, setDate] = useState<Date>()
     const [phone, setPhone] = useState<string>()
     const [numberCMND, setNumberCMND] = useState<string>()
     const [address, setAddress] = useState<string>()
@@ -38,7 +38,7 @@ const AddNewCustom = () => {
             alertMessing("Họ")
         } else if (!lastName || lastName.length == 0) {
             alertMessing("Tên")
-        } else if (!age || age.length == 0) {
+        } else if (!date ) {
             alertMessing("Ngày sinh")
         }else if (!gender || gender.length == 0) {
             alertMessing("Giới tính")
@@ -48,18 +48,17 @@ const AddNewCustom = () => {
     }
 
     const createCustomer = async () => {
-        console.log(userId + " " + firstName + " " + lastName + " " + gender + " " + age + " " + address);
-        if (!firstName || !lastName || !age || !gender || !address) {
+        console.log(userId + " " + firstName + " " + lastName + " " + gender + " " + date + " " + address);
+        if (!firstName || !lastName || !date || !gender || !address) {
             checkAlert()
             return
         }
-
         const customr = await instance.post("/createCustomer", {
           userId: userId,
           firstName,
           lastName,
           gender,
-          age,
+          date,
           address
         });
         if(!customr) {
@@ -97,7 +96,7 @@ const AddNewCustom = () => {
                 />
 
                 <DateAndGender 
-                    age={age} setAge={setAge}
+                    date={date} setDate={setDate}
                     gender={gender}
                     setGender={setGender}
                 />
