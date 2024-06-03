@@ -31,17 +31,17 @@ const Layout = () => {
         <MaterialTopTabs screenOptions={{
         }}>
             <MaterialTopTabs.Screen 
-                name="index"
+                name="pending"
                 options={{
                 }}
             />
             <MaterialTopTabs.Screen 
-                name="pass"
+                name="completed"
                 options={{
                 }}
             />
             <MaterialTopTabs.Screen 
-                name="notdone"
+                name="cancelled"
                 options={{
                 }}
             />

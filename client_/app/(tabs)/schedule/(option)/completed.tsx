@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native'
 import { Link, Stack, router } from 'expo-router'
-import React, { useEffect } from 'react'
+import  { useEffect, useState } from 'react'
 import instance from '@/utils/axios'
 import { createClient } from '@supabase/supabase-js';
 import { get } from 'http';
@@ -8,6 +8,7 @@ import { convertCreateAt } from '@/components/pageThread/ThreadDataType';
 import ScheduleOrderButton from '@/components/schedule/SchduleOrderButton';
 import CustomButton from '@/components/customButton';
 import { MaterialTopTabs } from './_layout';
+import Index from '../../setting';
 
 
 const customer_id = "8b57944c-1e70-4a2e-83ec-30532e698de3"
@@ -17,20 +18,18 @@ const client = createClient(
 );
 
 const SchedulePage = () => {
-  const [orders, setOrders] = React.useState([])
-
+  const [doctors, setDoctors] = useState([])
   const getAllOrders = async () => {
     try {
-        const response : any = await instance.get(`/getAllOrder/${customer_id}`)
-        if(response && response.length > 0) {
-          setOrders(response); // Provide the correct type for the 'setOrders' function
-        }
-
-        console.log(response)
-    } catch (error) {
-        console.error("Error fetching chat:", error);
+      const {data, error} = await client.from("Order").select("*, Doctor(name)").eq("status", "Completed");
+      const doctors :any = data?.map(item  => item.Doctor) || [];  // Safely map over data
+      console.log(data)
+      setDoctors(doctors)
+    } catch (err) {
+      console.log("Something went wrong !", err);
     }
   }
+  
   useEffect(() => {
     getAllOrders()
   }, [])
@@ -53,11 +52,7 @@ const SchedulePage = () => {
     return () => {
         channelA.unsubscribe();
     }
-}, []);
-
-
-
-  
+});
 
   return (
     <>
@@ -65,38 +60,9 @@ const SchedulePage = () => {
           title : "Hẹn khám"
         }}
       />
-    <View className=" h-full w-full py-3 flex items-center">
-      <View className='flex-1 w-full px-2'>
-        <ScrollView>
-        {orders.map((order, index: number) => (
-        <View key={index}>
-            <ScheduleOrderButton 
-              date_be={order['date_time']}
-              time={order['hour_time']}
-              doctor={order['doctor']['name']}
-              clinic={order['clinicId']}
-              doctorId={order['doctorId']}
-              orderId={order['id']}
-              isCreate={false.toString()}
-            />
-        </View>
-        ))}
-        {orders.map((order, index: number) => (
-        <View key={index}>
-            <ScheduleOrderButton 
-              date_be={order['date_time']}
-              time={order['hour_time']}
-              doctor={order['doctor']['name']}
-              clinic={order['clinicId']}
-              doctorId={order['doctorId']}
-              orderId={order['id']}
-              isCreate={false.toString()}
-            />
-        </View>
-        ))}
-        </ScrollView>
-      </View>
-    </View>
+      {doctors.map((content, index) => (
+        <Text>{doctors[index]['name']}</Text>
+      ))}
     </>
   )
 }
