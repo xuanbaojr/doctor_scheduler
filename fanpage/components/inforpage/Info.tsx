@@ -1,18 +1,23 @@
-import axiosInstance from "@/untils/axios";
+'use server'
 
-interface User {
-  id: string;
-  email: string;
-  phone: string;
-  // role: string;
+import { DoctorDataType, convertDataToDoctorType } from "@/app/contants/Type/DoctorType";
+import instance from "@/untils/axios";
+import InfoDoctor from "./InfoDoctor";
+
+interface Props {
+    id : string
 }
 
-export const fetchUser = async (): Promise<User> => {
-  try {
-    const response = await axiosInstance.get("/user");
-    // console.log(response.data);
-    return response.data;
-  } catch (error) {
-    throw new Error("Error fetching user data: " + error);
-  }
-};
+const CusPage = async ({id} : Props) => {
+    const data : any = await instance.get(`/doctor/${id}`);
+    const doctors : DoctorDataType[] = convertDataToDoctorType(data)
+    const doctor = doctors[0];
+    return (
+        <div className="">
+            {doctor.clinics[0].Specialty.name}
+            <InfoDoctor doctor={doctor}/>
+        </div>
+    )
+}
+
+export default CusPage;
