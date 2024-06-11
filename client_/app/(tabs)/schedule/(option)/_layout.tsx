@@ -47,9 +47,7 @@ const Layout = () => {
             />
             
         </MaterialTopTabs>
-        <View className=" px-2 py-2 ">
-            <CustomButton title="Hẹn lịch khám" onPress={start} />
-        </View>
+
         
         </>
     )

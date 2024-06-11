@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState, useRef } from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, KeyboardAvoidingView, Platform, Keyboard } from 'react-native';
 import { TextInput, Button } from 'react-native-rapi-ui';
 import { createClient } from '@supabase/supabase-js'
 import { useAuth } from '@clerk/clerk-expo';
+import { SvgXml } from 'react-native-svg';
+
 
 
 // Create a single supabase client for interacting with your database
@@ -10,10 +12,12 @@ const supabase_url = "https://snwjzonusggqqymhbluj.supabase.co"
 const supabase_anon = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNud2p6b251c2dncXF5bWhibHVqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTE2MTU4MTEsImV4cCI6MjAyNzE5MTgxMX0.H-4glIFgFb31Gu3sl2X4nqFOnJw5MDKa0Yjf2SvW4A0"
 const supabase = createClient(supabase_url, supabase_anon)
 const TestComponent = () => {
+  const scrollViewRef = useRef();
+
     const user = useAuth()
     user_id = user.userId
     // thay ip cua may minh
-    const url = "http://192.168.1.6:8000"
+    const url = "http://10.20.9.149:8000"
     const [humanChat, setHumanChat] = useState('');
     const [questionList, setQuestionList] = useState([])
     const [answerList, setAnswerList] = useState([])
@@ -88,37 +92,68 @@ const TestComponent = () => {
     })
     
     return (
-        <View style={styles.container}>
-            <ScrollView style={styles.chatContainer}>
-                {questionList.map((content, index) => (
-                    <View key={index}>
-
-                    <View style={styles.responseRow}>
-                        <View style={styles.responseBox}>
-                            <Text style={styles.responseText}>{questionList[index]}</Text>
-                        </View>
-                    </View>
-                    <View style={styles.messageBox}>
-                        <Text>{answerList[index]}</Text>
-                    </View>
-
-                    </View>
-                ))}
-            </ScrollView>
-            
-            <View style={styles.inputContainer}>
-                <TextInput 
-                    style={styles.input} 
-                    placeholder='Type your message ...'
-                    value={humanChat}
-                    onChangeText={(val) => setHumanChat(val)}>
-                </TextInput>
-                <TouchableOpacity style={styles.button} onPress={() => sendQuestion()}>
-                    <Text style={styles.buttonText}>Send</Text>
-                </TouchableOpacity>
+      <>
+      <KeyboardAvoidingView
+      style={{ flex: 1, backgroundColor: '#FFFFFF' }}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    >
+      <ScrollView 
+        style={{ flex: 1, padding: 10 }}
+        contentContainerStyle={{ flexDirection: 'column-reverse' }}
+        ref={scrollViewRef}
+        onContentSizeChange={() => scrollViewRef.current.scrollToEnd({ animated: true })}
+      >
+        {questionList.map((content, index) => (
+          <View key={index} style={{ marginBottom: 10 }}>
+            <View style={{ alignSelf: 'flex-end', backgroundColor: '#3B82F6', borderRadius: 20, padding: 10, marginBottom: 5, marginRight: 20, maxWidth: '75%' }}>
+              <Text style={{ color: '#FFFFFF' }}>{questionList[index]}</Text>
             </View>
+            <View style={{ alignSelf: 'flex-start', backgroundColor: '#E5E7EB', borderRadius: 20, padding: 10, marginBottom: 5, marginLeft: 20, maxWidth: '75%' }}>
+              <Text>{answerList[index]}</Text>
+            </View>
+          </View>
+        ))}
+      </ScrollView>
 
-        </View>
+      <View style={{
+        width: '100%',
+        backgroundColor: '#F3F4F6',
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: 8,
+      }}>
+        <TouchableOpacity style={{ marginLeft: 8 }}>
+        </TouchableOpacity>
+        
+      </View>
+      
+    </KeyboardAvoidingView>
+    <View>
+    <TextInput 
+        style={{
+          flex: 1,
+          borderWidth: 1,
+          borderColor: '#E5E7EB',
+          borderRadius: 25,
+          paddingVertical: 8,
+          paddingHorizontal: 16,
+          marginLeft: 8,
+          marginRight: 8,
+        }} 
+        placeholder='Type your message ...'
+        value={humanChat}
+        onChangeText={(val) => setHumanChat(val)}
+        onFocus={() => scrollViewRef.current.scrollToEnd({ animated: true })}
+      />
+      <TouchableOpacity style={{ marginRight: 8 }}>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => {
+        sendQuestion();
+        Keyboard.dismiss();
+      }} style={{ marginRight: 8 }}>
+      </TouchableOpacity>
+    </View>
+    </>
     );
 };
 
