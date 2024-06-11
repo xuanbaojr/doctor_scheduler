@@ -33,9 +33,9 @@ const MedicalLayout = () => {
         }}
       />
       <Stack.Screen
-        name="result"
+        name="[id]"
         options={{
-          headerShown: true,
+          headerShown: false,
         }}
       />
     </Stack>

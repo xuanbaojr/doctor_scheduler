@@ -77,8 +77,7 @@ model Profile {
   customId        String
   createAt        DateTime      @default(now())
   title           String
-  recomment       String[]
-  content         String
+  reconment        String
   listExamination Examination[] @relation("profile")
   customer        Customer      @relation("customerProfile", fields: [customId], references: [id])
 }
@@ -86,10 +85,20 @@ model Profile {
 model Examination {
   id        String   @id @default(uuid())
   createAt  DateTime @default(now())
-  iamge     String[]
-  title     String
+  comment String
+  listResult Result[] @relation("examination")
   profileId String
   profile   Profile  @relation("profile", fields: [profileId], references: [id])
+}
+
+model Result {
+  id String @id @default(uuid())
+  image String[]
+  comment String
+  name String
+  examinationId String
+  examination Examination @relation("examination", fields: [examinationId], references: [id])
+
 }
 
 model Customer {

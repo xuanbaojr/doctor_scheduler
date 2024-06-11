@@ -1,5 +1,7 @@
 import React from 'react';
 import { FaBell, FaUser, FaAmbulance } from 'react-icons/fa';
+import React from 'react';
+import { FaBell, FaUser, FaAmbulance } from 'react-icons/fa';
 
 const Header = () => {
   return (

@@ -1,24 +1,25 @@
-// 'use client'
-import React from 'react';
-import Calendar from '@/components/CalendarPage/Celendar';
+'use server'
+import ButtonTest from "@/components/MediaCom/ButtonTest";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator"
+import { IdPage } from "./[...id]/_page/IdPage";
 
-const MediaPage: React.FC = () => {
-  const pageStyle: React.CSSProperties = {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    padding: '20px',
-  };
+
+interface Props {
+
+}
+
+const MediaPage = () => {
 
   return (
-    <div style={pageStyle}>
-      <h1>Lịch</h1>
-      <Calendar />
-      <Calendar />
-      <Calendar />
-      <Calendar />
-    </div>
-  );
-};
+    <div className=" ">
+      media page
+      <ButtonTest  path="user_2f9EC351AyOw5H0FYNsbxwOmBRg" idPage={IdPage.customer} />
+      <ButtonTest  path="123" idPage={IdPage.profile} />
+      <ButtonTest  path="123" idPage={IdPage.examination} />
 
+    </div>
+  )
+};
+  
 export default MediaPage;

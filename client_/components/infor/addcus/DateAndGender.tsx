@@ -7,18 +7,19 @@ import { faChevronRight, faL } from "@fortawesome/free-solid-svg-icons";
 import { convertCreateAt } from "@/components/pageThread/ThreadDataType";
 import RadioGroup, {RadioButtonProps} from 'react-native-radio-buttons-group';
 interface Props {
-    age : string | undefined,
-    setAge : (age : string,) => void,
+    date : Date | undefined,
+    setDate : (age : Date) => void,
     gender : string | undefined,
     setGender: (gender : string) => void,
 }
 
 
-const DateAndGender = ({age, setAge, gender, setGender}: Props) => {
+const DateAndGender = ({date, setDate, gender, setGender}: Props) => { // date la hien thi ngay theo thoi gian
 
-    const [date, setDate] = useState<Date>(new Date())
+    // const [date, setDate] = useState<Date>(new Date())
+    const [currentDate, setCurrentDate] = useState<Date>(new Date()) // hien thi ngay theo chuooi
+    const [dateStr, setDateStr] = useState("")  // hien thi ngay theo chuoi
     const [showPicker, setShowPicker] = useState(false)
-    // const [datestr, setDatestr] = useState("")
     const radioButtons: RadioButtonProps[] = useMemo(() => ([
         {
             id: 'man', // acts as primary key, should be unique and non-empty string
@@ -32,7 +33,6 @@ const DateAndGender = ({age, setAge, gender, setGender}: Props) => {
         }
     ]), []);
 
-    
 
     const ToggleShowPicker = (show : boolean) => {
         setShowPicker(show)
@@ -45,8 +45,9 @@ const DateAndGender = ({age, setAge, gender, setGender}: Props) => {
             if(currentDate == null || currentDate == undefined) {
                 return 
             }
+            setCurrentDate(currentDate)
             setDate(currentDate)
-            setAge(convertCreateAt(currentDate))
+            setDateStr(convertCreateAt(currentDate))
             ToggleShowPicker(false)
         } else {
             ToggleShowPicker(false)
@@ -62,21 +63,21 @@ const DateAndGender = ({age, setAge, gender, setGender}: Props) => {
                     <DateTimePicker 
                     mode="date"
                     display="spinner"
-                    value={date}
+                    value={currentDate}
                     onChange={onChange}
                 />
                 }
                 <Pressable 
                     onPress={() => ToggleShowPicker(true)} 
-                    className="px-2 py-3 flex-1 border-border-1 border-2 flex-row justify-between items-center rounded-lg"
+                    className="px-2 py-3 flex-1 border-border-1 border flex-row justify-between items-center rounded-lg"
                 >
                     <View className="flex-col mr-4"> 
                         <View>
-                            <Text className="text-base/6">Ngày sinh *</Text>
+                            <Text className="text-sm">Ngày sinh</Text>
                         </View>
-                        {age != "" && 
+                        {date != undefined && 
                         <View>
-                            <Text className="text-base/6">{age}</Text>
+                            <Text className="text-base/6">{dateStr}</Text>
                         </View>
                         }
                     </View>

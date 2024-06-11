@@ -20,7 +20,7 @@ module.exports = {
         'bg-post' : "#fefefe",
         "comment" : "#f5f4f9",
         'question' : "#065bb5",
-        "all" : "#194d89",
+        "all" : "#0860c4",
         "bgmajor" : "#ebeef7",
         "bghotline" : "#7ab3f0",
         "line-bot" : "#dedfe0",

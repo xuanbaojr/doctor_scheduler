@@ -20,7 +20,7 @@ const InputSection = ({
         <View className="flex w-full border-border-1 rounded-sm my-1.5">
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
           <TextInput
-            className="text-base border-2 rounded-lg border-border-1 p-2"
+            className="text-base border rounded-lg border-border-1 p-2"
             underlineColorAndroid="transparent"
             placeholder={placeholder}
             placeholderTextColor="grey"

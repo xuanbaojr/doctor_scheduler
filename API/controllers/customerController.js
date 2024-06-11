@@ -38,14 +38,48 @@ class CustomerController {
     }
   }
 
+  // for web lay thong tin gom phone, email, name, gender, age
+  async fetchCustomerIdForWeb(req, res) {
+    const userId = req.query.userId;
+    console.log(userId);
+    try {
+      const data = await prisma.customer.findFirst({
+        where: {
+          id: userId,
+        },
+        select : {
+          date : true,
+          sex : true,
+          userId : true,
+          firstName : true,
+          lastName : true,
+        }
+      });
+      const user = await prisma.user.findFirst({
+        where : {
+            id : data?.userId
+        }
+      })
+      const datas = {
+        user : user,
+        data : data
+      }
+      console.log(datas);
+      res.send(datas);
+    } catch (error) {
+      console.error("Lỗi khi lấy thông tin khách hàng:", error);
+      return res.status(500).send("Lỗi khi lấy thông tin khách hàng");
+    }
+  }
+
   async createCustomer(req, res) {
     const { userId, 
       firstName, 
       lastName, 
       gender, 
-      age, 
+      date, 
       address} = req.body;
-    console.log(userId + " " + firstName + " " + lastName + " " + gender + " " + age + " " + address);
+    console.log(userId + " " + firstName + " " + lastName + " " + gender + " " + date + " " + address);
 
     try {
       // Kiểm tra xem user đã tồn tại trong database chưa
@@ -66,7 +100,7 @@ class CustomerController {
           userId: userId,
           firstName: firstName,
           lastName: lastName,
-          age: age,
+          date: date,
           sex: gender,
           address: address,
         },
