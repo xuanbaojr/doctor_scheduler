@@ -41,10 +41,10 @@ const ListMember = () => {
     return <Text>Không có dữ liệu.</Text>;
   }
 
-  const Press = (custome : string) => {
-    console.log(custome)
-    router.navigate(`/personal/${custome}/userInfo`)
-  }
+  const Press = (customer: string) => {
+    console.log(customer);
+    router.navigate(`/personal/${customer}/userInfo`);
+  };
 
 //   useEffect(() => {
 //     const channelA = client
@@ -68,23 +68,25 @@ const ListMember = () => {
 
   return (
     <View className="w-full h-full bg-background px-2">
-    <ScrollView className="mt-4 bg-background">
-      {listOfCustomers.map((customer, index) => (
-        <TouchableOpacity key={index} onPress={() => Press(customer.id)} 
-          style={{
-            // flexDirection: "row",
-            padding: 5,
-            backgroundColor: "#FFFFFF",
-            borderRadius: 8,
-            shadowColor: "#000000",
-            shadowOpacity: 0.1,
-            shadowRadius: 2,
-            elevation: 2,
-            // flex: 1,
-            alignItems: "center",
-          }}
-          className="w-full my-2 flex-row items-center"
-        >
+      <ScrollView className="mt-4 bg-background">
+        {listOfCustomers.map((customer, index) => (
+          <TouchableOpacity
+            key={index}
+            onPress={() => Press(customer.id)}
+            style={{
+              // flexDirection: "row",
+              padding: 5,
+              backgroundColor: "#FFFFFF",
+              borderRadius: 8,
+              shadowColor: "#000000",
+              shadowOpacity: 0.1,
+              shadowRadius: 2,
+              elevation: 2,
+              // flex: 1,
+              alignItems: "center",
+            }}
+            className="my-2 flex-row items-center mx-1"
+          >
             <View className="w-16 h-16 rounded-full bg-avatar-1 flex items-center justify-center">
               <Image source={avatar} style={{ width: 50, height: 50 }} />
             </View>
@@ -96,13 +98,12 @@ const ListMember = () => {
                 </Text>
               </View>
               <View className="p-2 rounded-full mr-1">
-                < FontAwesomeIcon icon={faChevronRight} size={19} color="grey" />
+                <FontAwesomeIcon icon={faChevronRight} size={19} color="grey" />
               </View>
             </View>
-        </TouchableOpacity>
-        
-      ))}
-    </ScrollView>
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
     </View>
   );
 };
