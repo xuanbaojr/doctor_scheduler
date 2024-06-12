@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, KeyboardAvoidingV
 import { TextInput, Button } from 'react-native-rapi-ui';
 import { createClient } from '@supabase/supabase-js'
 import { useAuth } from '@clerk/clerk-expo';
-import { SvgXml } from 'react-native-svg';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 
 
@@ -14,37 +14,38 @@ const supabase = createClient(supabase_url, supabase_anon)
 const TestComponent = () => {
   const scrollViewRef = useRef();
 
+
     const user = useAuth()
     user_id = user.userId
-    // thay ip cua may minh
-    const url = "http://10.20.9.149:8000"
+    const url = "http://10.30.53.166:8000"
     const [humanChat, setHumanChat] = useState('');
     const [questionList, setQuestionList] = useState([])
     const [answerList, setAnswerList] = useState([])
+    const [isLoading, setIsLoading] = useState(true)
 
     // hien thi lich su chat (1)
     const getHistoryChat = async () => {
-        try {
-            const {data, error} = await supabase.from("Chat_chat").select().eq("user_id", user_id)
-            const content = data.map(item => item.content)
-            const question = content.map(item => item.question)
-            const z_answer = content.map(item => item.z_answer)
-            setQuestionList(question)
-            setAnswerList(z_answer)
-        } catch(err) {
-            console.log(err)
-        }
-    }
-    useEffect(() => {
-        getHistoryChat()
-    },[])
+      try {
+          const {data, error} = await supabase.from("Chat_chat").select().eq("user_id", user_id)
+          const content = data.map(item => item.content)
+          const question_ = content.map(item => item.question)
+          const z_answer = content.map(item => item.z_answer)
+          setQuestionList(question_)
+          setAnswerList(z_answer)
+      } catch(err) {
+          console.log(err)
+      }
+  }
+  useEffect(() => {
+      getHistoryChat()
+  },[])
 
     // gui tin nhan, update database (2)
     const sendQuestion = async () => {
         try {
             const formData = new FormData();
             formData.append('chain_input', humanChat);
-            formData.append('user_id', "user_2fB6XBxtyeK4Ds36D8SK0jM8LMs");
+            formData.append('user_id', user_id);
             setQuestionList(prevList => [...prevList, humanChat])
             setHumanChat("")
             const response = await fetch(`${url}/test/`, {
@@ -67,6 +68,7 @@ const TestComponent = () => {
             const content = data.map(item => item.content)
             const z_answer = content.map(item => item.z_answer)
             setAnswerList(z_answer)
+            setIsLoading(false)
         } catch (error) {
             console.error("Error getChatUpdate", error)
         }
@@ -93,13 +95,9 @@ const TestComponent = () => {
     
     return (
       <>
-      <KeyboardAvoidingView
-      style={{ flex: 1, backgroundColor: '#FFFFFF' }}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-    >
       <ScrollView 
         style={{ flex: 1, padding: 10 }}
-        contentContainerStyle={{ flexDirection: 'column-reverse' }}
+        contentContainerStyle={{ flexDirection: 'column' }}
         ref={scrollViewRef}
         onContentSizeChange={() => scrollViewRef.current.scrollToEnd({ animated: true })}
       >
@@ -109,7 +107,7 @@ const TestComponent = () => {
               <Text style={{ color: '#FFFFFF' }}>{questionList[index]}</Text>
             </View>
             <View style={{ alignSelf: 'flex-start', backgroundColor: '#E5E7EB', borderRadius: 20, padding: 10, marginBottom: 5, marginLeft: 20, maxWidth: '75%' }}>
-              <Text>{answerList[index]}</Text>
+              {isLoading === false ? <Text>{answerList[index]}</Text> : <Text>...</Text>}
             </View>
           </View>
         ))}
@@ -127,9 +125,9 @@ const TestComponent = () => {
         
       </View>
       
-    </KeyboardAvoidingView>
-    <View>
-    <TextInput 
+    <View style={{flexDirection:'row', backgroundColor:'white'}}>
+      <View style={{width:"90%"}}>
+      <TextInput 
         style={{
           flex: 1,
           borderWidth: 1,
@@ -145,12 +143,13 @@ const TestComponent = () => {
         onChangeText={(val) => setHumanChat(val)}
         onFocus={() => scrollViewRef.current.scrollToEnd({ animated: true })}
       />
-      <TouchableOpacity style={{ marginRight: 8 }}>
-      </TouchableOpacity>
+      </View>
+    
       <TouchableOpacity onPress={() => {
         sendQuestion();
         Keyboard.dismiss();
-      }} style={{ marginRight: 8 }}>
+      }} style={{ marginRight: 0 }}>
+          <MaterialCommunityIcons style={{margin:10}} name="send" size={24} color="#3B82F6" />
       </TouchableOpacity>
     </View>
     </>

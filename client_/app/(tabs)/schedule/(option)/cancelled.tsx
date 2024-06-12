@@ -336,23 +336,7 @@ const SchedulePage = () => {
     ))}
 
 
-    <Link href={{
-      pathname: `/scheduleDoctor/bookCustomer`,
-      params: {customer_id: customerSelected}}} asChild>
-      <TouchableOpacity style ={{
-                       alignItems: 'center',
-                       marginTop: 10,
-                       backgroundColor: '#33CC99',
-                       marginHorizontal: 40,
-                       marginVertical: 100,
-                       height: 50,
-                       justifyContent: 'center',
-                       borderRadius: 10,
-        }}>
-        <Text style={{ color: 'white', fontSize: 18, fontWeight: 'bold' }}>
-            Đặt lịch khám</Text>
-      </TouchableOpacity>
-    </Link>
+   
     </ScrollView>
     </>
   )

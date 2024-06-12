@@ -9,6 +9,7 @@ import { useLocalSearchParams } from 'expo-router';
 import { useEffect, useState } from "react";
 import { createClient } from '@supabase/supabase-js';
 import { useAuth } from '@clerk/clerk-expo';
+import { Stack} from 'expo-router';
 
 
 const client = createClient(
@@ -26,6 +27,21 @@ const BookConfirm = () => {
         setParamsUpdate(params)
     }
     return(
+      <>
+       <Stack.Screen
+                options={{
+                    headerTitle: 'Xác nhận ',
+                    headerTitleAlign: 'center',
+                    headerStyle: {
+                        backgroundColor: '#FFFFFF',
+                    },     
+                    headerTintColor: '#000000',
+                    headerTitleStyle: {
+                        fontWeight: '100',
+                        fontSize: 18,
+                    },
+                }}
+            />
         <ScrollView>
             <ClinicComponent params={params}></ClinicComponent>
             <CustomerComponent params={params}></CustomerComponent>
@@ -34,6 +50,8 @@ const BookConfirm = () => {
             <DangerComponent params={params} updateParams={updateParams}></DangerComponent>
             <ConfirmButton params={paramsUpdate} user_id={user_id}></ConfirmButton>
         </ScrollView>
+        </>
+
     )
 }
 
