@@ -75,7 +75,7 @@ const UpAndLoadImage =  ({
     } 
     const saveImage = async (uri: string) => {
         await ensureDirExists();
-        const filename = new Date().getTime() + '.jpeg';
+        const filename = new Date().getTime() + '.png';
         const dest = imgDir + filename;
         await FileSystem.copyAsync({ from: uri, to: dest });
         setImages([ dest]);

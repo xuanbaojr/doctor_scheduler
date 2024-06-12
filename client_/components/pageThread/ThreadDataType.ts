@@ -83,3 +83,8 @@ export const convertDateToAge = (date : Date) : number | "Chưa điền" => {
     const age = today.getFullYear() - birth.getFullYear()
     return age
 }
+
+
+export const sortComment = (comment : Comment[]) : Comment[] => {
+    return comment.sort((a : Comment, b : Comment) => new Date(a.createAt).getTime() - new Date(b.createAt).getTime());
+}

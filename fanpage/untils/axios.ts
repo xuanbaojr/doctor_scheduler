@@ -5,7 +5,7 @@ const instance: AxiosInstance = axios.create({
     // baseURL: "http://192.168.1.220:3000"
 
     // quyen
-    baseURL: "http://192.168.1.80:3000"
+    baseURL: "http://192.168.3.149:3000"
 });
 
 instance.interceptors.response.use(

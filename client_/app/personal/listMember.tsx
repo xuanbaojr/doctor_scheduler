@@ -14,7 +14,16 @@ import instance from "@/utils/axios";
 import useCustomers from "@/hooks/useCustomer";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { createClient } from "@supabase/supabase-js";
 const avatar = require("../../assets/avatar3.png");
+
+
+
+const client = createClient(
+  'https://snwjzonusggqqymhbluj.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNud2p6b251c2dncXF5bWhibHVqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTE2MTU4MTEsImV4cCI6MjAyNzE5MTgxMX0.H-4glIFgFb31Gu3sl2X4nqFOnJw5MDKa0Yjf2SvW4A0'
+);
+
 const ListMember = () => {
   const { listOfCustomers, isLoading } = useCustomers();
 
@@ -36,6 +45,26 @@ const ListMember = () => {
     console.log(custome)
     router.navigate(`/personal/${custome}/userInfo`)
   }
+
+//   useEffect(() => {
+//     const channelA = client
+//     .channel('schema-db-changes')
+//     .on(
+//     'postgres_changes',
+//     {
+//         event: '*',
+//         schema: 'public',
+//         table: 'Order'
+//     },
+//     () => console.log("asdas")
+//     )
+//     .subscribe()
+
+//     // Return a cleanup function to unsubscribe from the channel
+//     return () => {
+//         channelA.unsubscribe();
+//     }
+// });
 
   return (
     <View className="w-full h-full bg-background px-2">

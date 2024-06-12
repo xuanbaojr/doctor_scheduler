@@ -12,19 +12,18 @@ interface Props {
 
 const CommentDoctor = ({comment} : Props ) => {
   return (
-    <View className='flex-row items-center justify-between p-1 mb-1  bg-comment'>
-        <View className='w-8 h-8 rounded-full ml-1 mr-2 flex items-center justify-center bg-majorbg'>
+    <View className='flex-row items-center justify-between mb-1 py-1.5 bg-comment'>
+        <View className='w-10 h-10 rounded-full ml-1 mr-2 flex items-center justify-center bg-majorbg'>
             <Image source={avatar} style={{
-              height:24,
-              width:24,
+              height:30,
+              width:30,
             }}/>
         </View>
-        <View className='text-sm flex-1 h-14  ml-0.5 p-0.5 '>
+        <View className='text-sm flex-1   ml-0.5 p-0.5 '>
             <Text className='ml-0.5'>
               {convertComment(comment.content, 120) }
             </Text>
         </View>
-
     </View>
   )
 }

@@ -21,7 +21,7 @@ const CustomerPage = () => {
             const data : any = await instance.get(`/customer?userId=${userId}`)
             const test : CustomerDataType[] = convertDataToCustomerType(data) 
             setListCustomers(test)
-            console.log()
+            console.log('nguu gu')
 
         } catch (e){
             console.log(e)

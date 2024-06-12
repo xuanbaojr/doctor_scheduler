@@ -16,12 +16,14 @@ const client = createClient(
 );
 const Thread = () => {
     const { id } = useLocalSearchParams();
+    if(typeof id !== "string") return
+    const newid = splitStringAtCustomChar(id, ',')
     const [theard, setThreard] = useState<ThreadDataType>()
 
     // load thread 
     const getThreadForId = async () => {
         try {
-            const data = await instance.get(`/getThreadById/${id}`)
+            const data = await instance.get(`/getThreadById?threadID=${newid[0]}`)
             const test : ThreadDataType = ConvertDatatoThreadObject(data)
             setThreard(test)
         }catch (e) {
@@ -44,7 +46,7 @@ const Thread = () => {
             schema: 'public',
             table: 'chat'
         },
-        () => console.log("o ben thread")
+        () => getThreadForId()
         )
         .subscribe()
         // console.log("after add thread")
@@ -52,7 +54,7 @@ const Thread = () => {
         return () => {
             channelA.unsubscribe();
         }
-    }, []);
+    });
 
     // submit cau tra loi hoac cau hoi 
     const onSubmit = async  (question : string) => {
@@ -92,9 +94,13 @@ const Thread = () => {
                     />
                 }
             </ScrollView>
-            <ThreadQuestion 
-                onsubmit={onSubmit}
-            />
+
+            {newid[1] === "true" &&
+                <ThreadQuestion 
+                    onsubmit={onSubmit}
+                />
+            }
+            
             </GestureHandlerRootView>
         </View>
         
@@ -105,3 +111,8 @@ const Thread = () => {
 
 
 export default Thread
+
+
+const splitStringAtCustomChar = (input: string, separator: string): string[] => {
+    return input.split(separator);
+}

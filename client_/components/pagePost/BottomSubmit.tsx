@@ -14,9 +14,9 @@ const BottomSubmit =  ({setImages, images, open, onsubmit } : Props) => {
   return (
     <View className='flex-none flex-row border-t-2 border-slate-300  justify-between items-center mb-2 py-2 px-2 -z-10'>
         <UpAndLoadImage 
-        open={open}
-        images={images} 
-        setImages={setImages}
+            open={open}
+            images={images} 
+            setImages={setImages}
         />
         <View>
             <TouchableOpacity 

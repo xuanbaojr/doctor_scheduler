@@ -18,8 +18,10 @@ import instance from '@/utils/axios'
 import { faL } from '@fortawesome/free-solid-svg-icons'
 import { useAuth } from '@clerk/clerk-expo'
 import { router } from 'expo-router'
+import { useEdgeStore } from '../../lib/edgestore';
 
 const InforInput = () => {
+  const { edgestore } = useEdgeStore();
 
     const [gender, setGender] = useState<Gender>(Gender.man)
     const [age, setAge] = useState(20)
@@ -52,33 +54,44 @@ const InforInput = () => {
     }
 
     const onSubmit = async () => {
-      if(!checkAlert()) {
-        return
-      }
+      // if(!checkAlert()) {
+      //   return
+      // }
       console.log(gender, age, puImage, images[0], major, title )
-      await instance.post(`/createNewThread`, {
-        userId : userId,
-        gender : gender,
-        age : age.toString(), 
-        puImage :puImage, 
-        image : images[0],
-        major : major,
-        title : title,
-      })
-      done()
+      // await instance.post(`/createNewThread`, {
+      //   userId : userId,
+      //   gender : gender,
+      //   age : age.toString(), 
+      //   puImage :puImage, 
+      //   image : images[0],
+      //   major : major,
+      //   title : title,
+      // })
+      // done()
+
+      // const res = await edgestore.publicFiles.upload({
+      //   images[0],
+      //   onProgressChange: (progress) => {
+      //     // you can use this to show a progress bar
+      //     console.log(progress);
+      //   },
+      // });
+      // you can run some server action or api here
+      // to add the necessary data to your database
+      // console.log(res);
     }
     
   return (
     <>
     <MyContext.Provider value={{ myFunction, updateMyFunction }}>
-      <GestureHandlerRootView className='bg-bg w-full h-full flex-col'>
+      <GestureHandlerRootView className='w-full bg-bg-post h-full flex-col'>
       <KeyboardAvoidingView 
         className='grow'
         keyboardVerticalOffset={50}
       >
-        <ScrollView className='flex '>
+        <ScrollView className='flex flex-1'>
         {/* note title */}
-        <View className='w-full flex-none bg-blue-200 justify-center mb-2 items-center p-5'>
+        <View className='w-full flex-none bg-blue-100 justify-center mb-2 items-center px-4 py-3 '>
           <Text className='text-red-500 font-medium'>{noteTitle.title}</Text>
         </View>
 

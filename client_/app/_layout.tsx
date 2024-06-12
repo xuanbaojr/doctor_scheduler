@@ -3,6 +3,7 @@ import * as SecureStore from "expo-secure-store";
 import { ClerkProvider, useAuth } from "@clerk/clerk-expo";
 import { Slot, Stack, useRouter, useSegments } from "expo-router";
 import React from "react";
+import { EdgeStoreProvider } from "@/lib/edgestore";
 const CLERK_PUBLISHABLE_KEY = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
 
 // Cache the Clerk JWT
@@ -87,7 +88,10 @@ const RootLayoutNav = () => {
       publishableKey={CLERK_PUBLISHABLE_KEY!}
       tokenCache={tokenCache}
     >
-      <InitialLayout />
+      <EdgeStoreProvider>
+        <InitialLayout />
+      </EdgeStoreProvider>
+      
     </ClerkProvider>
   );
 };

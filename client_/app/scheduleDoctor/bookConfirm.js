@@ -1,6 +1,6 @@
 import { View, Text, ScrollView, TouchableOpacity, Modal, StyleSheet, TextInput } from "react-native"
 import { FontAwesome } from '@expo/vector-icons';
-import { Link } from "expo-router";
+import { Link, Stack } from "expo-router";
 import { MaterialIcons } from '@expo/vector-icons';
 import { Fontisto } from '@expo/vector-icons';
 
@@ -25,15 +25,33 @@ const BookConfirm = () => {
     const updateParams = (params) => {
         setParamsUpdate(params)
     }
-    return(
-        <ScrollView>
+    return(<>
+      <Stack.Screen
+                options={{
+                    headerTitle: 'Chọn phòng khám',
+                    headerTitleAlign: 'center',
+                    headerStyle: {
+                        backgroundColor: '#FFFFFF',
+                    },     
+                    headerTintColor: '#000000',
+                    headerTitleStyle: {
+                        fontWeight: '100',
+                        fontSize: 18,
+                    },
+                }}
+      />
+      <ScrollView>
             <ClinicComponent params={params}></ClinicComponent>
             <CustomerComponent params={params}></CustomerComponent>
             <DoctorComponent params={params}></DoctorComponent>
             <DateComponent params={params} updateParams={updateParams}></DateComponent>
             <DangerComponent params={params} updateParams={updateParams}></DangerComponent>
             <ConfirmButton params={paramsUpdate} user_id={user_id}></ConfirmButton>
-        </ScrollView>
+      </ScrollView>
+    
+    </>
+        
+        
     )
 }
 
@@ -687,7 +705,7 @@ const ConfirmButton = ({params, user_id})  => {
           <TouchableOpacity
           style={{
             alignItems: 'center',
-            marginTop: 100,
+            marginTop: 50,
             backgroundColor: '#33CC99',
             margin: 40,
             height: 50,

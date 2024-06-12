@@ -10,32 +10,31 @@ import { convertComment } from '@/utils/page/comment'
 
 interface Props {
     thread : ThreadDataType,
-  
+    isMyself : boolean;
 }
 
-const Post = ({thread} : Props) => {
+const Post = ({thread, isMyself} : Props) => {
     const router = useRouter()
 
     const OnThread = () => {
-        router.push(`/(adviceDoctor)/${thread.id}/thread`)
+        const path = `${thread.id},${isMyself}`
+        router.push(`/(adviceDoctor)/${path}/thread`)
     }
 
   return (
     <TouchableOpacity 
     onPress={OnThread}
-    className='w-full px-2 py-1 bg-bg-post  my-1'
+    className=' px-2 py-1 bg-bg-post mx-2 my-1.5'
     style={{
-        // flexDirection: "row",
-        // height: 16,
-        // padding: 16,
-        backgroundColor: "#FFFFFF",
         borderRadius: 8,
-        shadowColor: "#000000",
-        shadowOpacity: 0.1,
-        shadowRadius: 2 ,
-        elevation: 2,
-        // flex: 1,
-        // alignItems: "center",
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
     }}
     >
         {/* header */}

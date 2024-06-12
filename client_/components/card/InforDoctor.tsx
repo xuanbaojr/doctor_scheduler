@@ -1,11 +1,23 @@
-import { Image, Text, View } from "react-native"
+import { Image, Text, TouchableOpacity, View } from "react-native"
 import { MaterialIcons } from '@expo/vector-icons';
+import { useRouter } from "expo-router";
 const avatar = require("../../assets/favicon.png")
 
-const InforDoctor = () => {
+interface Props {
+    major : string,
+    name : string, 
+}
+
+const InforDoctor = ({major, name} : Props) => {
+    const router = useRouter()
+    const onpress = () => {
+        router.push("/home/")
+    }
 
     return (
-        <View className="flex-row p-2 mb-3 rounded-xl bg-bg-post"
+        <TouchableOpacity 
+        onPress={() => onpress()}
+        className="flex-row p-2 mb-3 rounded-xl bg-bg-post"
         style={{
             flexDirection: "row",
             // height: 16,
@@ -25,13 +37,13 @@ const InforDoctor = () => {
             </View>
             <View className="flex-col">
                     <View>
-                        <Text className="text-base font-semibold">Phan Xuân Bảo</Text>
+                        <Text className="text-base font-semibold">{name}</Text>
                     </View>
-                    <View className="rounded-sm flex-row ">
-                        <Text className=" text-all bg-bgmajor py-0.5 px-1 rounded-md flex-none">Khoa noi</Text>
+                    <View className="rounded-sm flex-row mt-0.5">
+                        <Text className=" text-all bg-bgmajor py-0.5 px-1 rounded-md flex-none">{major}</Text>
                     </View>
             </View>
-        </View>
+        </TouchableOpacity>
         
     )
 }
