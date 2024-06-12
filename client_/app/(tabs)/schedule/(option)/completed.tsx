@@ -3,10 +3,6 @@ import { Link, Stack, router } from 'expo-router'
 import  { useEffect, useState } from 'react'
 import instance from '@/utils/axios'
 import { createClient } from '@supabase/supabase-js';
-import { get } from 'http';
-import { convertCreateAt } from '@/components/pageThread/ThreadDataType';
-import ScheduleOrderButton from '@/components/schedule/SchduleOrderButton';
-import CustomButton from '@/components/customButton';
 import { MaterialTopTabs } from './_layout';
 import Index from '../../setting';
 
@@ -57,7 +53,7 @@ const SchedulePage = () => {
   return (
     <>
     <MaterialTopTabs.Screen options={{
-          title : "Hẹn khám"
+          title : "Hẹn khám",          
         }}
       />
       {doctors.map((content, index) => (

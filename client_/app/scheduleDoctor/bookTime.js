@@ -1,9 +1,13 @@
-import { ScrollView, Text, Modal, View, TouchableOpacity, StyleSheet, Image } from "react-native"
+import { ScrollView, Text, Modal, View, TouchableOpacity, StyleSheet, Image, Animated } from "react-native"
 import  react, { useEffect, useState } from 'react'
 import { useLocalSearchParams, Link} from 'expo-router';
 import { createClient } from '@supabase/supabase-js';
 import { Svg, Path } from 'react-native-svg';
 import { MaterialIcons } from '@expo/vector-icons';
+import { Foundation } from '@expo/vector-icons';
+import { Stack} from 'expo-router'
+import Spinner from 'react-native-loading-spinner-overlay';
+
 
 const client = createClient(
     'https://snwjzonusggqqymhbluj.supabase.co',
@@ -26,7 +30,6 @@ const BookTime = () => {
 const Doctor_Service = ({params}) => {
     const [clinic, setClinic] = react.useState()
     const [specialty, setSpecialy] = react.useState()
-    const [modalVisible, setModalVisible] = useState({});
 
 
     //get clinic by doctor_id
@@ -47,67 +50,110 @@ const Doctor_Service = ({params}) => {
     },[])
 
     // 
-    useEffect(() => {
-        // Check if clinic is defined before initializing modalVisible state
-        if (clinic) {
-          const initialModalState = {};
-          clinic.forEach((_, index) => {
-            initialModalState[index] = false;
-          });
-          setModalVisible(initialModalState);
-        }
-      }, [clinic]);
-    
-      const toggleModal = (index) => {
-        setModalVisible(prevState => ({
-          ...prevState,
-          [index]: !prevState[index]
-        }));
+    const [modalVisible, setModalVisible] = useState({});
+    const [fadeAnim,setFadeAnim] = useState({});
+
+  useEffect(() => {
+    // Check if clinic is defined before initializing modalVisible and fadeAnim state
+    if (clinic) {
+      const initialModalState = {};
+      const initialFadeAnim = {};
+      clinic.forEach((_, index) => {
+        initialModalState[index] = false;
+        initialFadeAnim[index] = new Animated.Value(0);
+      });
+      setModalVisible(initialModalState);
+      setFadeAnim(initialFadeAnim);
+    }
+  }, [clinic]);
+
+  const toggleModal = (index) => {
+    setModalVisible(prevState => {
+      const newState = {
+        ...prevState,
+        [index]: !prevState[index]
       };
+      handleFadeAnim(index, newState[index]);
+      return newState;
+    });
+  };
 
-    return(
-        <ScrollView>
+  const handleFadeAnim = (index, isVisible) => {
+    Animated.timing(fadeAnim[index], {
+      toValue: isVisible ? 1 : 0,
+      duration: 500,
+      useNativeDriver: true,
+    }).start();
+  };
 
-        {clinic && clinic.length > 0 && clinic.map((clinic_, index) => (
-          <View key={index}>
-            <TouchableOpacity style={styles.serviceContainer} onPress={() => toggleModal(index)}>
-              <View style={styles.icon_infor}>
-                <View style={styles.icon}>
-                  <MaterialIcons name="playlist-add-check" size={24} color="#33FF33" />	
-
-                </View>
-                <View style={styles.infor}>
-                  <Text style={{fontSize: 16, fontWeight:'600', color:'#111827'}}>{clinic_['name']}</Text>
-                  <Text style={{fontSize:13, marginTop:5}}>{clinic_['major']}</Text>
-                  <Text style={{fontSize:14, marginTop:5, fontWeight:'300'}}>{specialty[index]['name']}</Text>
-                  <View style={{flexDirection:'row', marginTop:5}} >
-                  <Text>{clinic_['price']}</Text>
-                  </View>
-                </View>
-                <View style={{marginRight:20, marginLeft:40, justifyContent:'center'}}>
-                <MaterialIcons name="navigate-next" size={24} color="#33FF33"/>
-
+  return (
+    <>
+    <Stack.Screen
+                options={{
+                    headerTitle: 'Chọn phòng khám',
+                    headerTitleAlign: 'center',
+                    headerStyle: {
+                        backgroundColor: '#FFFFFF',
+                    },     
+                    headerTintColor: '#000000',
+                    headerTitleStyle: {
+                        fontWeight: '100',
+                        fontSize: 18,
+                    },
+                }}
+            />
+    <ScrollView>
+      {clinic && clinic.length > 0 && clinic.map((clinic_, index) => (
+        <View key={index} style={{justifyContent:'space-between'}}>
+          <TouchableOpacity style={styles.serviceContainer} onPress={() => toggleModal(index)}>
+            <View style={styles.icon_infor}>
+              <View style={styles.icon}>
+                <MaterialIcons name="playlist-add-check" size={24} color="#66FF33" />  
+              </View>
+              <View style={styles.infor}>
+                <Text style={{fontSize: 16, fontWeight:'600', color:'#111827'}}>{clinic_['name']}</Text>
+                <Text style={{fontSize:13, marginTop:5}}>{clinic_['major']}</Text>
+                <Text style={{fontSize:14, marginTop:5, fontWeight:'300'}}>{specialty[index]['name']}</Text>
+                <View style={{flexDirection:'row', marginTop:5}} >
+                  <Foundation name="dollar-bill" size={24} color="#66FF33" />
+                  <Text style={{marginTop:2, marginLeft:10}} >{clinic_['price']}</Text>
                 </View>
               </View>
 
-            </TouchableOpacity>
-            <Modal
-              visible={modalVisible[index]} // Use the visibility state for this specific modal
-              animationType="slide"
-              transparent={true}
-              backdropColor="#000000"
-            >
+            </View>
+          </TouchableOpacity>
+          <Modal
+            visible={modalVisible[index]}
+            animationType="fade"
+            transparent={true}
+          >
+            <View style={{ flex: 1 }}>
+              {/* Animated View for the top part to handle closing the modal */}
               <TouchableOpacity
-                onPress={() => toggleModal(index)} // Toggle the modal visibility when backdrop is pressed
-                style={{ flex: 1, backgroundColor: 'rgba(0, 0, 0, 0.7)' }}
-              />
-              <Booking clinic_id={clinic_['id']} customer_id={params.customer_id} /> 
-            </Modal>
-          </View>
-        ))}
-      </ScrollView>
-    )
-}
+                onPress={() => toggleModal(index)}
+                style={{ flex: 1 }}
+              >
+                <Animated.View style={{ flex: 1, backgroundColor: fadeAnim[index]?.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: ['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.05)']
+                  }) }}
+                />
+              </TouchableOpacity>
+              {/* Non-transparent bottom part */}
+              <View style={{ flex: 1, backgroundColor: 'white' }}>
+                <Booking clinic_id={clinic_['id']} customer_id={params.customer_id} /> 
+              </View>
+            </View>
+          </Modal>
+        </View>
+      ))}
+    </ScrollView>
+    </>
+
+  );
+};
+
+    
 
 const Booking = ({clinic_id, customer_id}) => {
 
@@ -115,12 +161,44 @@ const Booking = ({clinic_id, customer_id}) => {
   const [hour, setHour] = useState()
   const today = new Date();
   const listOfDate = [];
+  const listOfDate_new = []
+
+  // Điều chỉnh lại mảng ngày trong tuần để phù hợp với giá trị trả về của getDay()
+  const days = ["Chủ nhật", "Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7"];
+  const listOfDay = []
+
+  function convertToDateString(dateString) {
+    const [month, day, year] = dateString.split("/");
+    return `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+  }
+
+  function dateToString(dateString) {
+    const [month, day, year] = dateString.split("/");
+    return `${String(day).padStart(2, '0')}-${String(month).padStart(2, '0')}`;
+  }
+
+  function getDayName(index) {
+    return days[index];
+  }
+
   for (let i = 1; i < 8; i++) {
     let date = new Date(today.getFullYear(), today.getMonth(), today.getDate() + i);
-    listOfDate.push(date.toLocaleDateString()); // Convert date to string
+    const dayIndex = date.getDay();
+    const dayName = getDayName(dayIndex);
+
+    date = date.toLocaleDateString();
+    const y_date = convertToDateString(date);
+    const d_date = dateToString(date);
+
+    listOfDate.push(y_date);
+    listOfDate_new.push(d_date);
+    listOfDay.push(dayName);
+
   }
+
   // 
-  const listOfHour = ["07: 00", "08:00", "09:00", "10:00"]
+  const morning = ["07: 00", "08:00", "09:00", "10:00", "11:00"]
+  const afternoon = ["13:00", "14:00", "15:00", "16:00", "17:00", "18:00"]
 
 
   const [date_be, setDate_be] = useState([])
@@ -142,19 +220,33 @@ const Booking = ({clinic_id, customer_id}) => {
   // create order
   return(
       <ScrollView>
+        <ScrollView horizontal={true} style={{flexDirection: 'row', padding: 10}}>
           {listOfDate && listOfDate.map((date_, index) => (
             date === date_ ? (
               <TouchableOpacity style={styles.selected} key={index} onPress={() => setDate(date_)} >
-                <Text>{date_}</Text>
+                {listOfDay[index] !== 'Chủ nhật' ?(
+                <View>
+                <Text style={{fontWeight:'500'}}>{listOfDay[index]}</Text>
+                <Text>{listOfDate_new[index]}</Text>
+
+                </View>) : null}
               </TouchableOpacity>
             ) : (
               <TouchableOpacity style={styles.pending} key={index} onPress={() => setDate(date_)} >
-                <Text>{date_}</Text>
+                {listOfDay[index] !== 'Chủ nhật' ?(
+                <View>
+                <Text style={{fontWeight:'500'}}>{listOfDay[index]}</Text>
+                <Text>{listOfDate_new[index]}</Text>
+
+                </View>) : null}
               </TouchableOpacity>
             )
           ))}
-
-          {listOfHour && listOfHour.map((hour_, index) => (
+          </ScrollView>
+          <View>
+            <Text style={{fontSize:15, fontWeight:'500'}}>    Buổi sáng</Text>
+            <View horizontal={true} style={{flexDirection: 'row', padding: 10, flexWrap:'wrap'}}>
+            {morning && morning.map((hour_, index) => (
             hour_be && hour_be.includes(hour_) ? (
               <TouchableOpacity style={styles.disable} key={index} disabled={true}>
                 <Text>{hour_}</Text>
@@ -171,15 +263,41 @@ const Booking = ({clinic_id, customer_id}) => {
               )
             )
           ))}
+          </View>
+          </View>
+          <View>
+            <Text style={{fontSize:15, fontWeight:'500'}}>    Buổi chiều</Text>
+            <View style={{flexDirection: 'row', padding: 10, flexWrap:'wrap'}}>
+            {afternoon && afternoon.map((hour_, index) => (
+            hour_be && hour_be.includes(hour_) ? (
+              <TouchableOpacity style={styles.disable} key={index} disabled={true}>
+                <Text>{hour_}</Text>
+              </TouchableOpacity>
+            ) : (
+              hour === hour_ ? (
+                <TouchableOpacity style={styles.selected} key={index} onPress={() => setHour(hour_)} >
+                  <Text>{hour_}</Text>
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity style={styles.pending} key={index} onPress={() => setHour(hour_)} >
+                  <Text>{hour_}</Text>
+                </TouchableOpacity>
+              )
+            )
+          ))}
+          </View>
+          </View>
 
+          <View style={styles.buttonContainer}>
           <Link href={{
             pathname: `./bookConfirm`,
             params: {clinic_id: clinic_id, customer_id:customer_id, date: date, hour: hour}
           }} asChild>
-            <TouchableOpacity>
-              <Text>Xac Nhan</Text>
-            </TouchableOpacity>
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.buttonText}>Xác nhận</Text>
+          </TouchableOpacity>
           </Link>
+        </View>
 
       </ScrollView>
   );
@@ -188,6 +306,7 @@ const Booking = ({clinic_id, customer_id}) => {
 const ProfileCard = ({params}) => {
   const [doctor, setDoctor] = react.useState()
   const [specialty, setSpecialy] = react.useState()
+  const [isLoading, setIsLoading] = react.useState(true)
 
   //get clinic by doctor_id
   const getDoctorById = async () => {
@@ -195,6 +314,7 @@ const ProfileCard = ({params}) => {
           const {data, error} = await client.from("Clinic").select("*, Doctor(*), Specialty(*)").eq("doctor_id", params.doctor_id)
           const doctor_ = data[0].Doctor
           setDoctor(doctor_)
+          setIsLoading(false)
       } catch (error) {
           console.log("cannot getDoctorById", error)
       }
@@ -202,6 +322,21 @@ const ProfileCard = ({params}) => {
   useEffect(() => {
       getDoctorById()
   },[])
+  if (isLoading) {
+    return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Spinner
+        visible={isLoading}
+        textContent={'...'}
+        textStyle={{ color: '#FFF', fontSize: 16, alignContent: 'center', alignItems: 'center'  }}
+        size={20}
+        animation='fade'
+
+      />     
+       </View>
+    )
+  }
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.card}>
@@ -325,16 +460,44 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   disable: {
-    backgroundColor: "#FF6666",
+    backgroundColor: "#DDDDDD",
+    borderWidth: 1,
+    borderColor: "black",
     color: "black",
+    borderRadius: 10,  
+    padding:7,
+    margin:5,
+    flexBasis: 70,
+    alignSelf: 'center',
+    alignContent: 'center',
+    alignItems: 'center',
   },
   pending: {
-    backgroundColor: "#FFCC66",
+    backgroundColor: "#white",
+    borderWidth: 1,
+    borderColor: "black",
     color: "black",
+    borderRadius: 10,  
+    padding:7,
+    margin:5,
+    flexBasis: 70,
+    alignSelf: 'center',
+    alignContent: 'center',
+    alignItems: 'center',
   },
   selected: {
     backgroundColor: "#66FF33",
+    borderWidth: 1,
+    borderColor: "black",
     color: "black",
+    borderRadius: 10,  
+    padding:7,
+    margin:5,
+    flexBasis: 70,
+    alignSelf: 'center',
+    alignContent: 'center',
+    alignItems: 'center',
+
   },
 
   serviceContainer: {
@@ -352,7 +515,7 @@ const styles = StyleSheet.create({
     shadowOffset:{width:3, height:10}, 
     shadowOpacity:0.19, 
     shadowRadius:10, 
-    elevation:5,
+    elevation:0,
     margin:0
   },
 
