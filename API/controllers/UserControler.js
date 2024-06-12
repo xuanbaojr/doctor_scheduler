@@ -5,14 +5,9 @@ prisma = new PrismaClient();
 
 class userController {
   async fetchUser(req, res) {
-    const userId = req.query.userId;
     try {
-      const data = await prisma.user.findFirst({
-        where : {
-          id : userId
-        }
-      });
-      // console.log(data);
+      const data = await prisma.user.findMany({});
+      console.log(data);
       res.send(data);
     } catch (error) {
       console.log(error);

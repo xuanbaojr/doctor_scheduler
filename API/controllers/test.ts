@@ -5,27 +5,32 @@ const prisma = new PrismaClient()
 
 
 class test {
-    async postNewResultImage (req, res) {
+    async getRecommentDoctors(req, res) {
         try {
-            const {
-                examiId,
-                image
-            } = req.body
-            // console.log(profileId + " " + name)
-            await prisma.result.update({
-                where : {
-                    id : examiId
-                }, 
-                data : {
-                    image : image
-                }
+            const data = await prisma.clinic.findMany({
+                select : {
+                    name : true,
+                    Doctor : {
+                        select : {
+                            name : true,
+                        }
+                    }
+                },
+                orderBy: {
+                    Order : {
+                        _count : 'asc'
+                    }
+                },
+                take : 1
             })
-        }catch (error ) {
-            console.log(error);
+            console.log(data)
+            res.send(data)
+        } catch (error) {
+            console.log(error)
             res.status(500).json({
-                errorCode: 1,
+                errorCode:1,
                 msg: "Server" + error.message
-            });
+            })
         }
     }
 }

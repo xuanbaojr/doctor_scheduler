@@ -7,7 +7,7 @@ prisma = new PrismaClient()
 class ThreadsController {
     async getThreadById(req, res) {
         try {
-            const id = req.params.thread_id
+            const id = req.query.threadID
             const data = await prisma.thread.findMany({
                 where: { id: id },
                 include : {

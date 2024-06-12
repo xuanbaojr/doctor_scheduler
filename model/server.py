@@ -92,7 +92,7 @@ add_routes(
 
 @app.post("/chat/")
 def chat(input_text: str = Form(...)):
-    remote_chain = RemoteRunnable("http://192.168.1.80:8000/agent/")
+    remote_chain = RemoteRunnable("http://192.168.1.2:8000/agent/")
     response = remote_chain.invoke({
         "input": input_text,  # Corrected variable name
         "chat_history": []
