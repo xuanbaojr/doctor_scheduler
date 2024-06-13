@@ -6,7 +6,7 @@ const SettingLayout = () => {
   return (
     <Stack
     screenOptions={{
-     
+      
     }}
     >
         <Stack.Screen 
