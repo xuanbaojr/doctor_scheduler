@@ -1,12 +1,7 @@
 import { View, Text, TouchableOpacity, ScrollView, StyleSheet, Modal, Image, Alert, ActivityIndicator } from 'react-native'
 import { Link, Stack, router } from 'expo-router'
-import  react, { useEffect, useId, useState } from 'react'
-import instance from '@/utils/axios'
+import  react, { useEffect, useState } from 'react'
 import { createClient } from '@supabase/supabase-js';
-import { get } from 'http';
-import { convertCreateAt } from '@/components/pageThread/ThreadDataType';
-import ScheduleOrderButton from '@/components/schedule/SchduleOrderButton';
-import CustomButton from '@/components/customButton';
 import { MaterialTopTabs } from './_layout';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useAuth } from '@clerk/clerk-expo';
@@ -95,7 +90,7 @@ const SchedulePage = () => {
   const getNewestCustomerIdByOrder = async () => {
     try {
       setIsLoading(true)
-      const {data, error} = await client.from("Order").select("*, Clinic(*, Doctor(*), Specialty(*)), Customer (*)").eq("status", "Pending").eq('user_id', userId).order("id", {ascending: false})
+      const {data, error} = await client.from("Order").select("*, Clinic(*, Doctor(*), Specialty(*)), Customer (*)").eq("status", "Pending").eq("user_id", userId).order("id", {ascending: false})
       const customerId_ : any = data && data[0] ? data[0]['customer_id'] : null;
       const customer_ : any = data && data[0] ? data[0]['Customer'] : null;
       const clinics_ : any = data?.map(item => item.Clinic)
@@ -295,7 +290,7 @@ const SchedulePage = () => {
                 </View>
             ))}
             <View style={styles.separator} />
-            <Link href={{ pathname: './addCustomer' }} asChild>
+            <Link href={{ pathname: '/personal/addMember' }} asChild>
                     <TouchableOpacity style={styles.add_member}>
                         <MaterialCommunityIcons style ={{marginHorizontal:10}} name="account-plus" size={20} color="#009966" />
                         <Text >Thêm thành viên</Text>

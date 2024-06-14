@@ -6,13 +6,7 @@ const SettingLayout = () => {
   return (
     <Stack
     screenOptions={{
-      headerStyle: {
-        backgroundColor: '#194d89',
-      },
-      headerTintColor: '#fff',
-      headerTitleStyle: {
-        fontWeight: 'bold',
-      },
+      
     }}
     >
         <Stack.Screen 

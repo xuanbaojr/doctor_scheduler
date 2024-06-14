@@ -19,3 +19,11 @@ cd client : npm start
 
 - Tìm bác sĩ (Tôi bị đau răng,..)
 - Hỏi về thông tin bệnh viện và hướng dẫn khám (sử dụng lịch sử chat và file hướng dẫn của bệnh viện)
+
+
+- Update UI selectCustomer
+    - Stack
+    - Css, color
+- Update UI BookDoctor
+    - search, select specialty
+    * AI symptom
