@@ -7,10 +7,9 @@ interface Props {
 }
 
 const ListDataSearch = async ({query} : Props) => {
-    const data  : any= await instance.get(`/user`)
+    const data  : any= await instance.get(`/searchUser`)
     const listUser : SearchUser[] = converDataToSearchUser(data)
-    console.log("asdasd ")
-    console.log(listUser[0].id)
+    console.log(listUser)
     const filteredUser = Array.isArray(listUser) ? listUser.filter((user) => {
         return user.email.toLowerCase().includes(query.toLowerCase())
     }) : []
@@ -22,7 +21,7 @@ const ListDataSearch = async ({query} : Props) => {
             )}
             <div className="flex flex-col mt-4 items-center">
                 {Array.isArray(listUser) && query !== '' && filteredUser.map((user) => (
-                    <ListUser user={user}/>
+                    <ListUser key={user.id} user={user}/>
                 ))}
             </div>
         </div>
