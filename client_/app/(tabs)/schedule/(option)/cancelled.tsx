@@ -52,7 +52,7 @@ const SchedulePage = () => {
   const getNewestCustomerIdByOrder = async () => {
     try {
       setIsLoading(true)
-      const {data, error} = await client.from("Order").select("*, Clinic(*, Doctor(*), Specialty(*)), Customer (*)").eq("status", "Cancelled").order("id", {ascending: false})
+      const {data, error} = await client.from("Order").select("*, Clinic(*, Doctor(*), Specialty(*)), Customer (*)").eq("status", "Cancelled").eq("user_id", userId).order("id", {ascending: false})
       const customerId_ : any = data && data[0] ? data[0]['customer_id'] : null;
       const customer_ : any = data && data[0] ? data[0]['Customer'] : null;
       const clinics_ : any = data?.map(item => item.Clinic)
@@ -336,23 +336,7 @@ const SchedulePage = () => {
     ))}
 
 
-    <Link href={{
-      pathname: `/scheduleDoctor/bookCustomer`,
-      params: {customer_id: customerSelected}}} asChild>
-      <TouchableOpacity style ={{
-                       alignItems: 'center',
-                       marginTop: 10,
-                       backgroundColor: '#33CC99',
-                       marginHorizontal: 40,
-                       marginVertical: 100,
-                       height: 50,
-                       justifyContent: 'center',
-                       borderRadius: 10,
-        }}>
-        <Text style={{ color: 'white', fontSize: 18, fontWeight: 'bold' }}>
-            Đặt lịch khám</Text>
-      </TouchableOpacity>
-    </Link>
+   
     </ScrollView>
     </>
   )

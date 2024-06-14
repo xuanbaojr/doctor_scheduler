@@ -19,6 +19,7 @@ const client = createClient(
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNud2p6b251c2dncXF5bWhibHVqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTE2MTU4MTEsImV4cCI6MjAyNzE5MTgxMX0.H-4glIFgFb31Gu3sl2X4nqFOnJw5MDKa0Yjf2SvW4A0'
 );
 const BoxDoctor = () => {
+  const url = "http://10.30.53.166:8000"
   const params = useLocalSearchParams() // customer_id
   const [specialty, setSpecialty] = useState([]) // 
   const [selectedSpecialty, setSelectedSpecialty] = useState(1) 
@@ -32,6 +33,8 @@ const BoxDoctor = () => {
   const [data, setData] = useState([])
   const [error, setError] = useState(null)
   const [fullData, setFullData] = useState([])
+  const [querySymptom, setQuerySymptom] = useState('')
+  const [specialtyName, setSpecialtyName] = useState('')
 
   useEffect(() => {
     setIsLoading(true)
@@ -79,6 +82,7 @@ const BoxDoctor = () => {
       setClinics(clinic_)
       setSpecialty(specialty_)
       setDoctors(doctor_)
+      console.log("getDoctorBySpecialty", doctor_)
     } catch (error) {
       console.log("cannot getDoctorBySpecialty", error)
     }
@@ -107,6 +111,25 @@ const BoxDoctor = () => {
     }
     return specialty.name.toLowerCase().includes(query);
   };
+
+  const handleSymptom = async(symptom) => {
+    try {
+      const formData = new FormData();
+      formData.append('symptom', symptom);
+      const response = await fetch(`${url}/getDoctorBySymptom/`, {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'multipart/form-data'
+          },
+          body: formData
+      });
+      const data = await response.json()
+      getDoctorBySpecialty(data['data'][0]['id'])
+      
+  } catch(error) {
+      console.error(error);
+  }
+  }
 
   return (
     <View>
@@ -137,11 +160,14 @@ const BoxDoctor = () => {
             placeholder="Nhập triệu chứng"
             clearButtonMode="always"
             styte={styles.searchBox}
-            value={searchQuery}
+            value={querySymptom}
             autoCapitalize="none"
-            onChangeText={(text) => handleSearch(text)}
+            onChangeText={(text) => setQuerySymptom(text)}
           />
+      <TouchableOpacity onPress={() => handleSymptom(querySymptom)}>
       <EvilIcons style={{marginTop:3, marginRight:20}} name="search" size={22} color="black" />
+
+      </TouchableOpacity>
 
 
       </View>
