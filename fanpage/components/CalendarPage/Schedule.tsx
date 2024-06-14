@@ -34,7 +34,6 @@ const Schedule = ({ doctor_id, date, time } : Props) => {
       } else {
         const orders_ : OrderType[] = convertDataToOrderType(data);
         setOrders(orders_);
-        console.log("data trả về " , data);
         const clinic : ClinicType = orders_[0].Clinic
         setClinics(clinic)
         if ( clinic.doctor_id === doctor_id) {  
@@ -48,7 +47,6 @@ const Schedule = ({ doctor_id, date, time } : Props) => {
       setIsLoading(false);
     }
   };
-  
   useEffect(() => {
     orderbydoctor( doctor_id ,date , time );
   }, [doctor_id,date , time]);
