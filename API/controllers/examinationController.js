@@ -13,6 +13,8 @@ class ExaminationController {
                 },
                 select : {
                     title : true,
+                select : {
+                    title : true,
                     listExamination : {
                         select : {
                             id : true,
@@ -21,10 +23,18 @@ class ExaminationController {
                         },
                         orderBy : {
                             createAt : "asc"
+                        },
+                        orderBy : {
+                            createAt : "asc"
                         }
                     }
                 }
             })  
+            const datas = {
+                title : data.title,
+                examination : data.listExamination
+            }
+            res.send(datas)
             const datas = {
                 title : data.title,
                 examination : data.listExamination
@@ -46,6 +56,8 @@ class ExaminationController {
                 where : {
                     id : userId,
                 },
+                select : {
+                    comment : true,
                 select : {
                     comment : true,
                     listResult: {
@@ -187,6 +199,8 @@ class ExaminationController {
         }
     }
 
+    // create new exami for the web 
+    
 }
 
 module.exports = new ExaminationController

@@ -9,6 +9,7 @@ import { useLocalSearchParams } from 'expo-router';
 import { useEffect, useState } from "react";
 import { createClient } from '@supabase/supabase-js';
 import { useAuth } from '@clerk/clerk-expo';
+import { Stack} from 'expo-router';
 
 
 const client = createClient(

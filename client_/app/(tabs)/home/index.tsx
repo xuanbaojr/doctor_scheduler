@@ -62,9 +62,11 @@ const StartPage = () => {
           <Activity />
         </View>
             {/* review doctor */}
+            {/* review doctor */}
         <View className="">
           <ReviewDoctor />
         </View>
+        {/* hotline */}
         {/* hotline */}
         <View className="px-2 mb-3">
           <View className="flex-row py-2 bg-bghotline justify-center items-center rounded-xl">
@@ -85,6 +87,11 @@ const StartPage = () => {
           <Link href={`/chat/AI_chat_test`} asChild>
           <TouchableOpacity>
             <Text>AI CHAT TEST</Text>
+          </TouchableOpacity>
+          </Link>
+        <Link href={`/chat/AI_chat`} asChild>
+          <TouchableOpacity>
+            <Text>AI CHAT DEMO</Text>
           </TouchableOpacity>
           </Link>
       </ScrollView>

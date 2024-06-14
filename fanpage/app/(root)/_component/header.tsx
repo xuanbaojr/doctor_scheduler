@@ -16,13 +16,16 @@ const Header = () => {
   );
 };
 
-const headerStyle = {
+const headerStyle: React.CSSProperties = {
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
   padding: '10px 50px',
   backgroundColor: '#CAE0FA',
-  boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+  // boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+  position: 'sticky',
+  top: '0',
+  zIndex: '1000',
 };
 
 const leftStyle = {
