@@ -7,21 +7,8 @@ const prisma = new PrismaClient()
 class test {
     async getRecommentDoctors(req, res) {
         try {
-            const data = await prisma.clinic.findMany({
-                select : {
-                    name : true,
-                    Doctor : {
-                        select : {
-                            name : true,
-                        }
-                    }
-                },
-                orderBy: {
-                    Order : {
-                        _count : 'asc'
-                    }
-                },
-                take : 1
+            const data = await prisma.order.findMany({
+                
             })
             console.log(data)
             res.send(data)

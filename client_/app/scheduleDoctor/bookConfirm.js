@@ -64,6 +64,7 @@ const ClinicComponent = ({ params }) => {
     const getClinicByClinicId = async () => {
         try {
             const { data, error } = await client.from("Clinic").select("*, Specialty(*)").eq("id", params.clinic_id);
+            const a = await client.storage.from("order").select
             if (error) {
                 console.log("Error getting clinic by clinic_id:", error);
             } else {

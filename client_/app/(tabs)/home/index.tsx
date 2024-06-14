@@ -1,17 +1,35 @@
 import { View, Text, Image, ScrollView, TouchableOpacity } from "react-native";
 import React from "react";
-import { Link, Stack } from "expo-router";
+import { Link, Redirect, Stack } from "expo-router";
 import ButtonDesign from "@/components/card/ButtonDesign";
 import ReviewDoctor from "@/components/forms/ReviewDoctor";
 import Activity from "@/components/card/Activity";
 import { useAuth } from "@clerk/clerk-expo";
-const background = require("../../../assets/background.jpg");
+const background = require("../../../assets/background4.jpg");
 import { FontAwesome5 } from "@expo/vector-icons";
+import useCustomers from "@/hooks/useCustomer";
+import Spinner from "react-native-loading-spinner-overlay";
 
 const StartPage = () => {
   const { isLoaded, userId, sessionId, getToken } = useAuth();
   console.log("StartPage", isLoaded, userId, sessionId, getToken);
   const header = "Xin chào ";
+
+  const { listOfCustomers, isLoading } = useCustomers();
+  if (isLoading) {
+    return (
+      <Spinner
+        visible={true}
+        textContent={"Đang tải..."}
+        textStyle={{ color: "#FFF" }}
+      />
+    );
+  }
+  if(listOfCustomers.length === 0 ) {
+    return <Redirect href="/personal/addMember" />
+  } else {
+
+  
   return (
     <>
       <Stack.Screen
@@ -33,6 +51,7 @@ const StartPage = () => {
             resizeMode="cover"
             style={{
               height: 230,
+              borderRadius: 12,
             }}
             className=" w-full grid grid-rows-2"
           />
@@ -70,7 +89,7 @@ const StartPage = () => {
           </Link>
       </ScrollView>
     </>
-  );
+  )};
 };
 
 export default StartPage;

@@ -37,6 +37,7 @@ class scheduleController {
             const data = await prisma.clinic.findMany({
                 select : {
                     name : true,
+                    doctor_id : true,
                     Doctor : {
                         select : {
                             name : true,

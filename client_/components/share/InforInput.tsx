@@ -18,10 +18,8 @@ import instance from '@/utils/axios'
 import { faL } from '@fortawesome/free-solid-svg-icons'
 import { useAuth } from '@clerk/clerk-expo'
 import { router } from 'expo-router'
-import { useEdgeStore } from '../../lib/edgestore';
 
 const InforInput = () => {
-  const { edgestore } = useEdgeStore();
 
     const [gender, setGender] = useState<Gender>(Gender.man)
     const [age, setAge] = useState(20)
@@ -30,6 +28,7 @@ const InforInput = () => {
     const [title, setTitle] = useState<string>('')
     const [puImage, setPuImage] = useState(true)
     const {userId} = useAuth()
+    const [imageUp, setImageUp] = useState('')
 
     const snapPoint2 = useMemo(() => [  '25%' ], ['0%'])
     const bottomSheetRef2 = useRef<BottomSheet>(null)
@@ -54,30 +53,21 @@ const InforInput = () => {
     }
 
     const onSubmit = async () => {
-      // if(!checkAlert()) {
-      //   return
-      // }
-      console.log(gender, age, puImage, images[0], major, title )
-      // await instance.post(`/createNewThread`, {
-      //   userId : userId,
-      //   gender : gender,
-      //   age : age.toString(), 
-      //   puImage :puImage, 
-      //   image : images[0],
-      //   major : major,
-      //   title : title,
-      // })
-      // done()
+      if(!checkAlert()) {
+        return
+      }
+      console.log(gender, age, puImage, images[0], imageUp, major, title )
+      await instance.post(`/createNewThread`, {
+        userId : userId,
+        gender : gender,
+        age : age.toString(), 
+        puImage :puImage, 
+        image : imageUp,
+        major : major,
+        title : title,
+      })
+      done()
 
-      // const res = await edgestore.publicFiles.upload({
-      //   images[0],
-      //   onProgressChange: (progress) => {
-      //     // you can use this to show a progress bar
-      //     console.log(progress);
-      //   },
-      // });
-      // you can run some server action or api here
-      // to add the necessary data to your database
       // console.log(res);
     }
     
@@ -123,6 +113,7 @@ const InforInput = () => {
           open={handleOpenPress2}
           images={images} 
           setImages={setImages}
+          setImageUpload={setImageUp}
         />
 
         

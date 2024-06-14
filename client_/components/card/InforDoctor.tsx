@@ -1,22 +1,18 @@
 import { Image, Text, TouchableOpacity, View } from "react-native"
-import { MaterialIcons } from '@expo/vector-icons';
-import { useRouter } from "expo-router";
+import { Link, useRouter, } from "expo-router";
+import { RecomentDoctor } from "../forms/type";
+import useCustomers from "@/hooks/useCustomer";
 const avatar = require("../../assets/favicon.png")
 
 interface Props {
-    major : string,
-    name : string, 
+    doctor : RecomentDoctor
 }
 
-const InforDoctor = ({major, name} : Props) => {
-    const router = useRouter()
-    const onpress = () => {
-        router.push("/home/")
-    }
+const InforDoctor = ({doctor} : Props) => {
+    const { listOfCustomers, isLoading } = useCustomers();
 
     return (
-        <TouchableOpacity 
-        onPress={() => onpress()}
+        <View
         className="flex-row p-2 mb-3 rounded-xl bg-bg-post"
         style={{
             flexDirection: "row",
@@ -32,18 +28,23 @@ const InforDoctor = ({major, name} : Props) => {
             alignItems: "center",
         }}
         >
-            <View className="w-16 h-16 rounded-xl mr-4 bg-avatar-1 flex items-center justify-center">
-                <Image source={avatar}  />
-            </View>
-            <View className="flex-col">
+            <Link href={listOfCustomers.length!== 0 ? { pathname: `/scheduleDoctor/bookTime`, params: { doctor_id: doctor.doctorId, customer_id: listOfCustomers[0].id} } : { pathname:`/personal/addMember`}} asChild>
+            <TouchableOpacity className="flex-row">
+                <View className="w-16 h-16 rounded-xl mr-4 bg-avatar-1 flex items-center justify-center">
+                    <Image source={avatar}  />
+                </View>
+                <View className="flex-col justify-center">
                     <View>
-                        <Text className="text-base font-semibold">{name}</Text>
+                        <Text className="text-base font-semibold">{doctor.name}</Text>
                     </View>
-                    <View className="rounded-sm flex-row mt-0.5">
-                        <Text className=" text-all bg-bgmajor py-0.5 px-1 rounded-md flex-none">{major}</Text>
+                    <View className="rounded-sm flex-row mt-1">
+                        <Text className=" text-all bg-bgmajor py-0.5 px-1 rounded-md flex-none">{doctor.major}</Text>
                     </View>
-            </View>
-        </TouchableOpacity>
+                </View>
+            </TouchableOpacity>
+            </Link>
+            
+        </View>
         
     )
 }

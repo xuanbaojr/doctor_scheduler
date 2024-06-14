@@ -47,7 +47,7 @@ export const ConvertDatatoThreadObject = (item : any) : ThreadDataType => {
     }) )
     const thread : ThreadDataType = {
         id: item[0]['id'],
-        customId : item[0]['customid'],
+        customId : item[0]['customId'],
         nurfeId : item[0]['nurfeId'],
         image : item[0]['image'],
         createAt : item[0]['createAt'],

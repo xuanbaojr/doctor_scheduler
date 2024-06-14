@@ -1,6 +1,10 @@
 import { Image, Text, View } from "react-native"
 import { Ionicons } from '@expo/vector-icons';
 import { convertCreateAt, convertName } from "./ThreadDataType";
+import { createClient } from "@supabase/supabase-js";
+import { useEffect, useState } from "react";
+import ImageNotPublic from "./ImageNotPublic";
+import AvatarImage from "./AvatarImage";
 
 interface Props {
     gender : string,
@@ -8,14 +12,36 @@ interface Props {
     date : Date ,
     title : string ,
     major : string[] ,
-    image : string 
+    image : string ,
+    puImage : boolean,
 }
 
-const linkDefault = "https://files.edgestore.dev/w3yo8jqa6b3xtuvu/publicFiles/_public/"
+const client = createClient(
+    'https://snwjzonusggqqymhbluj.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNud2p6b251c2dncXF5bWhibHVqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTE2MTU4MTEsImV4cCI6MjAyNzE5MTgxMX0.H-4glIFgFb31Gu3sl2X4nqFOnJw5MDKa0Yjf2SvW4A0'
+); 
 
+const ThreadHeader = ({gender, age, date, title,major, image, puImage} : Props) => {
 
-const ThreadHeader = ({gender, age, date, title,major, image} : Props) => {
-    
+    const [imageUpload, setImageUpload] = useState('')
+    const uploadMedia = async () => {
+        const data = await client.storage
+          .from('file')
+          .download(image)
+          // .list()
+          .then(({ data }) => {
+              const fr = new FileReader();
+              if(!data) return
+              fr.readAsDataURL(data);
+              fr.onload = () => {
+                setImageUpload(fr.result as string);
+              };
+          });
+    }
+
+    useEffect(() => {
+        uploadMedia()
+    },[])
 
     return (
     <>
@@ -35,9 +61,7 @@ const ThreadHeader = ({gender, age, date, title,major, image} : Props) => {
         {/* avatar */}
         <View className="w-full flex-row items-center border-b py-2.5 border-red-100">
             <View className="w-10 h-10 p-0.5 rounded-full mr-4 bg-white flex justify-center items-center">
-                <View className=" w-full h-full bg-majorbg rounded-full flex justify-center items-center">
-                    <Ionicons name="person" size={30} color='white' />
-                </View>
+                <AvatarImage gender={gender} age={age} />
             </View>
             <View className="flex-col flex-1">
                 <Text className="text-sm font-semibold">{convertName(gender, age)}</Text>
@@ -54,10 +78,19 @@ const ThreadHeader = ({gender, age, date, title,major, image} : Props) => {
 
         {/* image */}
         {
-            image && 
+            imageUpload !== '' && puImage && 
             <View className="my-3 px-2">
-            <Image source={{uri: image + linkDefault}} style={{width: 80, height: 80, borderRadius:12}} />
+            <Image 
+                source={{uri: imageUpload}} 
+                style={{width: 200, height: 200, borderRadius:12,}} 
+                
+            />
         </View>
+        }{
+            imageUpload !== '' && !puImage && 
+            <View className="my-3 px-2">
+                <ImageNotPublic />
+            </View>
         }
         
 

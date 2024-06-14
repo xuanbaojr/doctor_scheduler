@@ -33,7 +33,7 @@ const ReviewDoctor = () => {
                         Bác sĩ có lịch khám
                     </Text>
                 </View>
-                <Link href={'/(tabs)/medical'}
+                <Link href={'/scheduleDoctor/bookDoctor'}
                     className="pr-2 ">
                     <Text className='mr-2 text-all text-base'>
                         Tất cả
@@ -44,7 +44,7 @@ const ReviewDoctor = () => {
 
                 {
                     listDoctor.map((doc : RecomentDoctor, index ) => (
-                        <InforDoctor major={doc.major} key={index} name={doc.name}/>
+                        <InforDoctor key={index} doctor={doc}/>
                     ))
                 }
 

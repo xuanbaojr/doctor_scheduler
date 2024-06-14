@@ -6,6 +6,7 @@ import {   ThreadDataType, convertCreateAt, convertName } from '../pageThread/Th
 import { useRouter } from 'expo-router'
 import { Ionicons } from '@expo/vector-icons';
 import { convertComment } from '@/utils/page/comment'
+import AvatarImage from '../pageThread/AvatarImage'
 
 
 interface Props {
@@ -40,10 +41,9 @@ const Post = ({thread, isMyself} : Props) => {
         {/* header */}
         <View className='flex-row mb-1 justify-center items-center pl-2 mt-1'>
             <View className="w-10 h-10 p-0.5 rounded-full mr-4 bg-white flex justify-center items-center">
-                <View className=" w-full h-full bg-majorbg rounded-full flex justify-center items-center">
-                    <Ionicons name="person" size={30} color='white' />
-                </View>
+                <AvatarImage  gender={thread.gender} age={thread.age}/>
             </View>
+            
             <View className='flex-col flex-1'>
                 <Text className='text-sm font-semibold'>{convertName(thread.gender, thread.age)}</Text>
                 <Text className='text-sm font-light italic'>{convertCreateAt(thread.createAt)}</Text>
@@ -60,6 +60,7 @@ const Post = ({thread, isMyself} : Props) => {
                 thread.comment.length > 0 && 
                 <CommentDoctor 
                 comment={thread.comment[0]}
+                gender={thread.gender}
             />
             }
         </View>
