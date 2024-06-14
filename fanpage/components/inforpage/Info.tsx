@@ -1,6 +1,6 @@
 'use server'
 
-import { DoctorDataType, convertDataToDoctorType } from "@/app/contants/Type/DoctorType";
+import { DoctorDataType, convertDataToDoctorType } from "@/contants/Type/DoctorType";
 import instance from "@/untils/axios";
 import InfoDoctor from "./InfoDoctor";
 import Clinics from "./Clinics";

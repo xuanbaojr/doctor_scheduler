@@ -107,7 +107,8 @@ const Calendar = () => {
                   return (
                     <td style={tableCellStyle} key={dayIndex}>
                       <Schedule
-                        date={format(currentDay, 'dd-MM-yyyy')}
+                        doctor_id = "2"
+                        date={format(currentDay, 'yyyy-dd-MM')}
                         time={format(hour, 'HH:mm')}
                       />
                     </td>

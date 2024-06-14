@@ -7,19 +7,17 @@ const prisma = new PrismaClient()
 class test {
     async createNewExamiForWeb (req, res) {
         try {
-            const profileId = req.query.profileId;
-            const data = await prisma.examination.create({
-                data : {
-                    comment : "sda",
-                    profile : profileId,
-                }
-            })
-        }catch (error ) {
+            const response = await prisma.order.findMany({
+                
+            });
+      
+            res.send(response);
+          } catch (error) {
             console.log(error);
             res.status(500).json({
-                errorCode: 1,
-                msg: "Server" + error.message
+              errorCode: 1,
+              msg: "Server error: " + error.message
             });
-        }
+          }
         }
 }

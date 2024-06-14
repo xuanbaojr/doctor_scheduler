@@ -1,4 +1,4 @@
-import { ClinicType, DoctorDataType } from "@/app/contants/Type/DoctorType";
+import { ClinicType, DoctorDataType } from "@/contants/Type/DoctorType";
 import instance from "@/untils/axios";
 import ClinicInfo from "./ClinicInfo";
 

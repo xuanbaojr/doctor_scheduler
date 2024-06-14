@@ -3,6 +3,7 @@ import axios, { AxiosInstance, AxiosResponse, AxiosError } from "axios";
 const instance: AxiosInstance = axios.create({
 //   baseURL: "http://192.168.111.149:3000" 
     baseURL: "http://192.168.1.220:3000"
+    // baseURL: "http://10.30.55.71:3000"
 });
 
 instance.interceptors.response.use(

@@ -13,10 +13,12 @@ export interface ClinicType {
     major: string;
     price: number;
     specialty_id: string;
-    Specialty: {
-        id: string;
-        name: string;
-    };
+    Specialty: SpecialtyType;
+}
+
+export interface SpecialtyType {
+    id: string;
+    name: string;
 }
 
 export const convertDataToDoctorType = (data: any[]): DoctorDataType[] => {
@@ -42,4 +44,25 @@ export const convertDataToDoctorType = (data: any[]): DoctorDataType[] => {
     }));
 
     return doctors;
+};
+
+export const convertDataToClinicType = (data: any[]): ClinicType[] => {
+    if (!Array.isArray(data)) {
+        return [];
+    }
+
+    const clinics: ClinicType[] = data.map((item: any) => ({
+        id: item.id,
+        doctor_id: item.doctor_id,
+        name: item.name,
+        major: item.major,
+        price: item.price,
+        specialty_id: item.specialty_id,
+        Specialty: {
+            id: item.Specialty.id,
+            name: item.Specialty.name,
+        },
+    }));
+
+    return clinics;
 };
