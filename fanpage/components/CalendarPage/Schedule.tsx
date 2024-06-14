@@ -32,14 +32,14 @@ const Schedule = ({ doctor_id, date, time } : Props) => {
       if (error) {
         console.log("Error fetching orders:", error);
       } else {
-        // const orders_ : OrderType[] = convertDataToOrderType(data);
-        // setOrders(orders_);
+        const orders_ : OrderType[] = convertDataToOrderType(data);
+        setOrders(orders_);
         console.log("data trả về " , data);
-        // const clinic : ClinicType = orders_[0].Clinic
-        // setClinics(clinic)
-        // if ( clinic.doctor_id === doctor_id) {  
-        //   setCheck(true)
-        // }
+        const clinic : ClinicType = orders_[0].Clinic
+        setClinics(clinic)
+        if ( clinic.doctor_id === doctor_id) {  
+          setCheck(true)
+        }
         
       }
     } catch (err) {
