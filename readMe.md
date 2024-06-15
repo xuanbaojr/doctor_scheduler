@@ -13,7 +13,18 @@ cd model
 python ai_chat_02.py
 ```
 ## Công nghệ sử dụng
-- framework/ library: nodeJs, expo, react native, langchain, fastAPI
-- database: supabase, prisma
-- programming language: javascript, python
+### framework/ library: 
+- nodeJs
+- expo
+- react native
+- langchain 
+- fastAPI
+
+### database:
+- supabase
+- prisma
+
+### programming language:
+- javascript
+- python
 
