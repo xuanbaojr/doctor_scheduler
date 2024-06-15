@@ -19,7 +19,7 @@ const client = createClient(
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNud2p6b251c2dncXF5bWhibHVqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTE2MTU4MTEsImV4cCI6MjAyNzE5MTgxMX0.H-4glIFgFb31Gu3sl2X4nqFOnJw5MDKa0Yjf2SvW4A0'
 );
 const BoxDoctor = () => {
-  const url = "http://10.30.53.166:8000"
+  const url = "http://192.168.1.5:8000"
   const params = useLocalSearchParams() // customer_id
   const [specialty, setSpecialty] = useState([]) // 
   const [selectedSpecialty, setSelectedSpecialty] = useState(1) 
@@ -253,12 +253,13 @@ const BoxDoctor = () => {
         </View>
       </Modal>
 
-      {doctors && doctors.map((doctor, index) => (
-          <View key={index} style={styles.order_container}>
-          <Link href={{ pathname: `./bookTime`, params: { doctor_id: doctor['id'], customer_id: params.customer_id } }} asChild>
+      {clinics && clinics.map((clinic, index) => (
+        
+          <ScrollView key={index} style={styles.order_container}>
+          <Link href={{ pathname: `./bookTime`, params: { doctor_id: clinic["Doctor"]['id'], customer_id: params.customer_id } }} asChild>
 
           <TouchableOpacity>
-            <View>
+            <ScrollView>
               <View style={styles.date}>
                 <Text style={{fontSize:14, fontWeight:"500", color:"#339966"}}>Yêu thích</Text>
                 <View style={styles.icon_}>
@@ -276,7 +277,7 @@ const BoxDoctor = () => {
                 <View style={styles.infor}>
                   <View style={{flexDirection: 'row'}}>
                   <Text>Bác sĩ:          </Text>
-                  <Text style={{fontWeight:'600'}}>TS. {doctor['name']}</Text>
+                  <Text style={{fontWeight:'600'}}>TS. {clinic["Doctor"]['name']}</Text>
                   </View>
                   <Text style={{marginTop:10}}>{clinics[index]['name']}: </Text>
                   <Text style={{marginTop:0}}>{clinics[index]['Specialty']['name']}</Text>
@@ -289,12 +290,12 @@ const BoxDoctor = () => {
                   <Text style={{ fontWeight:"500"}}>Giá tiền:    </Text>
                   <Text style={{color:"#FF0000", fontWeight:"500"}}>{clinics[index]['price']} VND</Text>
                 </View>
-            </View>
+            </ScrollView>
 
           </TouchableOpacity>
 
           </Link>
-          </View>
+          </ScrollView>
       ))}
     </View>
   )

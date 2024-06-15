@@ -18,7 +18,7 @@ const TestComponent = () => {
 
     const user = useAuth()
     user_id = user.userId
-    const url = "http://192.168.1.2:8000"
+    const url = "http://192.168.1.5:8000"
     const [humanChat, setHumanChat] = useState('');
     const [questionList, setQuestionList] = useState([])
     const [answerList, setAnswerList] = useState([])
@@ -65,30 +65,16 @@ const TestComponent = () => {
     // Hien thi cau chat moi (4)
     const getChatUpdate = async () => {
       try {
-          const {data, error} = await supabase
-              .from("Chat_chat")
-              .select()
-              .eq("user_id", user_id)
-              .order("id", { ascending: true });
-  
-          if (error) {
-              console.error("Error getChatUpdate", error);
-              return;
-          }
-  
-          const newContent = data.map(item => item.content);
-          const newAnswers = newContent.map(item => item.z_answer);
-  
-          setAnswerList(prevAnswerList => [
-              ...newAnswers,
-              ...prevAnswerList
-          ]);
-  
-          setIsLoading(false);
-      } catch (error) {
-          console.error("Error getChatUpdate", error);
-      }
-  };
+        const {data, error} = await supabase.from("Chat_chat").select().eq("user_id", user_id)
+        const content = data.map(item => item.content)
+        const z_answer = content.map(item => item.z_answer)
+        setAnswerList(z_answer)
+        setIsLoading(false)
+    } catch (error) {
+        console.error("Error getChatUpdate", error)
+    }
+  }
+
     // check database real-time  (3)
     useEffect(() => {
         const channelA = supabase
