@@ -5,9 +5,14 @@ prisma = new PrismaClient();
 
 class userController {
   async fetchUser(req, res) {
+    const userId = req.query.userId;
     try {
-      const data = await prisma.user.findMany({});
-      console.log(data);
+      const data = await prisma.user.findFirst({
+        where : {
+          id : userId
+        }
+      });
+      // console.log(data);
       res.send(data);
     } catch (error) {
       console.log(error);
@@ -17,6 +22,7 @@ class userController {
       });
     }
   }
+
 
   async createUser(req, res) {
     try {
@@ -43,6 +49,25 @@ class userController {
         }
       }
       res.send("Users fetched successfully");
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({
+        errorCode: 1,
+        msg: "Server" + error.message,
+      });
+    }
+  }
+
+  async SearchUser(req, res) {
+    try {
+      const email = req.query.email;
+      const data = await prisma.user.findMany({
+        where :{
+          emai : email,
+        }
+      });
+      console.log(data);
+      res.send(data);
     } catch (error) {
       console.log(error);
       res.status(500).json({

@@ -18,6 +18,19 @@ const ButtonDesign = ({path, label, children} : Props) => {
     <TouchableOpacity
         onPress={Press}
         className="border flex-1  border-all rounded-full p-3 mr-3 flex-row justify-around items-center"
+        style={{
+            flexDirection: "row",
+            // height: 16,
+            // padding: 16,
+            backgroundColor: "#FFFFFF",
+            borderRadius: 8,
+            shadowColor: "#000000",
+            shadowOpacity: 0.1,
+            shadowRadius: 2 ,
+            elevation: 2,
+            flex: 1,
+            alignItems: "center",
+        }}
     >
         <View>
             {children}

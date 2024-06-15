@@ -46,8 +46,8 @@ os.environ['OPENAI_API_KEY'] = 'sk-proj-qpCmBm3wDA6QmcUdhFG1T3BlbkFJ6mJLy7biuPDR
 llm = ChatOpenAI(model="gpt-3.5-turbo")
 embedding = OpenAIEmbeddings()
 
-os.environ['SUPABASE_URL'] = 'https://snwjzonusggqqymhbluj.supabase.co'
-os.environ['SUPABASE_KEY'] = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNud2p6b251c2dncXF5bWhibHVqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTE2MTU4MTEsImV4cCI6MjAyNzE5MTgxMX0.H-4glIFgFb31Gu3sl2X4nqFOnJw5MDKa0Yjf2SvW4A0'
+# os.environ['SUPABASE_URL'] = 'https://snwjzonusggqqymhbluj.supabase.co'
+# os.environ['SUPABASE_KEY'] = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNud2p6b251c2dncXF5bWhibHVqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTE2MTU4MTEsImV4cCI6MjAyNzE5MTgxMX0.H-4glIFgFb31Gu3sl2X4nqFOnJw5MDKa0Yjf2SvW4A0'
 url: str = os.environ.get("SUPABASE_URL")
 key: str = os.environ.get("SUPABASE_KEY")
 supabase: Client = create_client(url, key)

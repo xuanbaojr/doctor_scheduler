@@ -53,16 +53,7 @@ const AddMember = () => {
     }
   };
 
-  const createCustomer = async () => {
-    await instance.post("/createCustomer", {
-      userId: userId,
-      ho,
-      ten,
-      tuoi,
-      gioiTinh,
-      diaChi,
-    });
-  };
+
   return (
     <GestureHandlerRootView className='bg-bg w-full h-full flex-col'>
 
