@@ -39,7 +39,7 @@ const ExamiList = ({id, createAt, comment, linkId} : Props) => {
             }}
         >
             <View className="w-16 h-16 rounded-full mr-4 flex items-center justify-center">
-                <AntDesign name="calendar" size={32} color="black" />
+                <AntDesign name="calendar" size={32} color="#0860c4" />
             </View>
             <View className="flex-col flex-1">
                 <Text className="mb-1  text-slate-500 text-base">

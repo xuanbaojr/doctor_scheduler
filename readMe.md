@@ -1,21 +1,30 @@
-1. cach chay :
-    thay ip vao file client_/utils/axios.js
-
-cd api : npx nodemon server.js
-cd client : npm start
-
-----
-test chat bot (server):
-tao 2 file chứa nội dung cần test (test.txt, test_02.txt)
+# Ứng dụng đặt lịch khám 
+Ứng dụng cho phép người dùng đặt trước lịch hẹn với bác sĩ mong muốn cho bản thân hoặc thành viên trong gia đình. Đồng thời cho chép người bệnh quản lý hồ sơ bệnh án của mình
+## Hướng dẫn cài đặt
+```
+git clone https://github.com/qbert0/Mobile.git
+cd client_
+npx expo start
+cd ..
+cd api
+npx nodemon server.js
+cd ..
 cd model
 python ai_chat_02.py
+```
+## Công nghệ sử dụng
+### framework/ library: 
+- nodeJs
+- expo
+- react native
+- langchain 
+- fastAPI
 
+### database:
+- supabase
+- prisma
 
-ket qua test:
-chat_history_is Human: tôi bị đau răng
-AI: Bạn cần gặp bác sĩ chuyên khoa Răng - Hàm - Mặt. Bác sĩ phụ trách là bác sĩ XuanBao01 với mức giá 250 đơn vị tiền tệ. Bạn có muốn biết thêm thông tin gì không? Chúc bạn sớm khỏe lại!
-Human: tôi là sinh viên, có được giảm giá không ?
-AI: Có, sinh viên sẽ được giảm giá 30%. Bạn có thể yên tâm khi đến khám. Chúc bạn khỏe mạnh!
-Human: giảm bao nhiêu cơ ?
-AI: Xin lỗi về sự chậm trễ, bạn sẽ được giảm giá 30%. Chúc bạn sớm khỏe lại!
-(data lấy realtime từ supabase)
+### programming language:
+- javascript
+- python
+

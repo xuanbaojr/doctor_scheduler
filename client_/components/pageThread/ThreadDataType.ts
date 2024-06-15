@@ -47,7 +47,7 @@ export const ConvertDatatoThreadObject = (item : any) : ThreadDataType => {
     }) )
     const thread : ThreadDataType = {
         id: item[0]['id'],
-        customId : item[0]['customid'],
+        customId : item[0]['customId'],
         nurfeId : item[0]['nurfeId'],
         image : item[0]['image'],
         createAt : item[0]['createAt'],
@@ -72,4 +72,19 @@ export const convertCreateAt = (date : Date) : string => {
     const formattedDate : Date = new Date(date)
     const createAt = formattedDate.toLocaleDateString() 
     return createAt
+}
+
+export const convertDateToAge = (date : Date) : number | "Chưa điền" => {
+    if(date == null) {
+        return "Chưa điền"
+    }
+    const today = new Date()
+    const birth = new Date(date)
+    const age = today.getFullYear() - birth.getFullYear()
+    return age
+}
+
+
+export const sortComment = (comment : Comment[]) : Comment[] => {
+    return comment.sort((a : Comment, b : Comment) => new Date(a.createAt).getTime() - new Date(b.createAt).getTime());
 }
