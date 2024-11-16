@@ -1,5 +1,5 @@
 
-# Facial landmark detection
+# Doctor Scheduler
 
 [](https://github.com/xuanbaojr/doctor_scheduler)
 
